@@ -1,12 +1,10 @@
+@import "variables.css";
 html,
 body {
     height: 100%;
 }
 
 body {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
     -ms-flex-align: center;
     -ms-flex-pack: center;
     -webkit-box-align: center;
@@ -20,7 +18,6 @@ body {
 
 .form-signin {
     width: 100%;
-    max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }

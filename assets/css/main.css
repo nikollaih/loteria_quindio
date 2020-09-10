@@ -1,0 +1,32 @@
+@import "bootstrap.min.css";
+@import "variables.css";
+@import "icons.min.css";
+
+/* @import "login.css"; */
+
+.btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-success:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    opacity: 0.8;
+}
+
+#sidebar-menu>ul>li>a:active,
+#sidebar-menu>ul>li>a:focus,
+#sidebar-menu>ul>li>a:hover,
+#sidebar-menu>ul>li>a:active svg,
+#sidebar-menu>ul>li>a:focus svg,
+#sidebar-menu>ul>li>a:hover svg,
+.btn-link,
+.btn-link:hover {
+    color: var(--primary-color) !important;
+}
+
+label {
+    margin-bottom: 0.1rem;
+    font-weight: 400;
+}
