@@ -6,11 +6,34 @@
             <ul class="metismenu" id="menu-bar">
                 <li class="menu-title">Menú</li>
                 <li>
-                    <a href="index-2.html">
+                    <a href="javascript: void(0);">
                         <i data-feather="users"></i>
                         <span> Usuarios </span>
+                        <span class="menu-arrow"></span>
                     </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="email-inbox.html">Agregar</a>
+                        </li>
+                        <li>
+                            <a href="email-read.html">Ver Todos</a>
+                        </li>
+                    </ul>
                 </li>
+
+                <?php
+                    if(is_admin()){
+                ?>
+                    <li>
+                        <a href="<?= base_url() . 'hobbies'; ?>">
+                            <i data-feather="coffee"></i>
+                            <span> Hobbies </span>
+                        </a>
+                    </li>
+                <?php
+                    }
+                ?>
             </ul>
         </div>
         <!-- End Sidebar -->

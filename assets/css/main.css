@@ -1,6 +1,10 @@
 @import "bootstrap.min.css";
 @import "variables.css";
 @import "icons.min.css";
+@import "../libs/dataTables/dataTables.bootstrap4.min.css";
+@import "../libs/dataTables/responsive.bootstrap4.min.css";
+@import "../libs/dataTables/buttons.bootstrap4.min.css";
+@import "../libs/dataTables/select.bootstrap4.min.css";
 
 /* @import "login.css"; */
 
@@ -22,11 +26,30 @@
 #sidebar-menu>ul>li>a:focus svg,
 #sidebar-menu>ul>li>a:hover svg,
 .btn-link,
-.btn-link:hover {
+.btn-link:hover,
+#sidebar-menu .metismenu li a[aria-expanded=true],
+#sidebar-menu>ul>li.mm-active>a svg,
+.nav-second-level li a:focus,
+.nav-second-level li a:hover,
+.nav-thrid-level li a:focus,
+.nav-thrid-level li a:hover,
+.navbar-custom .topnav-menu .nav-link:active svg,
+.navbar-custom .topnav-menu .nav-link:focus svg,
+.navbar-custom .topnav-menu .nav-link:hover svg,
+#sidebar-menu>ul>li>a.active {
     color: var(--primary-color) !important;
 }
 
 label {
     margin-bottom: 0.1rem;
     font-weight: 400;
+}
+
+#sidebar-menu>ul>li.mm-active>a {
+    border-left: 3px solid var(--primary-color) !important;
+}
+
+.alert-danger {
+    background-color: var(--danger-color) !important;
+    border-color: var(--danger-color) !important;
 }
