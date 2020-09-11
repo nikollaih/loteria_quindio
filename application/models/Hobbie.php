@@ -17,5 +17,9 @@ Class Hobbie extends CI_Model {
             return false;
         }
     }
+
+    public function set_hobbie($data){
+        return $this->db->insert('hobbies', $data);
+    }
 }
 ?>
