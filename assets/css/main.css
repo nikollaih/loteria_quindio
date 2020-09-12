@@ -5,6 +5,7 @@
 @import "../libs/dataTables/responsive.bootstrap4.min.css";
 @import "../libs/dataTables/buttons.bootstrap4.min.css";
 @import "../libs/dataTables/select.bootstrap4.min.css";
+@import "../libs/sweetalert/sweetalert.min.css";
 
 /* @import "login.css"; */
 
@@ -36,8 +37,13 @@
 .navbar-custom .topnav-menu .nav-link:active svg,
 .navbar-custom .topnav-menu .nav-link:focus svg,
 .navbar-custom .topnav-menu .nav-link:hover svg,
-#sidebar-menu>ul>li>a.active {
+#sidebar-menu>ul>li>a.active,
+.text-success {
     color: var(--primary-color) !important;
+}
+
+.text-danger {
+    color: var(--danger-color) !important;
 }
 
 label {
@@ -52,4 +58,14 @@ label {
 .alert-danger {
     background-color: var(--danger-color) !important;
     border-color: var(--danger-color) !important;
+}
+
+.sa-confirm-button-container .confirm {
+    background-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    ;
 }

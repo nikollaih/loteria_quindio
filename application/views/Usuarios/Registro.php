@@ -54,13 +54,17 @@
             </div>
             <div class="col-md-12 form-group">
               <label for="inputPassword">Hobbies</label>
-                                                    <select class="form-control wide" data-plugin="customselect" multiple>
-                                                        <option value="0" selected>Shreyu</option>
-                                                        <option value="1">Greeva</option>
-                                                        <option value="2">Dhyanu</option>
-                                                        <option value="3" disabled>Disabled</option>
-                                                        <option value="4">Mannat</option>
-                                                    </select>
+                <select class="form-control wide" data-plugin="customselect" multiple>
+                    <?php
+                      if($hobbies != false && is_array($hobbies)){
+                        foreach ($hobbies as $hobbie) {
+                    ?>
+                          <option value='<?= $hobbie["id"] ?>'><?= $hobbie["name"] ?></option>
+                    <?php
+                        }
+                      }
+                    ?>
+                </select>
             </div>
           </div>
           <div class="row mt-5 justify-content-md-end">

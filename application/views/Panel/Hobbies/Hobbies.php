@@ -2,23 +2,32 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0">Agregar hobbie</h4>
+                <h4 class="header-title mt-0 add-hobbie-title">Agregar hobbie</h4>
                 <hr class="mb-4">
                 <form action="" method="post">
-                    <input type="hidden" name="id" value="null">
+                    <input type="hidden" name="id" id="input_id_hobbie" value="null">
                     <div class="form-group">
                         <label for="">Nombre</label>
-                        <input required name="name" type="text" class="form-control">
+                        <input id="input_name_hobbie" required name="name" type="text" class="form-control">
                     </div>
                     <?php
                         if(isset($message)){
                     ?>
-                        <p class="text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+                        <p class="result-hobbie-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
                     <?php
                         }
                     ?>
-                    <div class="form-group">
-                        <button class="btn btn-success btn-block" type="submit">Guardar</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">    
+                                <a class="btn btn-light btn-block cancel-edit-hobbie-button invisible" type="submit">Cancelar</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button class="btn btn-success btn-block" type="submit">Guardar</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -47,8 +56,8 @@
                                 <th scope="row"><?= $x++; ?></th>
                                 <td><?= $hobbie["name"] ?></td>
                                 <td class="text-center" style="width:160px;">
-                                    <button type="button" class="btn btn-primary btn-sm">Editar</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                                    <button data-id="<?= $hobbie['id'] ?>" data-name="<?= $hobbie['name'] ?>" type="button" class="btn btn-primary btn-sm edit-hobbie-button">Editar</button>
+                                    <button id="row-hobbie-<?= $hobbie['id'] ?>" data-id="<?= $hobbie['id'] ?>" type="button" class="btn btn-danger btn-sm delete-hobbie-button">Eliminar</button>
                                 </td>
                             </tr>
                         <?php

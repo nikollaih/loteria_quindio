@@ -6,7 +6,7 @@ class Usuarios extends CI_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Usuario');
+		$this->load->model(['Usuario', 'Hobbie']);
 		$this->load->helper(["url", "form"]);
 		$this->load->library(['form_validation', 'session']);
 	}
@@ -68,6 +68,7 @@ class Usuarios extends CI_Controller {
 	// Carga la vista de login con todos los parametros seleccionados
 	public function registro(){
 		$data["title"] = "Registro | Lotería del Quindío";
+		$data["hobbies"] = $this->Hobbie->get_hobbies();
 		$this->load->view('Usuarios/Registro', $data);
 	}
 
