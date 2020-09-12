@@ -8,7 +8,7 @@ class Usuarios extends CI_Controller {
 		parent::__construct();
 		$this->load->model(['Usuario', 'Hobbie']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['form_validation', 'session']);
+		$this->load->library(['Form_validation']);
 	}
 
 	public function index()
