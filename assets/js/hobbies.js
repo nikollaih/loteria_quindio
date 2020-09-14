@@ -62,7 +62,11 @@ function delete_hobbie(id) {
                             'success'
                         );
                     } else {
-                        alert("no")
+                        swal(
+                            'Error!',
+                            data.message,
+                            'danger'
+                        );
                     }
                 }, 'json')
         });

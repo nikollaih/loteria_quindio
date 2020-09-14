@@ -24,7 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-if($_SERVER['HTTP_HOST'] == 'localhost:8888'){
+
+if($_SERVER['HTTP_HOST'] == 'localhost:8888' || $_SERVER['HTTP_HOST'] == 'localhost'){
 	$config['base_url'] = "http://".$_SERVER['HTTP_HOST']."/loteria_quindio";
 }else{
 	$config['base_url'] = "https://".$_SERVER['HTTP_HOST'];
@@ -329,7 +330,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'vHG)+e}wF[ykpLC*';
 
 /*
 |--------------------------------------------------------------------------

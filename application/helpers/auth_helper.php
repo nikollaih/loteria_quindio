@@ -21,4 +21,12 @@ if(!function_exists('logged_user'))
     }
 
 }
+
+if(!function_exists('get_alnum_string'))
+{
+    function get_alnum_string($long = 28){
+        return random_string("alnum", 28);
+    }
+
+}
 ?>

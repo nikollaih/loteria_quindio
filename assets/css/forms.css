@@ -1,0 +1,29 @@
+@import "./variables.css";
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove,
+.select2-selection__choice__display {
+    color: #fff !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover,
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
+    background-color: var(--primary-color) !important;
+    opacity: 0.8;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default .select2-selection--multiple {
+    border: solid #e2e7f1 1px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    border-right: 1px solid rgb(255 255 255 / 32%) !important;
+}
+
+.select2-selection.select2-selection--multiple {
+    height: 46px;
+}
