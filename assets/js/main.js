@@ -12,6 +12,9 @@ import "../libs/datatables/buttons.print.min.js";
 import "../libs/datatables/dataTables.keyTable.min.js";
 import "../libs/datatables/dataTables.select.min.js";
 import "../libs/sweetalert/sweetalert.min.js";
+import "../libs/select2/select2.min.js";
+import "../libs/flatpickr/flatpickr.min.js";
 
 // Custom javascript files
 import "./hobbies.js";
+import "./forms.js";

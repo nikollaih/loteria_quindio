@@ -41,5 +41,17 @@ Class Hobbie extends CI_Model {
         $this->db->where("id", $id);
         return $this->db->delete("hobbies");
     }
+
+    public function set_user_hobbies($user_id, $hobbies){
+        if(is_array($hobbies)){
+            for ($i=0; $i < count($hobbies); $i++) { 
+                $this->db->insert('users_hobbies',array("user_id" => $user_id, "hobby_id" => $hobbies[$i]));
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 ?>

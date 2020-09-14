@@ -6,22 +6,13 @@ Class Usuario extends CI_Model {
     }
 
     // Insert registration data in database
-    public function registration_insert($data) {
-        // Query to check whether username already exist or not
-        $condition = "user_name =" . "'" . $data['user_name'] . "'";
-        $this->db->select('*');
-        $this->db->from('user_login');
-        $this->db->where($condition);
-        $this->db->limit(1);
-        $query = $this->db->get();
-
-        if ($query->num_rows() == 0) {
-            // Query to insert data in database
-            $this->db->insert('user_login', $data);
-            if ($this->db->affected_rows() > 0) {
-                return true;
-            }
-        } else {
+    public function signin_insert($data) {
+        // Query to insert data in database
+        $this->db->insert('users', $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->get_user_by_param("email", $data["email"]);;
+        }
+        else{
             return false;
         }
     }
@@ -42,14 +33,14 @@ Class Usuario extends CI_Model {
     }
 
     // Read data from database to show data in admin page
-    public function read_user_information($username) {
+    public function get_user_by_param($param, $value){
         $this->db->from('users');
-        $this->db->where("email", $username);
+        $this->db->where($param, $value);
         $this->db->limit(1);
         $query = $this->db->get();
 
         if ($query->num_rows() == 1) {
-            return $query->result_array();
+            return $query->row_array();
         } else {
             return false;
         }
