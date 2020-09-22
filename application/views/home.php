@@ -1,67 +1,69 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/powerball.css">
 
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1 class="title">¡Tu suerte a un click!</h1>
+			<div class="header">
+				<div class="header-item text-center">
+          <img class="text-center logo" src="<?= base_url().'assets/images/logo.png' ?>" alt="" height="72">
+				</div>
+				<div class="header-item">
+					|
+					<a href="<?= base_url() . 'usuarios/registro' ?>" class="btn btn-link" type="submit">Iniciar sesión</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-12">
+			<h1 class="title"></h1>
+		</div>
+	</div>
+	<div class="row" id="rotate">
+		<div class="col-md-3 card-loto">
 			<div class="board">
 				<div class="right-arrow"></div>
 				<div class="left-arrow"></div>
 				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board">
-					<div class="numbers">
-						<div class="number number-1">5</div>
-						<div class="number number-1">2</div>
-						<div class="number number-1">4</div>
+				<div class="content-board reel">
+					<div class="numbers ring" id="ring-1">
 					</div>
 				</div>
 				<div class="bottom-shadow"><div class="line"></div></div>
 			</div>
 		</div>	
-		<div class="col-md-3">
+		<div class="col-md-3 card-loto">
 			<div class="board">
 				<div class="right-arrow"></div>
 				<div class="left-arrow"></div>
 				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board">
-					<div class="numbers">
-						<div class="number number-1">8</div>
-						<div class="number number-1">0</div>
-						<div class="number number-1">3</div>
+				<div class="content-board reel">
+					<div class="numbers ring" id="ring-2">
 					</div>
 				</div>
 				<div class="bottom-shadow"><div class="line"></div></div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-3 card-loto">
 			<div class="board">
 				<div class="right-arrow"></div>
 				<div class="left-arrow"></div>
 				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board">
-					<div class="numbers">
-						<div class="number number-1">3</div>
-						<div class="number number-1">7</div>
-						<div class="number number-1">2</div>
+				<div class="content-board reel">
+					<div class="numbers ring" id="ring-3">
 					</div>
 				</div>
 				<div class="bottom-shadow"><div class="line"></div></div>
 			</div>
 		</div>	
-		<div class="col-md-3">
+		<div class="col-md-3 card-loto">
 			<div class="board">
 				<div class="right-arrow"></div>
 				<div class="left-arrow"></div>
 				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board">
-					<div class="numbers">
-						<div class="number number-1">9</div>
-						<div class="number number-1">1</div>
-						<div class="number number-1">3</div>
+				<div class="content-board reel">
+					<div class="numbers ring" id="ring-4">
 					</div>
 				</div>
 				<div class="bottom-shadow"><div class="line"></div></div>
@@ -90,8 +92,12 @@
 	</div>
 	<div class="row justify-content-center">
 		<div class="col-md-3">
-			<button class="btn btn-success btn-block btn-simulator">Jugar</button>
+			<button class="btn btn-success btn-block btn-simulator" id="btn-play">Jugar</button>
 		</div>
 
 	</div>
 </div>
+
+<script type="module" src="<?= base_url().'assets/js/vendor.min.js' ?>"></script>
+<script type="module" src="<?= base_url().'assets/js/app.min.js' ?>"></script>
+<script type="module" src="<?= base_url().'assets/js/simulator.js' ?>"></script>
