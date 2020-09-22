@@ -8,7 +8,7 @@ class Usuarios extends CI_Controller {
 		parent::__construct();
 		$this->load->model(['Usuario', 'Hobbie', 'Identification_Type', 'Location']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation', 'encryption']);
+		$this->load->library(['Form_validation']);
 	}
 
 	public function index()
@@ -18,9 +18,10 @@ class Usuarios extends CI_Controller {
 
     // Carga la vista de login con todos los parametros seleccionados
 	public function login(){
-		if($this->session->has_userdata('logged_in')){
+		if(is_logged()){
 			header("Location: " . base_url() . "panel");
 		}
+
 		$data["title"] = "Login | Lotería del Quindío";
 		$this->load->view('Usuarios/Login', $data);
 	}
@@ -76,8 +77,8 @@ class Usuarios extends CI_Controller {
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required|numeric');
 			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|numeric');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required|alpha');
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required|alpha');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required|numeric');
 			$this->form_validation->set_rules('user[phone]', 'Teléfono', 'required|numeric|min_length[7]');
 			$this->form_validation->set_rules('user[address]', 'Dirección', 'required');
@@ -149,7 +150,6 @@ class Usuarios extends CI_Controller {
 	public function logout() {
 		$this->session->unset_userdata('logged_in');
 		$data['message_display'] = 'Successfully Logout';
-		$this->load->view('usuarios/login', $data);
+		$this->load->view('Usuarios/Login', $data);
 	}
-	
 }

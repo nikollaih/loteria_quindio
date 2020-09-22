@@ -18,3 +18,12 @@ import "../libs/flatpickr/flatpickr.min.js";
 // Custom javascript files
 import "./hobbies.js";
 import "./forms.js";
+import "./blends.js";
+import "./draws.js";
+import "./purchases.js";
+
+jQuery(document).ready(function() {
+    jQuery('.custom-select2').select2();
+
+    jQuery(".flatpickr-input").flatpickr();
+});

@@ -6,10 +6,12 @@
 @import "../libs/dataTables/buttons.bootstrap4.min.css";
 @import "../libs/dataTables/select.bootstrap4.min.css";
 @import "../libs/sweetalert/sweetalert.min.css";
+@import "../libs/flatpickr/flatpickr.min.css";
 
 /* @import "login.css"; */
 
-.btn-success {
+.btn-success,
+.badge-success {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
@@ -70,5 +72,32 @@ label {
     ;
 }
 
+.flatpickr-weekdays {
+    background: var(--primary-color) !important;
+}
 
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
 
+span.flatpickr-weekday {
+    color: #fff !important;
+}

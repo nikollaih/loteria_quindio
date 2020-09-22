@@ -1,3 +1,3 @@
 <?php
-print_r($this->session->userdata("logged_in"));
+var_dump($this->session->userdata("logged_in"));
 ?>

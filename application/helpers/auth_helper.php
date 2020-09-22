@@ -22,6 +22,28 @@ if(!function_exists('logged_user'))
 
 }
 
+// Check if it's a logged user
+if(!function_exists('is_logged'))
+{
+    function is_logged($redirect = false){
+        $CI = &get_instance();
+        $CI->load->library('session');
+
+        if (!isset($CI->session->has_userdata('logged_in')["roles_id"])) {
+            if($redirect){
+                header("Location: " . base_url() . "panel");
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+}
+
 if(!function_exists('get_alnum_string'))
 {
     function get_alnum_string($long = 28){
