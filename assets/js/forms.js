@@ -1,7 +1,10 @@
-jQuery(document).ready(function() {
-    jQuery('.custom-select2').select2();
+// Check the input max length
+jQuery(document).on("keyup", ".max-length-check", function() {
+    var value = jQuery(this).val();
 
-    jQuery(".flatpickr-input").flatpickr();
+    if (value.length > jQuery(this).attr("maxlength")) {
+        jQuery(this).val(value.slice(0, this.maxLength));
+    }
 });
 
 // When the state selector changes
@@ -24,6 +27,7 @@ jQuery(document).on("keyup", ".check-password", function() {
         jQuery(".password-match-text").removeClass("d-none");
     }
 });
+
 
 // Call a location function in order to get the state cities
 function get_cities_by_state(id_state) {

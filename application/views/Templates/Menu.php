@@ -26,7 +26,19 @@
                     if(is_admin()){
                 ?>
                     <li>
-                        <a href="<?= base_url() . 'hobbies'; ?>">
+                        <a href="<?= base_url() . 'Draws'; ?>">
+                            <i data-feather="star"></i>
+                            <span> Sorteos </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url() . 'Blends'; ?>">
+                            <i data-feather="settings"></i>
+                            <span> Mezclas </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url() . 'Hobbies'; ?>">
                             <i data-feather="coffee"></i>
                             <span> Hobbies </span>
                         </a>
@@ -34,6 +46,12 @@
                 <?php
                     }
                 ?>
+                <li>
+                    <a href="<?= base_url() . 'Purchases'; ?>">
+                        <i data-feather="dollar-sign"></i>
+                        <span> Comprar </span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- End Sidebar -->

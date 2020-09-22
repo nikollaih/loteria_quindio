@@ -27,7 +27,7 @@ function set_update_hobbie(id, name) {
         jQuery(".add-hobbie-title").html("Modificar Hobbie");
         jQuery(".cancel-edit-hobbie-button").removeClass("invisible");
         jQuery(".result-hobbie-action").remove();
-        jQuery(window).scrollTop(0);
+        $('html, body').animate({ scrollTop: 0 }, "slow");
     }
 }
 

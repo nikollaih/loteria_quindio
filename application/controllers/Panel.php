@@ -12,7 +12,7 @@ class Panel extends Application_Controller {
 
 	public function index()
 	{
-		if(!$this->session->has_userdata('logged_in')){
+		if(!is_logged()){
 			header("Location: " . base_url() . "usuarios/login");
 		}
         $params["title"] = "Inicio";
