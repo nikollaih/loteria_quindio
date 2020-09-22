@@ -10,7 +10,7 @@
 				</div>
 				<div class="header-item">
 					|
-					<a href="<?= base_url() . 'usuarios/registro' ?>" class="btn btn-link" type="submit">Iniciar sesión</a>
+					<a href="<?= base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit">Iniciar sesión</a>
 				</div>
 			</div>
 		</div>
