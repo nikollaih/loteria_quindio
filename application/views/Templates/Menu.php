@@ -47,11 +47,27 @@
                     }
                 ?>
                 <li>
-                    <a href="<?= base_url() . 'Purchases'; ?>">
+                    <a href="javascript: void(0);">
                         <i data-feather="dollar-sign"></i>
-                        <span> Comprar </span>
+                        <span> Compras </span>
+                        <span class="menu-arrow"></span>
                     </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="<?= base_url() . 'Purchases'; ?>">Nueva Compra</a>
+                        </li>
+                        <li>
+                            <a href="<?= base_url() . 'Purchases'; ?>/user_list">Mis Compras</a>
+                        </li>
+                    </ul>
                 </li>
+                <li>
+                        <a href="<?= base_url() . 'Purchases/user_subscriber'; ?>">
+                            <i data-feather="refresh-cw"></i>
+                            <span> Abonados </span>
+                        </a>
+                    </li>
             </ul>
         </div>
         <!-- End Sidebar -->

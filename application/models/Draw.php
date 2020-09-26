@@ -43,5 +43,21 @@ Class Draw extends CI_Model {
         $this->db->where("id", $id);
         return $this->db->delete('draws', $data);
     }
+
+    // Get the current draw
+    public function get_active_draw(){
+        $this->db->from("draws");
+        $this->db->where("date >=", date("Y-m-d"));
+        $this->db->order_by("date", "asc");
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
 }
 ?>

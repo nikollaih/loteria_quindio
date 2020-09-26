@@ -55,7 +55,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Fecha</label>
-                                <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="date" class="form-control flatpickr-input active" placeholder="10/12/2020" value="<?= (isset($data_form)) ? $data_form["date"] : "" ?>">
+                                <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="text" class="form-control flatpickr-input active" value="<?= (isset($data_form)) ? $data_form["date"] : date('Y-m-d') ?>">
                             </div>
                         </div>
                     </div>

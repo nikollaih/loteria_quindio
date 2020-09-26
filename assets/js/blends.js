@@ -32,8 +32,7 @@ function check_blend_start_end() {
 
 function set_update_blend(columns) {
     var data = JSON.parse(columns);
-    console.log(data)
-    console.log(data.id);
+
     jQuery("#input_id_blend").val(data.id);
     jQuery("#input_start_number").val(data.start_number);
     jQuery("#input_end_number").val(data.end_number);
@@ -61,7 +60,6 @@ function delete_blend(id) {
             closeOnConfirm: false
         },
         function() {
-            console.log(id);
             jQuery.post(base_url + "Blends/delete_blend", { id: id },
                 function(data) {
                     console.log(data)

@@ -4,10 +4,10 @@
         <!-- LOGO -->
         <a href="index-2.html" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg">
-                <img src="assets/images/logo.png" alt="Lotería del Quindío" height="40" />
+                <img src="<?= base_url() ?>assets/images/logo.png" alt="Lotería del Quindío" height="40" />
             </span>
             <span class="logo-sm">
-                <img src="assets/images/logo.png" alt="" height="24">
+                <img src="<?= base_url() ?>assets/images/logo.png" alt="" height="24">
             </span>
         </a>
 
