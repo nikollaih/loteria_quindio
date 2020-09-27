@@ -6,17 +6,111 @@ class Purchases extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('url');
-		$this->load->library(['session']);
-		$this->load->model(['Location', 'Blend']);
+		$this->load->helper(['url', 'product']);
+		$this->load->library(['session', 'form_validation']);
+		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber']);
 	}
 
 	public function index()
 	{
+		$params["draw"] = $this->Draw->get_active_draw();
+
+		if($this->input->post()){
+			// Set the inputs rules
+			$this->form_validation->set_rules('purchase[number]', 'Número del billete', 'required|numeric|exact_length[4]');
+			$this->form_validation->set_rules('purchase[serie]', 'Serie', 'required|numeric|exact_length[3]');
+			$this->form_validation->set_rules('purchase[parts]', 'Fracciones', 'required');
+			$this->form_validation->set_rules('purchase[id_draw]', 'Sorteo', 'required');
+
+			// Check if input rules are ok
+			if ($this->form_validation->run() == false) {
+				$params["message"] = array("type" => "danger", "message" => "Ha ocurrido un error, los datos ingresados presentan errores", "success" => false);
+			}else{
+                $params["message"] = $this->register_purchase_proccess($this->input->post());
+            }
+            
+            if(!$params["message"]["success"]){
+                $params["data_form"] = $this->input->post();
+			}
+		}
+
         $params["title"] = "Compra";
 		$params["subtitle"] = "Compra";
 		$params["states"] = $this->Location->get_states();
 		$params["blends"] = $this->Blend->get_blends();
-        $this->load_layout("Purchases/Checkout", $params);
+		$params["cities"] = $this->Location->get_cities_by_city(logged_user()["city_id"]);
+
+        $this->load_layout("Panel/Purchases/Checkout", $params);
+	}
+
+	// Purchase register process
+	function register_purchase_proccess($info_data){
+		$data = $info_data["purchase"];
+		$data["created_at"] = date("Y-m-d h:m:s");
+		$data["id_user"] = logged_user()["id"];
+		$draw = $this->Draw->get_active_draw();
+		$subscriber_amoung = $info_data["subscriber_amount"];
+
+		// Validate if current active draw is the same for the purchase process
+		if($data["id_draw"] == $draw["id"]){
+			$temp_purchase = $this->Purchase->validate_purchase($data);
+
+			// Check if exists a previus purchase with the same number, serie and draw
+			if(!$temp_purchase){
+				$result_purchase = $this->Purchase->set_purchase($data);
+				if($result_purchase != false){
+					if($subscriber_amoung > 1){
+						$this->set_subscriber($subscriber_amoung, $data);
+					}
+					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
+				}
+			}
+			else{
+				// Check is there is any available part for the number purchase
+				if(intval(get_product_available_parts(1, $data)) > intval(0)){
+					$result_purchase = $this->Purchase->set_purchase($data);
+					if($result_purchase != false){
+						if($subscriber_amoung > 1){
+							$this->set_subscriber($subscriber_amoung, $data);
+						}
+						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
+					}
+				}
+				else{
+					return array("type" => "danger", "success" => false, "message" => "El número o cantidad de fracciones que desea comprar no se encuentra disponible.");
+				}
+			}
+		}
+		else{
+			return array("type" => "danger", "success" => false, "message" => "El sorteo #".$draw["draw_number"]." ya no se encuentra disponible.");
+		}
+	}
+
+	// Set the subscriber rows
+	function set_subscriber($amount, $purchase){
+		$data["id_user"] = $purchase["id_user"];
+		$data["subscriber_number"] = $purchase["number"];
+		$data["subscriber_serie"] = $purchase["serie"];
+		$data["subscriber_amount"] = $amount;
+		$data["subscriber_remaining_amount"] = $amount - 1;
+		$data["created_at"] = $purchase["created_at"];
+
+		$this->Subscriber->set_subscriber($data);
+	}
+	
+	function user_list(){
+		$params["title"] = "Mis Compras";
+		$params["subtitle"] = "Mis Compras";
+		$params["purchases"] = $this->Purchase->get_user_purchases(logged_user()["id"]);
+
+        $this->load_layout("Panel/Purchases/UserList", $params);
+	}
+
+	function user_subscriber(){
+		$params["title"] = "Mis Abonados";
+		$params["subtitle"] = "Mis Abonados";
+		$params["subscribers"] = $this->Subscriber->get_user_subscribers(logged_user()["id"]);
+
+        $this->load_layout("Panel/Purchases/UserSubscriber", $params);
 	}
 }

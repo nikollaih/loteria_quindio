@@ -10,8 +10,21 @@
 
 /* @import "login.css"; */
 
+.fs-1-2 {
+    font-size: 1.2rem;
+}
+
+.fs-2 {
+    font-size: 2rem;
+}
+
 .btn-success,
-.badge-success {
+.badge-success,
+.btn-outline-success:hover,
+.btn-outline-success:not(:disabled):not(.disabled).active,
+.btn-outline-success:not(:disabled):not(.disabled):active,
+.show>.btn-outline-success.dropdown-toggle,
+.page-item.active .page-link {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
@@ -20,6 +33,10 @@
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     opacity: 0.8;
+}
+
+.btn-outline-success {
+    border-color: var(--primary-color);
 }
 
 #sidebar-menu>ul>li>a:active,
@@ -40,8 +57,15 @@
 .navbar-custom .topnav-menu .nav-link:focus svg,
 .navbar-custom .topnav-menu .nav-link:hover svg,
 #sidebar-menu>ul>li>a.active,
-.text-success {
+.btn-outline-success,
+.text-success,
+.nav-second-level li>a.active,
+.nav-thrid-level li>a.active {
     color: var(--primary-color) !important;
+}
+
+.btn-outline-success:hover {
+    color: #fff !important;
 }
 
 .text-danger {

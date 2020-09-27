@@ -34,5 +34,20 @@ Class Location extends CI_Model {
             return false;
         }
     }
+
+    // Get the cities state list by city id
+    public function get_cities_by_city($city_id){
+        $this->db->select('state_id');
+        $this->db->from('cities');
+        $this->db->where("id", $city_id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            return $this->get_cities($result["state_id"]);
+        } else {
+            return false;
+        }
+    }
 }
 ?>

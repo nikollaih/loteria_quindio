@@ -74,7 +74,7 @@ function delete_draw(id) {
 
 function set_dom_result(columns) {
     let data = JSON.parse(columns);
-    console.log(data)
+
     jQuery("#draw-info").html("#" + data.draw_number + " de " + data.date);
     jQuery("#result-id").val(data.id);
 }
