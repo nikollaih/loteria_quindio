@@ -350,3 +350,16 @@ h1.title {
     0%    { transform: rotateX(30deg); }
     100%  { transform: rotateX(-4049deg); }
 }
+
+
+@media (max-width: 1368px) {
+  .board {
+    height: 252px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .board {
+    height: 214px;
+  }
+}
