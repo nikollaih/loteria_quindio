@@ -71,21 +71,24 @@
 		</div>
 	</div>
 	<div class="row justify-content-end">
-		<div class="col-md-5">
+		<div class="col-md-6 d-flex align-items-center">
+			<button class="btn btn-yellow btn-simulator invisible btn-purchase"><i data-feather="shopping-cart"></i>  Comprar</button>
+		</div>
+		<div class="col-md-6">
 			<div class="series">
 				<div class="label">
 					<div class="serie-title">
 						Serie
 					</div>
 				</div>
-				<div class="round">
+				<div class="round serie-1">
 					0
 				</div>
-				<div class="round">
-					3
+				<div class="round serie-2">
+					0
 				</div>
-				<div class="round">
-					9
+				<div class="round serie-3">
+					0
 				</div>
 			</div>
 		</div>

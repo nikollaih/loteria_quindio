@@ -1,6 +1,7 @@
 @import "bootstrap.min.css";
 @import "variables.css";
 @import "icons.min.css";
+@import "../libs/sweetalert/sweetalert.min.css";
 
 body {
   background-color: #f7f6f6;
@@ -178,7 +179,7 @@ h1.title {
 	border-radius: 22px;
 	height: 50px;
   font-size: 1.3rem;
-  box-shadow: 1px 4px 0px 0px #ccc;
+  box-shadow: 1px 3px 0px 0px #ccc;
 }
 
 
@@ -275,7 +276,7 @@ h1.title {
 
 
 /*=====*/
-.spin-0     { transform: rotateX(-3719deg); }
+.spin-0     { transform: rotateX(-719deg); }
 .spin-1     { transform: rotateX(-3749deg); }
 .spin-2     { transform: rotateX(-3779deg); }
 .spin-3     { transform: rotateX(-3809deg); }
@@ -290,7 +291,7 @@ h1.title {
 /*=====*/
 @keyframes back-spin {
     /*0%    { transform: rotateX(0deg); }*/
-    100%  { transform: rotateX(30deg); }
+    100%  { transform: rotateX(100deg); }
 }
 @keyframes tiltin {
     0%    { transform: rotateY(0deg);}
@@ -362,4 +363,62 @@ h1.title {
   .board {
     height: 214px;
   }
+}
+
+.btn-yellow {
+  background-color: var(--orange-color);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.btn-yellow:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.buying {
+  text-align: left;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.buying .div {
+  width: 100px;
+  text-align: center;
+}
+
+.buying label {
+  font-size: 1rem;
+  font-weight: 800;
+  width: 100%;
+  text-align: center;
+}
+
+.buying p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: var(--primary-color);
+  border-radius: 25px;
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #fff
+}
+
+.sa-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sa-confirm-button-container .confirm {
+  background-color: var(--orange-color) !important;
+}
+
+
+.sa-confirm-button-container .confirm:hover {
+  opacity: 0.8 !important;
 }

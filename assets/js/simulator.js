@@ -1,3 +1,4 @@
+import "../libs/sweetalert/sweetalert.min.js";
 
 const SLOTS_PER_REEL = 10;
 // radius = Math.round( ( panelWidth / 2) / Math.tan( Math.PI / SLOTS_PER_REEL ) ); 
@@ -46,7 +47,6 @@ function spin(timer) {
 		var oldClass = $('#ring-'+i).attr('class');
 		if(oldClass.length > 4) {
 			oldSeed = parseInt(oldClass.slice(10));
-			console.log(oldSeed);
 		}
 		var seed = getSeed();
 		while(oldSeed == seed) {
@@ -54,11 +54,9 @@ function spin(timer) {
 		}
 
 		$('#ring-'+i)
-			.css('animation','back-spin 1s, spin-' + seed + ' ' + (timer + i*0.5) + 's')
+			.css('animation','back-spin 3s, spin-' + seed + ' ' + (timer + i*0.5) + 's infinite')
 			.add('ring spin-' + seed);
 	}
-
-	console.log('=====');
 }
 
 $(document).ready(function() {
@@ -71,9 +69,36 @@ $(document).ready(function() {
 
  	// hook start button
  	$('#btn-play').on('click',function(){
- 		var timer = 2;
- 		spin(timer);
- 	})
+		$.ajax({
+			url: "Main/get_random_draw_number",
+			beforeSend: function( xhr ) {
+				$('.btn-purchase').addClass('invisible');
+				var timer = 2;
+				spin(timer);
+			}
+		})
+		.done(function( data ) {
+			var result = jQuery.parseJSON(data);
+			var numbers = result.number.split('');
+			var series = result.serie.split('');
+			$('.ring').css('animation', '');
+			for(var i = 1; i <= 4; i ++) {
+				$('#ring-' + i + ' div:nth-child(2) p').html(numbers[i - 1]);
+			}
+			$('.serie-1').html(series[0]);
+			$('.serie-2').html(series[1]);
+			$('.serie-3').html(series[2]);
+			$('.btn-purchase').attr('number', result.number);
+			$('.btn-purchase').attr('serie', result.serie);
+			$('.btn-purchase').attr('date', result.draw.date);
+			$('.btn-purchase').removeClass('invisible');
+		});
+ 	
+	})
+	 
+	$('#btn-stop').on('click',function(){
+		$('.ring').css('animation', '');
+	})
 
  	// hook xray checkbox
  	$('#xray').on('click',function(){
@@ -104,3 +129,29 @@ $(document).ready(function() {
  		$('#stage').toggleClass('perspective-on perspective-off');
  	})	
  });
+
+jQuery(document).on("click", ".btn-purchase", function() {
+	try_to_buy(this);
+});
+
+function try_to_buy(btn) {
+	var number = btn.getAttribute('number');
+	var serie = btn.getAttribute('serie');
+	var date = btn.getAttribute('date');
+	var d = new Date(date);
+	date = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " ;
+
+	var content = "<div class='buying'><div><label>Numero</label><p class='number-confirm'>" + number + "</p></div><div><label>Serie</label><p class='serie-confirm'>" + serie + "</p></div><div><label>Fecha de sorteo</label><p class='fecha-confirm'>" + date +"</p></div></div>";
+	swal({
+					title: '¿Deseas hacer esta compra?',
+					html: true,
+					text: content,
+					showCancelButton: true,
+					confirmButtonText: 'Si, comprar!',
+					closeOnConfirm: false,
+					showLoaderOnConfirm: true
+			},
+			function() {
+				window.location.href = 'Main/set_session_draw_number/' + number + '/' + serie;
+			});
+}
