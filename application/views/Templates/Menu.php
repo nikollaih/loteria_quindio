@@ -43,6 +43,13 @@
                             <span> Hobbies </span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="<?= base_url() . 'Products'; ?>">
+                            <i data-feather="tag"></i>
+                            <span> Productos </span>
+                        </a>
+                    </li>
                 <?php
                     }
                 ?>

@@ -57,7 +57,8 @@ function delete_blend(id) {
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, Eliminar!',
-            closeOnConfirm: false
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
         },
         function() {
             jQuery.post(base_url + "Blends/delete_blend", { id: id },

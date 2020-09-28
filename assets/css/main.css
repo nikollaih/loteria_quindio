@@ -125,3 +125,13 @@ label {
 span.flatpickr-weekday {
     color: #fff !important;
 }
+
+ul.pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dataTables_filter {
+    display: flex;
+    justify-content: flex-end;
+}

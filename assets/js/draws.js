@@ -45,7 +45,8 @@ function delete_draw(id) {
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, Eliminar!',
-            closeOnConfirm: false
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
         },
         function() {
             jQuery.post(base_url + "draws/delete_draw", { id: id },

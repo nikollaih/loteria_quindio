@@ -45,7 +45,8 @@ function delete_hobbie(id) {
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, Eliminar!',
-            closeOnConfirm: false
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
         },
         function() {
             jQuery.post(base_url + "hobbies/delete_hobbie", { id: id },

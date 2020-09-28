@@ -115,7 +115,7 @@ class Usuarios extends CI_Controller {
 
 				// In case it doesn't exists an account with the same idetification number
 				if($user == false){
-					$user_data["slug"] = get_alnum_string();
+					$user_data["slug"] = create_unique_slug('users');
 					$user_data["password"] = md5($user_data["password"]);
 					$result_user = $this->Usuario->signin_insert($user_data);
 					// If the user was registered successfully
@@ -150,6 +150,6 @@ class Usuarios extends CI_Controller {
 	public function logout() {
 		$this->session->unset_userdata('logged_in');
 		$data['message_display'] = 'Successfully Logout';
-		$this->load->view('Usuarios/Login', $data);
+		header("Location: " . base_url() . "usuarios/login");
 	}
 }
