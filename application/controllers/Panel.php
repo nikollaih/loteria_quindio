@@ -12,11 +12,8 @@ class Panel extends Application_Controller {
 
 	public function index()
 	{
-		if(!is_logged()){
-			header("Location: " . base_url() . "usuarios/login");
-		}
-        $params["title"] = "Inicio";
-        $params["subtitle"] = "Inicio";
-        $this->load_layout("Panel/Home", $params);
+		$params["title"] = "Inicio";
+		$params["subtitle"] = "Inicio";
+		$this->load_layout("Panel/Home", $params);
 	}
 }
