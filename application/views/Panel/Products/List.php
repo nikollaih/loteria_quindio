@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title mt-0 add-product-title">Agregar producto</h4>
@@ -7,14 +7,14 @@
                 <form action="" method="post">
                     <input type="hidden" name="id" id="input_id_product" value="null">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="">Cantidad de Fracciones</label>
                           <input id="input_fractions_count_product" required name="fractions_count" type="number" min="1"   class="form-control">
                         </div>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="">Valor de cada fracción (COP)</label>
                           <input id="input_fraction_value_product" required name="fraction_value" type="text" class="form-control">
@@ -30,13 +30,13 @@
                     <?php
                         }
                     ?>
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row justify-content-end">
+                        <div class="col-md-3">
                             <div class="form-group">    
                                 <a class="btn btn-light btn-block cancel-edit-product-button invisible" type="submit">Cancelar</a>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <button class="btn btn-success btn-block" type="submit">Guardar</button>
                             </div>
