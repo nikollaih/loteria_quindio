@@ -1,5 +1,11 @@
 <div>
    <?php 
+      $draw_number = null;
+
+      if($this->session->has_userdata('draw_number')){
+         $draw_number = $this->session->userdata()['draw_number'];
+      }
+
       if(date("w") == 4 && (strtotime(date("H:i:s")) >= strtotime("22:00:00") && strtotime(date("H:i:s")) <= strtotime("23:59:59"))){
          ?>
          <div>
@@ -30,7 +36,6 @@
       <form class="needs-validation" novalidate="" method="post">
          <input name="subscriber_amount" type="hidden" id="text-value-subscriber" value="1">
          <input name="purchase[id_draw]" type="hidden" id="" value="<?= $draw["id"] ?>">
-         <input name="purchase[price]" type="hidden" id="" value="0">
          <div class="row">
             <div class="col-md-4 order-md-2 mb-4">
                <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -40,7 +45,7 @@
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                      <div>
                         <h6 class="my-0">Número y serie</h6>
-                        <small class="text-muted fs-1-2 text-success font-weight-bold" id="text-show-number-serie">0000 - 000</small>
+                        <small class="text-muted fs-1-2 text-success font-weight-bold" id="text-show-number-serie"><?= (is_array($draw_number)) ? $draw_number["number"] : "0000" ?> - <?= (is_array($draw_number)) ? $draw_number["serie"] : "000" ?></small>
                      </div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between bg-light">
@@ -75,7 +80,7 @@
                   </li>
                   <li class="list-group-item d-flex justify-content-between">
                      <span>Total (COP)</span>
-                     <strong>$ 13.000</strong>
+                     <strong id="text-show-price">$ <?= $draw["fractions_count"] * $draw["fraction_value"] ?> COP</strong>
                   </li>
                </ul>
                <hr class="mb-4">
@@ -161,7 +166,7 @@
                <div class="row">
                   <div class="col-md-4 mb-3">
                      <h5 for="state">Número del billete</h5>
-                     <input maxlength="4" minlength="4" name="purchase[number]" type="text" class="form-control bill-data" id="bill-number" placeholder="0000" value="" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                     <input value="<?= (is_array($draw_number)) ? $draw_number["number"] : "" ?>" maxlength="4" minlength="4" name="purchase[number]" type="text" class="form-control bill-data" id="bill-number" placeholder="0000" value="" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
                      <div class="invalid-feedback">
                         Ingrese el número que desea comprar.
                      </div>
@@ -174,7 +179,7 @@
                                $x = 1;
                                foreach ($blends as $blend) {
                            ?>
-                        <option value="<?= $blend["serie"] ?>"><?= $blend["serie"] ?></option>
+                        <option <?= (is_array($draw_number) && $draw_number["serie"] == $blend["serie"]) ? "selected" : "" ?> value="<?= $blend["serie"] ?>"><?= $blend["serie"] ?></option>
                         <?php
                            }
                            }
@@ -183,11 +188,11 @@
                   </div>
                   <div class="col-md-4 mb-3">
                      <h5 for="state">Cantidad de fracciones</h5>
-                     <select name="purchase[parts]" class="custom-select d-block w-100" id="slt-parts-cant" required="">
+                     <select data-amount="<?= $draw['fractions_count'] ?>" data-value="<?= $draw['fraction_value'] ?>" name="purchase[parts]" class="custom-select d-block w-100" id="slt-parts-cant" required="">
                         <?php
-                           for ($i=1; $i <= 4; $i++) { 
+                           for ($i=1; $i <= $draw["fractions_count"]; $i++) { 
                         ?>
-                           <option <?= ($i == 4) ? "selected" : "" ?> value="<?= $i ?>"><?= $i ?><?= ($i == 4) ? " - Billete Completo" : "" ?></option>
+                           <option <?= ($i == $draw["fractions_count"]) ? "selected" : "" ?> value="<?= $i ?>"><?= $i ?><?= ($i == $draw["fractions_count"]) ? " - Billete Completo" : "" ?></option>
                         <?php
                            }
                         ?>

@@ -32,6 +32,7 @@ var table_subscribers = jQuery("#table-subscribers").DataTable({
 // When the select parts changes
 jQuery(document).on("change", "#slt-parts-cant", function() {
     jQuery('#text-show-parts').html(jQuery(this).find(":selected").text());
+    jQuery('#text-show-price').html("$ " + jQuery(this).val() * jQuery(this).attr("data-value") + " COP");
 });
 
 // When the select serie changes

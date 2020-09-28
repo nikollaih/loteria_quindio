@@ -26,11 +26,16 @@ class Purchases extends Application_Controller {
 			if ($this->form_validation->run() == false) {
 				$params["message"] = array("type" => "danger", "message" => "Ha ocurrido un error, los datos ingresados presentan errores", "success" => false);
 			}else{
-                $params["message"] = $this->register_purchase_proccess($this->input->post());
+				$temp_data = $this->input->post();
+				$temp_data["current_draw"] = $params["draw"];
+                $params["message"] = $this->register_purchase_proccess($temp_data);
             }
             
             if(!$params["message"]["success"]){
                 $params["data_form"] = $this->input->post();
+			}
+			else{
+				$this->session->unset_userdata('draw_number');
 			}
 		}
 
@@ -48,6 +53,7 @@ class Purchases extends Application_Controller {
 		$data = $info_data["purchase"];
 		$data["created_at"] = date("Y-m-d h:m:s");
 		$data["id_user"] = logged_user()["id"];
+		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
 		$draw = $this->Draw->get_active_draw();
 		$subscriber_amoung = $info_data["subscriber_amount"];
 

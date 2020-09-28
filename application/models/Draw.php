@@ -48,7 +48,8 @@ Class Draw extends CI_Model {
 
     // Get the current draw
     public function get_active_draw(){
-        $this->db->from("draws");
+        $this->db->from("draws d");
+        $this->db->join("products p", "d.product_id = p.id");
         $this->db->where("date >=", date("Y-m-d"));
         $this->db->order_by("date", "asc");
         $this->db->limit(1);
