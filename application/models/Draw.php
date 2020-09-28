@@ -8,7 +8,9 @@ Class Draw extends CI_Model {
     // Get the draws rows
     // $id -> If id is different of null it will return only a row with the draw id information
     public function get_draws($id = null, $number = null) {
+        $this->db->select('*');
         $this->db->from('draws');
+        $this->db->join('products', 'products.id = draws.product_id');
         $this->db->order_by("date", "desc");
         if($number != null && $number != "null"){
             $this->db->where("draw_number", $number);

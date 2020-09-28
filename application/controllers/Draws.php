@@ -6,7 +6,7 @@ class Draws extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['Draw']);
+		$this->load->model(['Draw', 'Product']);
 		$this->load->helper(["url", "form"]);
 		$this->load->library(['Form_validation']);
 	}
@@ -37,6 +37,7 @@ class Draws extends Application_Controller {
 		$params["title"] = "Sorteos";
         $params["subtitle"] = "Sorteos";
         $params["draws"] = $this->Draw->get_draws();
+        $params["products"] = $this->Product->get_products();
         $this->load_layout("Panel/Draws/Draws", $params);
     }
 
