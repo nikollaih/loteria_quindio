@@ -5,7 +5,7 @@
       if($this->session->has_userdata('draw_number')){
          $draw_number = $this->session->userdata()['draw_number'];
       }
-
+print_r($draw);
       if(date("w") == 4 && (strtotime(date("H:i:s")) >= strtotime("22:00:00") && strtotime(date("H:i:s")) <= strtotime("23:59:59"))){
          ?>
          <div>
@@ -34,7 +34,8 @@
          ?>
       </div>
       <form class="needs-validation" novalidate="" method="post">
-         <input name="subscriber_amount" type="hidden" id="text-value-subscriber" value="1">
+         <input name="subscriber[amount]" type="hidden" id="text-value-subscriber" value="1">
+         <input name="subscriber[discount]" type="hidden" id="text-value-subscriber-discount" value="0">
          <input name="purchase[id_draw]" type="hidden" id="" value="<?= $draw["id"] ?>">
          <div class="row">
             <div class="col-md-4 order-md-2 mb-4">
@@ -77,6 +78,14 @@
                         <h6 class="my-0">Cantidad de sorteos (Sistema de Abonados)</h6>
                         <small style="vertical-align: inherit;" class="text-muted" id="text-show-subscriber">1</small>
                      </div>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                     <span>Valor (COP)</span>
+                     <strong id="text-show-value">$ <?= $draw["fractions_count"] * $draw["fraction_value"] ?> COP</strong>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                     <span>Descuento (COP)</span>
+                     <strong id="text-show-discount" class="text-success">$ 0 COP</strong>
                   </li>
                   <li class="list-group-item d-flex justify-content-between">
                      <span>Total (COP)</span>
@@ -199,45 +208,47 @@
                      </select>
                   </div>
                </div>
-               <hr class="mb-4">
-               <h4 class="d-flex justify-content-between align-items-center mb-3">
-                  <span>Sistema de abonados</span>
-               </h4>
-               <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
-               <div class="row">
-                  <div class="col-md-12">
-                     <table class="custom-datatable table table-bordered table-striped text-center table-secondary">
-                        <thead>
-                           <tr class="font-weight-bold">
-                              <td>Plan</td>
-                              <td>13 SORTEOS</td>
-                              <td>26 SORTEOS</td>
-                              <td>52 SORTEOS</td>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td class="font-weight-bold">Descuento</td>
-                              <td>5%</td>
-                              <td>8%</td>
-                              <td>15%</td>
-                           </tr>
-                        </tbody>
-                     </table>
+               <div id="container-subscriber">
+                  <hr class="mb-4">
+                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+                     <span>Sistema de abonados</span>
+                  </h4>
+                  <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
+                  <div class="row">
+                     <div class="col-md-12">
+                        <table class="custom-datatable table table-bordered table-striped text-center table-secondary">
+                           <thead>
+                              <tr class="font-weight-bold">
+                                 <td>Plan</td>
+                                 <td>13 SORTEOS</td>
+                                 <td>26 SORTEOS</td>
+                                 <td>52 SORTEOS</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td class="font-weight-bold">Descuento</td>
+                                 <td>5%</td>
+                                 <td>8%</td>
+                                 <td>15%</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12 mb-3">
-                     <h5 for="state">Cantidad de sorteos que desea comprar</h5>
-                     <div class="row">
-                        <div class="col-md-4">
-                           <button data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>
-                        </div>
-                        <div class="col-md-4">
-                           <button data-value="26" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">26</button>
-                        </div>
-                        <div class="col-md-4">
-                           <button data-value="52" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">52</button>
+                  <div class="row">
+                     <div class="col-md-12 mb-3">
+                        <h5 for="state">Cantidad de sorteos que desea comprar</h5>
+                        <div class="row">
+                           <div class="col-md-4">
+                              <button data-percent="5" data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>
+                           </div>
+                           <div class="col-md-4">
+                              <button data-percent="8" data-value="26" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">26</button>
+                           </div>
+                           <div class="col-md-4">
+                              <button data-percent="15" data-value="52" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">52</button>
+                           </div>
                         </div>
                      </div>
                   </div>

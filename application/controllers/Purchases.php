@@ -51,11 +51,18 @@ class Purchases extends Application_Controller {
 	// Purchase register process
 	function register_purchase_proccess($info_data){
 		$data = $info_data["purchase"];
+		$subscriber_amount = $info_data["subscriber"]["amount"];
+		$subcriber_discount = $info_data["subscriber"]["discount"];
+
 		$data["created_at"] = date("Y-m-d h:m:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
 		$draw = $this->Draw->get_active_draw();
-		$subscriber_amoung = $info_data["subscriber_amount"];
+
+		if($subscriber_amount > 1){
+			$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"] * $subscriber_amount;
+			$data["discount"] = $data["price"] * ($subcriber_discount / 100);
+		}
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
@@ -65,8 +72,8 @@ class Purchases extends Application_Controller {
 			if(!$temp_purchase){
 				$result_purchase = $this->Purchase->set_purchase($data);
 				if($result_purchase != false){
-					if($subscriber_amoung > 1){
-						$this->set_subscriber($subscriber_amoung, $data);
+					if($subscriber_amount > 1){
+						$this->set_subscriber($subscriber_amount, $data);
 					}
 					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
 				}
@@ -76,8 +83,8 @@ class Purchases extends Application_Controller {
 				if(intval(get_product_available_parts(1, $data)) > intval(0)){
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
-						if($subscriber_amoung > 1){
-							$this->set_subscriber($subscriber_amoung, $data);
+						if($subscriber_amount > 1){
+							$this->set_subscriber($subscriber_amount, $data);
 						}
 						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
 					}
