@@ -1,17 +1,33 @@
+var purchase_price = 0;
+var purchase_discount = 0;
+var purchase_total = 0;
+
 // When the subscriber button is pressed
 jQuery(document).on("click", ".btn-draw-cant", function() {
+    var fractions_count = jQuery("#slt-parts-cant").attr("data-amount");
+    var fraction_price = jQuery("#slt-parts-cant").attr("data-value");
+
     if (jQuery(this).hasClass("btn-success")) {
-        console.log("si")
+        purchase_price = jQuery("#slt-parts-cant").val() * fraction_price;
+        purchase_discount = 0;
         jQuery(".btn-draw-cant").removeClass("btn-success");
         jQuery(".btn-draw-cant").addClass("btn-outline-success");
         set_susbcriber(1);
+        set_total();
     } else {
-        console.log("no")
+        var subscriber_percent = jQuery(this).attr("data-percent");
+        var subscriber_amount = jQuery(this).attr("data-value");
+
+        purchase_price = fractions_count * fraction_price * subscriber_amount;
+        purchase_discount = purchase_price * (subscriber_percent / 100);
+
         jQuery(".btn-draw-cant").removeClass("btn-success");
         jQuery(".btn-draw-cant").addClass("btn-outline-success");
         jQuery(this).removeClass("btn-outline-success");
         jQuery(this).addClass("btn-success");
-        set_susbcriber(jQuery(this).attr("data-value"));
+        jQuery("#text-value-subscriber-discount").val(subscriber_percent);
+        set_total();
+        set_susbcriber(subscriber_amount);
     }
 });
 
@@ -31,8 +47,21 @@ var table_subscribers = jQuery("#table-subscribers").DataTable({
 
 // When the select parts changes
 jQuery(document).on("change", "#slt-parts-cant", function() {
+    purchase_discount = 0;
+    purchase_price = jQuery(this).val() * jQuery(this).attr("data-value");
+    var fractions_count = jQuery("#slt-parts-cant").attr("data-amount");
+
+    if (jQuery(this).val() == fractions_count) {
+        jQuery("#container-subscriber").slideDown();
+    } else {
+        jQuery("#container-subscriber").slideUp();
+    }
+
     jQuery('#text-show-parts').html(jQuery(this).find(":selected").text());
-    jQuery('#text-show-price').html("$ " + jQuery(this).val() * jQuery(this).attr("data-value") + " COP");
+    jQuery(".btn-draw-cant").removeClass("btn-success");
+    jQuery(".btn-draw-cant").addClass("btn-outline-success");
+    jQuery("#text-value-subscriber").val(1);
+    set_total();
 });
 
 // When the select serie changes
@@ -43,6 +72,12 @@ jQuery(document).on("change", "#bill-serie", function() {
 jQuery(document).on("keyup", "#bill-number", function() {
     set_show_bill_data();
 });
+
+function set_total() {
+    jQuery('#text-show-value').html("$ " + purchase_price + " COP");
+    jQuery('#text-show-discount').html("$ " + purchase_discount + " COP");
+    jQuery('#text-show-price').html("$ " + ((purchase_price) - (purchase_discount)) + " COP");
+}
 
 function set_susbcriber(value) {
     jQuery("#text-show-subscriber").html(value);

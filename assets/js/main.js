@@ -25,6 +25,5 @@ import "./products.js";
 
 jQuery(document).ready(function() {
     jQuery('.custom-select2').select2();
-
     jQuery(".flatpickr-input").flatpickr();
 });
