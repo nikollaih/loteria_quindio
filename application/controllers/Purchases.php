@@ -54,7 +54,7 @@ class Purchases extends Application_Controller {
 		$subscriber_amount = $info_data["subscriber"]["amount"];
 		$subcriber_discount = $info_data["subscriber"]["discount"];
 
-		$data["created_at"] = date("Y-m-d h:m:s");
+		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
 		$draw = $this->Draw->get_active_draw();
@@ -73,7 +73,7 @@ class Purchases extends Application_Controller {
 				$result_purchase = $this->Purchase->set_purchase($data);
 				if($result_purchase != false){
 					if($subscriber_amount > 1){
-						$this->set_subscriber($subscriber_amount, $data);
+						$this->set_subscriber($subscriber_amount, $result_purchase);
 					}
 					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
 				}
@@ -84,7 +84,7 @@ class Purchases extends Application_Controller {
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
 						if($subscriber_amount > 1){
-							$this->set_subscriber($subscriber_amount, $data);
+							$this->set_subscriber($subscriber_amount, $result_purchase);
 						}
 						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
 					}
@@ -102,10 +102,9 @@ class Purchases extends Application_Controller {
 	// Set the subscriber rows
 	function set_subscriber($amount, $purchase){
 		$data["id_user"] = $purchase["id_user"];
-		$data["subscriber_number"] = $purchase["number"];
-		$data["subscriber_serie"] = $purchase["serie"];
+		$data["id_purchase"] = $purchase["id_purchase"];
 		$data["subscriber_amount"] = $amount;
-		$data["subscriber_remaining_amount"] = $amount - 1;
+		$data["subscriber_remaining_amount"] = $amount;
 		$data["created_at"] = $purchase["created_at"];
 
 		$this->Subscriber->set_subscriber($data);

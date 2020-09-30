@@ -15,6 +15,7 @@ class Products extends Application_Controller {
 	    if(is_admin()){
             if($this->input->post()){
                 // Set the inputs rules
+                $this->form_validation->set_rules('product_name', 'Nombre', 'required');
                 $this->form_validation->set_rules('fractions_count', 'Cantidad de Fracciones', 'required');
                 $this->form_validation->set_rules('fraction_value', 'Valor de cada fracción (COP)', 'required');
                 

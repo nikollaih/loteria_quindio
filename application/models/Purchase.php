@@ -9,14 +9,14 @@ Class Purchase extends CI_Model {
     // $id -> If id is different of null it will return only a row with the purchase id information
     public function get_purchases($id = null) {
         $this->db->from('purchases');
-        $this->db->order_by("id", "desc");
+        $this->db->order_by("id_purchase", "desc");
         if($id != null){
-            $this->db->where("id", $id);
+            $this->db->where("id_purchase", $id);
         }
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
-            return ($serie == null) ? $query->result_array() : $query->row_array();
+            return ($id == null) ? $query->result_array() : $query->row_array();
         } else {
             return false;
         }
@@ -41,7 +41,8 @@ Class Purchase extends CI_Model {
     // Add a new purchase
     // $data -> The purchase data with id as null and name
     public function set_purchase($data){
-        return $this->db->insert('purchases', $data);
+        $this->db->insert('purchases', $data);
+        return $this->get_purchases($this->db->insert_id());
     }
 
     // Update an existing purchase
@@ -84,6 +85,8 @@ Class Purchase extends CI_Model {
         }
     }
 
+    // Get the user's purchases list
+    // id_user -> The user identification to get his/her purchases list
     public function get_user_purchases($id_user){
         $this->db->select("d.id, d.draw_number, d.date, p.number, p.serie, p.parts, p.created_at, p.price");
         $this->db->from('purchases p');
@@ -98,6 +101,13 @@ Class Purchase extends CI_Model {
         } else {
             return false;
         }
+    }
+
+    // Delete a product
+    // $id -> Purchase id the user wants to delete
+    public function delete_purchase($id){
+        $this->db->where("id_purchase", $id);
+        return $this->db->delete("purchases");
     }
 }
 ?>

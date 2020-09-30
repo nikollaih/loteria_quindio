@@ -6,7 +6,9 @@ class Main extends Application_Controller {
     function __construct()
 	{
         parent::__construct();
+        $this->load->helper(["date"]);
         $this->load->library("session");
+        $this->load->model(["Booking", "Draw"]);
 	}
 
     // Return a random number and serie for current draw
@@ -23,6 +25,13 @@ class Main extends Application_Controller {
     // Set a draw number and serie in a session array
     public function set_session_draw_number($number = null, $serie = null){
         $this->session->set_userdata('draw_number', array("number" => $number, "serie" => $serie));
+        // Get the active draw
+        $draw = $this->Draw->get_active_draw();
+        $created_at = date("Y-m-d H:i:s");
+
+        // Add the booking row to save the number for this sale
+        $this->Booking->set_booking(array("created_at" => $created_at, "id_draw" => $draw["id"], "number" => $number, "serie" => $serie));
+
         header("Location: " . base_url() . "Purchases");
     }
 }

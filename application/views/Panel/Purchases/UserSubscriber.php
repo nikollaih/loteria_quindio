@@ -23,8 +23,8 @@
                         ?>
                             <tr>
                                 <th class="text-center" scope="row"><?= $x++; ?></th>
-                                <td class="text-center"><?= $subscriber["subscriber_number"] ?></td>
-                                <td class="text-center"><?= $subscriber["subscriber_serie"] ?></td>
+                                <td class="text-center"><?= $subscriber["number"] ?></td>
+                                <td class="text-center"><?= $subscriber["serie"] ?></td>
                                 <td class="text-center"><?= $subscriber["subscriber_amount"] ?></td>
                                 <td class="text-center"><?= $subscriber["subscriber_remaining_amount"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($subscriber["created_at"]))) ?></td>

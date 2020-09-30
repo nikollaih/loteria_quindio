@@ -67,7 +67,7 @@
                                         $x = 1;
                                         foreach ($products as $product) {
                                     ?>
-                                    <option value="<?= $product["id"] ?>"><?= $product["fractions_count"] ?>/$<?= $product["fraction_value"] ?>COP</option>
+                                    <option value="<?= $product["id"] ?>"><?= $product["product_name"] ?> <?= $product["fractions_count"] ?>/$<?= $product["fraction_value"] ?>COP</option>
                                     <?php
                                     }
                                     }
@@ -126,7 +126,7 @@
                                 <th scope="row"><?= $x++; ?></th>
                                 <td><?= $draw["draw_number"] ?></td>
                                 <td><?= $draw["date"] ?></td>
-                                <td><?= $draw["fractions_count"]?>/$<?= $draw["fraction_value"]?>COP</td>
+                                <td><?= $draw["product_name"] ?> <?= $draw["fractions_count"]?>/$<?= $draw["fraction_value"]?>COP</td>
                                 <td><?php echo ($draw["result"] != null) ? $draw["result"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td><?php echo ($draw["serie"] != null) ? $draw["serie"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td class="text-center" style="width:160px;">
