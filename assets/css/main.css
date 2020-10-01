@@ -7,8 +7,14 @@
 @import "../libs/dataTables/select.bootstrap4.min.css";
 @import "../libs/sweetalert/sweetalert.min.css";
 @import "../libs/flatpickr/flatpickr.min.css";
+@import "../libs/smartwizard/smart_wizard.min.css";
+@import "../libs/smartwizard/smart_wizard_theme_arrows.min.css";
 
 /* @import "login.css"; */
+
+.fs-1 {
+    font-size: 1rem;
+}
 
 .fs-1-2 {
     font-size: 1.2rem;
@@ -24,9 +30,14 @@
 .btn-outline-success:not(:disabled):not(.disabled).active,
 .btn-outline-success:not(:disabled):not(.disabled):active,
 .show>.btn-outline-success.dropdown-toggle,
-.page-item.active .page-link {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+.page-item.active .page-link,
+.sw-theme-arrows>ul.step-anchor>li.active>a {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.sw-theme-arrows>ul.step-anchor>li.active>a:after {
+    border-left: 30px solid var(--primary-color) !important;
 }
 
 .btn-success:hover {
@@ -37,6 +48,15 @@
 
 .btn-outline-success {
     border-color: var(--primary-color);
+}
+
+.sw-theme-arrows>ul.step-anchor>li.done>a {
+    background-color: var(--third-color) !important;
+    border-color: var(--third-color) !important;
+}
+
+.sw-theme-arrows>ul.step-anchor>li.done>a:after {
+    border-left: 30px solid var(--third-color) !important;
 }
 
 #sidebar-menu>ul>li>a:active,
