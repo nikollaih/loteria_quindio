@@ -27,3 +27,28 @@
 .select2-selection.select2-selection--multiple {
     height: 46px;
 }
+
+.select2.select2-container {
+    width: 100% !important;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #d8d8d8 !important;
+    opacity: 1;
+    /* Firefox */
+}
+
+ :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #d8d8d8 !important;
+}
+
+ ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #d8d8d8 !important;
+}
+
+.sw-theme-arrows .sw-toolbar {
+    margin-bottom: 15px !important;
+}

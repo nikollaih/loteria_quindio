@@ -1,7 +1,7 @@
 <?php
 // Set the portal timezone
-date_default_timezone_set('America/Bogota');
 setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
+date_default_timezone_set('America/Bogota');
 /**
  * CodeIgniter
  *

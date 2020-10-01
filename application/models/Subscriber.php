@@ -7,12 +7,14 @@ Class Subscriber extends CI_Model {
 
     // Get the subscribers rows
     // $id -> If id is different of null it will return only a row with the subscriber id information
-    public function get_subscribers($id) {
-        $this->db->from('subscribers');
+    public function get_subscribers($id = null) {
+        $this->db->from('subscribers s');
+        $this->db->join('purchases p', 'p.id_purchase = s.id_purchase');
         if($id != null && $id != "null"){
             $this->db->where("id_subscriber", $id);
         }
-        $this->db->where("subscriber_remaining_amount >", 0);
+        $this->db->where("s.subscriber_remaining_amount >", 0);
+        $this->db->where("p.purchase_status", 1);
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -25,9 +27,10 @@ Class Subscriber extends CI_Model {
     // Get the subscribers rows by user
     // $id -> If id is different of null it will return only a row with the subscriber id information
     public function get_user_subscribers($id_user) {
-        $this->db->from('subscribers');
+        $this->db->from('subscribers s');
+        $this->db->join('purchases p', 's.id_purchase = p.id_purchase');
         $this->db->order_by("id_subscriber", "desc");
-        $this->db->where("id_user", $id_user);
+        $this->db->where("s.id_user", $id_user);
 
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -46,7 +49,7 @@ Class Subscriber extends CI_Model {
     // Update an existing subscriber
     // $data -> The new updated data with id and name
     public function update_subscriber($data){
-        $this->db->where("id", $data["id"]);
+        $this->db->where("id_subscriber", $data["id_subscriber"]);
         return $this->db->update("subscribers", $data);
     }
 

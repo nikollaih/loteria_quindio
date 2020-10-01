@@ -11,11 +11,6 @@ class Usuarios extends CI_Controller {
 		$this->load->library(['Form_validation']);
 	}
 
-	public function index()
-	{
-		$this->load->view('welcome_message');
-	}
-
     // Carga la vista de login con todos los parametros seleccionados
 	public function login(){
 		if(is_logged()){
@@ -55,7 +50,12 @@ class Usuarios extends CI_Controller {
 				if ($result != false) {
 				// Add user data in session
 				$this->session->set_userdata('logged_in', $result);
-				header("Location: " . base_url() . "panel");
+				if($this->session->has_userdata("draw_number")){
+					header("Location: " . base_url() . "Purchases");
+				}
+				else{
+					header("Location: " . base_url() . "panel");
+				}
 				exit();
 			}
 			} else {
@@ -75,15 +75,12 @@ class Usuarios extends CI_Controller {
 
 		if($this->input->post()){
 			// Set the inputs rules
-			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required|numeric');
-			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|numeric');
+			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
 			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
 			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
-			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required|numeric');
-			$this->form_validation->set_rules('user[phone]', 'Teléfono', 'required|numeric|min_length[7]');
-			$this->form_validation->set_rules('user[address]', 'Dirección', 'required');
-			$this->form_validation->set_rules('user[birth_date]', 'Fecha de nacimiento', 'required');
-			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required|valid_email');
+			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
 			$this->form_validation->set_rules('user[password]', 'Contraseña', 'required');
 
 			// Check if input rules are ok
@@ -91,6 +88,32 @@ class Usuarios extends CI_Controller {
 				$params["message"] = array("type" => "danger", "message" => "Ha ocurrido un error, por favor intente de nuevo más tarde", "success" => false);
 			}else{
 				$params["message"] = $this->user_signin_process($this->input->post("user"), $this->input->post("hobbies"));
+			}
+
+			if($params["message"]["success"] == true){
+				$data = array(
+					'username' => $this->input->post("user")['email'],
+					'password' => md5($this->input->post("user")["password"]),
+				);
+	
+				$result = $this->Usuario->login($data);
+	
+				// If the user exists
+				if ($result == TRUE) {
+					$result = $this->Usuario->get_user_by_param("email", $data["username"]);
+					if ($result != false) {
+						// Add user data in session
+						$this->session->set_userdata('logged_in', $result);
+						$this->session->set_userdata('register', true);
+						if($this->session->has_userdata("draw_number")){
+							header("Location: " . base_url() . "Purchases");
+						}
+						else{
+							header("Location: " . base_url() . "panel");
+						}
+						exit();
+					}
+				}
 			}
 
 			$params["data_form"] = $this->input->post();
@@ -104,6 +127,11 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function user_signin_process($user_data, $user_hobbies){
+
+		if(!is_array($user_hobbies)){
+			$user_hobbies = [];
+		}
+
 		// Check if received params are arrays
 		if(is_array($user_data) && is_array($user_hobbies)){
 			// Serach an account with the signin email

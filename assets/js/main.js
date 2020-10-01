@@ -14,6 +14,8 @@ import "../libs/datatables/dataTables.select.min.js";
 import "../libs/sweetalert/sweetalert.min.js";
 import "../libs/select2/select2.min.js";
 import "../libs/flatpickr/flatpickr.min.js";
+import "../libs/smartwizard/jquery.smartWizard.min.js";
+import "./pages/form-wizard.init.js";
 
 // Custom javascript files
 import "./hobbies.js";

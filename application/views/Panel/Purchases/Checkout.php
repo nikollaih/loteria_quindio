@@ -5,7 +5,7 @@
       if($this->session->has_userdata('draw_number')){
          $draw_number = $this->session->userdata()['draw_number'];
       }
-print_r($draw);
+
       if(date("w") == 4 && (strtotime(date("H:i:s")) >= strtotime("22:00:00") && strtotime(date("H:i:s")) <= strtotime("23:59:59"))){
          ?>
          <div>

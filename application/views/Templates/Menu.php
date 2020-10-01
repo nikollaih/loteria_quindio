@@ -5,7 +5,7 @@
         <div id="sidebar-menu" class="slimscroll-menu">
             <ul class="metismenu" id="menu-bar">
                 <li class="menu-title">Menú</li>
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);">
                         <i data-feather="users"></i>
                         <span> Usuarios </span>
@@ -20,7 +20,7 @@
                             <a href="email-read.html">Ver Todos</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <?php
                     if(is_admin()){

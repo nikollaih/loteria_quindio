@@ -8,9 +8,9 @@ Class Draw extends CI_Model {
     // Get the draws rows
     // $id -> If id is different of null it will return only a row with the draw id information
     public function get_draws($id = null, $number = null) {
-        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value');
+        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from('draws d');
-        $this->db->join('products p', 'products.id = draws.product_id');
+        $this->db->join('products p', 'p.id = d.product_id');
         $this->db->order_by("date", "desc");
         if($number != null && $number != "null"){
             $this->db->where("draw_number", $number);
@@ -48,7 +48,7 @@ Class Draw extends CI_Model {
 
     // Get the current draw
     public function get_active_draw(){
-        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value');
+        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
         $this->db->where("date >=", date("Y-m-d"));

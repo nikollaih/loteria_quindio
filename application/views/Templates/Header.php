@@ -2,7 +2,7 @@
 <div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
     <div class="container-fluid">
         <!-- LOGO -->
-        <a href="index-2.html" class="navbar-brand mr-0 mr-md-2 logo">
+        <a href="<?= base_url() ?>panel" class="navbar-brand mr-0 mr-md-2 logo">
             <span class="logo-lg">
                 <img src="<?= base_url() ?>assets/images/logo.png" alt="Lotería del Quindío" height="40" />
             </span>
