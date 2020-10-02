@@ -367,9 +367,22 @@ background: linear-gradient(0deg, rgba(145,67,59,0.9023984593837535) 3%, rgba(19
 }
 
 
-@media (max-width: 1368px) {
+@media (min-width: 1020px) {
+
+  .card-loto {
+    min-width: 23%;
+  }
 }
 
+p.winner-number {
+  border-radius: 50%;
+    height: 90px;
+    background-color: #69b56921;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .btn-yellow {
   background-color: var(--orange-color);

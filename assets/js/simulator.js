@@ -72,6 +72,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: "Main/get_random_draw_number",
 			beforeSend: function( xhr ) {
+				$('.ring div p').removeClass('winner-number');
 				$('.btn-purchase').addClass('invisible');
 				var timer = 2;
 				spin(timer);
@@ -83,7 +84,8 @@ $(document).ready(function() {
 			var series = result.serie.split('');
 			$('.ring').css('animation', '');
 			for(var i = 1; i <= 4; i ++) {
-				$('#ring-' + i + ' div:nth-child(2) p').html(numbers[i - 1]);
+				$('#ring-' + i + ' div:nth-child(1) p').html(numbers[i - 1]);
+				$('#ring-' + i + ' div:nth-child(1) p').addClass('winner-number');
 			}
 			$('.serie-1').html(series[0]);
 			$('.serie-2').html(series[1]);
@@ -134,6 +136,16 @@ jQuery(document).on("click", ".btn-purchase", function() {
 	try_to_buy(this);
 });
 
+function set_card_lotto_height() {
+	var cw = $('.card-loto').first().width();
+	$('.card-loto').css({'height':cw+'px'});
+}
+
+$(window).resize(function() {
+	set_card_lotto_height();
+});
+
+
 function try_to_buy(btn) {
 	var number = btn.getAttribute('number');
 	var serie = btn.getAttribute('serie');
@@ -155,3 +167,6 @@ function try_to_buy(btn) {
 				window.location.href = 'Main/set_session_draw_number/' + number + '/' + serie;
 			});
 }
+
+
+set_card_lotto_height();
