@@ -35,7 +35,7 @@
              <div class="row mt-4">
               <div class="col-md-12 text-center">
                 <a href="<?= base_url() . 'usuarios/registro' ?>" class="btn btn-link" type="submit">Crear cuenta</a> | 
-                <a href="<?= base_url() . 'usuarios/registro' ?>" class="btn btn-link" type="submit">Olvidé mi contraseña</a>
+                <a href="<?= base_url() . 'passwords/send_instructions_form' ?>" class="btn btn-link" type="submit">Olvidé mi contraseña</a>
               </div>
             </div>
           </form>

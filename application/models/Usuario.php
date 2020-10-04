@@ -38,12 +38,17 @@ Class Usuario extends CI_Model {
         $this->db->where($param, $value);
         $this->db->limit(1);
         $query = $this->db->get();
-
+        
         if ($query->num_rows() == 1) {
             return $query->row_array();
         } else {
             return false;
         }
+    }
+
+    public function update($data){
+        $this->db->where("id", $data["id"]);
+        return $this->db->update("users", $data);
     }
 }
 ?>
