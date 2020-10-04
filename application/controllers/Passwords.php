@@ -8,7 +8,7 @@ class Passwords extends CI_Controller {
 		parent::__construct();
 		$this->load->model(['Usuario']);
 		$this->load->helper(["url", "form", 'user']);
-		$this->load->library(['Form_validation']);
+		$this->load->library(['Form_validation', 'Mailer']);
 	}
 
   function send_instructions_form() {
@@ -31,6 +31,7 @@ class Passwords extends CI_Controller {
 				if($updating) {
 					$data['success_message'] = true;
 					echo 'url: ' .  generate_change_password_url($result);
+					$this->mailer->send('Hola', 'Esta es una prueba', 'yancarlosmarinosorio@gmail.com');
 				}
 			}else {
 				$data['error_message'] = 'Este correo electronico no esta registrado.';
