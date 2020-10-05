@@ -32,7 +32,7 @@ class Passwords extends CI_Controller {
 					$data['success_message'] = true;
 					$data['change_password_url'] = generate_change_password_url($result);
 					$email_body = $this->load->view('emails/change_password', $data, true);
-					$this->mailer->send($email_body, 'Solicitud de cambio de contraseña', 'yancarlosmarinosorio@gmail.com');
+					$this->mailer->send($email_body, 'Solicitud de cambio de contraseña', $result['email']);
 				}
 			}else {
 				$data['error_message'] = 'Este correo electronico no esta registrado.';
