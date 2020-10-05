@@ -18,31 +18,19 @@
                      <h4 class="text-dark mb-1"><?= $purchase["first_name"].' '.$purchase["last_name"]; ?></h4>
                      <div><?= $purchase["address"] ?></div>
                      <div><?= strtoupper($purchase["city"]).', '. strtoupper($purchase["state"]); ?></div>
-<<<<<<< HEAD
                      <div><strong>Email:</strong> <?= $purchase["email"] ?></div>
                      <?php
                         if(trim($purchase["phone"]) != ""){
                             echo "<strong>Teléfono: </strong>".$purchase["phone"];
                         }
                      ?>
-=======
-                     <div>Email: <?= $purchase["email"] ?></div>
-                     <div>Teléfono: <?= $purchase["phone"] ?></div>
->>>>>>> d69436bcdeb8528bfe36a21c54991319e6ed7cfd
                  </div>
                  <div class="col-sm-6 text-right">
                      <h6 class="mb-3"></h6>
                      <h4 class="text-dark mb-1">Lotería del Quíndio</h4>
-<<<<<<< HEAD
                      <div>Nit: 365467363254-4</div>
                      <div><strong>Número de sorteo:</strong> <?= $purchase["draw_number"] ?></div>
                      <div><strong>Fecha del sorteo:</strong> <?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["date"]))); ?></div>
-=======
-                     <div>478, Nai Sadak</div>
-                     <div>Chandni chowk, New delhi, 110006</div>
-                     <div>Email: info@tikon.com</div>
-                     <div>Phone: +91 9895 398 009</div>
->>>>>>> d69436bcdeb8528bfe36a21c54991319e6ed7cfd
                  </div>
              </div>
              <div class="table-responsive-sm">
@@ -62,17 +50,10 @@
                              <td class="left">
                                 <?php 
                                     if($purchase["parts"] == $purchase["fractions_count"]){
-<<<<<<< HEAD
                                         echo "Billete de lotería <br><strong>Número:</strong> ".$purchase["number"]. " <br><strong>Serie:</strong> ".$purchase["serie"];
                                     }
                                     else{
                                         echo $purchase["parts"] . " fracciones de un total de ".$purchase["fractions_count"]." <br><strong>Número:</strong> ".$purchase["number"]. " <br><strong>Serie:</strong> ".$purchase["serie"];
-=======
-                                        echo "Billete de lotería";
-                                    }
-                                    else{
-                                        echo $purchase["parts"] . " fracciones de un total de ".$purchase["fractions_count"];
->>>>>>> d69436bcdeb8528bfe36a21c54991319e6ed7cfd
                                     }
                                 ?>
                              </td>
@@ -116,7 +97,7 @@
                                 <td class="center">2</td>
                                 <td class="left">
                                     <?php 
-                                        echo "Sistema de abonados x".$purchase["subscriber_amount"]." sorteos";
+                                        echo "Sistema de abonados x".$purchase["subscriber_amount"]." sorteos <br><strong>Número:</strong> ".$purchase["number"]. " <br><strong>Serie:</strong> ".$purchase["serie"];
                                     ?>
                                 </td>
                                 <td class="text-right">$

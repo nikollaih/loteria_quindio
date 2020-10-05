@@ -8,10 +8,17 @@ Class Purchase extends CI_Model {
     // Get the purchases rows
     // $id -> If id is different of null it will return only a row with the purchase id information
     public function get_purchases($id = null) {
-        $this->db->from('purchases');
-        $this->db->order_by("id_purchase", "desc");
+        $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date');
+        $this->db->from('purchases p');
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->join('cities c', 'u.city_id = c.id', 'left outer');
+        $this->db->join('states s', 'c.state_id = s.id', 'left outer');
+        $this->db->join('draws d', 'p.id_draw = d.id', 'left outer');
+        $this->db->join('products pro', 'pro.id = d.product_id', 'left outer');
+        $this->db->join('subscribers sub', 'p.id_purchase = sub.id_purchase', 'left outer');
+        $this->db->order_by("p.id_purchase", "desc");
         if($id != null){
-            $this->db->where("id_purchase", $id);
+            $this->db->where("p.id_purchase", $id);
         }
         $query = $this->db->get();
 
