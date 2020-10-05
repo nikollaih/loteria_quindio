@@ -189,7 +189,7 @@
 
                             <div style="line-height: 35px">
 
-                                Solicitud de cambio de contraseña</span>
+                                Bienvenido</span>
 
                             </div>
                         </td>
@@ -226,10 +226,10 @@
 
                                         </p>
                                         <p style="line-height: 24px;margin-bottom:15px;">
-                                            Recibimos una solicitud de cambio de contraseña para tu cuenta de Loteria del Quindio:
+                                            Gracias por su nuevo registro dentro de  nuestra plataforma.
                                         </p>
                                         <p style="line-height: 24px; margin-bottom:20px;">
-                                            Para cambiar tu contraseña, haz clic en el siguiente enlace:
+                                          para poder ingresar y disfrutar de los servicios que ofrecemos debe verificar su dirección de correo electronico dando click el siguiente enlace:
                                         </p>
                                         <table border="0" align="center" width="180" cellpadding="0" cellspacing="0" bgcolor="5caad2" style="margin-bottom:20px; margin-top: 40px;">
 
@@ -242,7 +242,7 @@
                                                     <!-- main section button -->
 
                                                     <div style="line-height: 22px; width: 300px;">
-                                                        <a href="<?= $change_password_url; ?>" style="color: #ffffff; text-decoration: none;">Cambiar contraseña</a>
+                                                        <a href="<?= base_url().'usuarios/verify_email/' . $slug ?>" style="color: #ffffff; text-decoration: none;">Verificar</a>
                                                     </div>
                                                 </td>
                                             </tr>

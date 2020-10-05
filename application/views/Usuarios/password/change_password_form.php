@@ -48,7 +48,7 @@
               <?php
                 }
               ?>
-              <div class="row mt-4">
+                <div class="row mt-4">
                   <div class="col-md-12 text-center">
                     <a href="<?= base_url() . 'usuarios/registro' ?>" class="btn btn-link" type="submit">Crear cuenta</a> | 
                     <a href="<?= base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit">Iniciar sesión</a>

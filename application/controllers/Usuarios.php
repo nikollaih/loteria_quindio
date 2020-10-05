@@ -90,7 +90,7 @@ class Usuarios extends CI_Controller {
 				$params["message"] = $this->user_signin_process($this->input->post("user"), $this->input->post("hobbies"));
 			}
 
-			if($params["message"]["success"] == true){
+		/* 	if($params["message"]["success"] == true){
 				$data = array(
 					'username' => $this->input->post("user")['email'],
 					'password' => md5($this->input->post("user")["password"]),
@@ -114,7 +114,7 @@ class Usuarios extends CI_Controller {
 						exit();
 					}
 				}
-			}
+			} */
 
 			$params["data_form"] = $this->input->post();
 		}
@@ -150,12 +150,17 @@ class Usuarios extends CI_Controller {
 					if($result_user != false){
 						$result_hobbies = $this->Hobbie->set_user_hobbies($result_user["id"], $user_hobbies);
 
+						$email_body = $this->load->view('emails/confirm_email', $result_user, true);
+						$this->mailer->send($email_body, 'Verifica tu correo electronico', $result_user['email']);
+
 						if($result_hobbies){
 							return array("type" => "success", "success" => true, "message" => "Usuario registrado exitosamente.");
 						} 
 						else{
 							return array("type" => "success", "success" => true, "message" => "El usuario ha sido registrado pero ha ocurrido un error con los hobbies.");
 						}
+
+						
 					}
 					else{
 						return array("type" => "danger", "success" => false, "message" => "No se ha podido registrar el usuario, por favor intente de nuevo más tarde.");
@@ -179,5 +184,26 @@ class Usuarios extends CI_Controller {
 		$this->session->unset_userdata('logged_in');
 		$data['message_display'] = 'Successfully Logout';
 		header("Location: " . base_url() . "usuarios/login");
+	}
+
+	public function verify_email($user_slug = '') {
+		if($user_slug != ''){
+			$user = $this->Usuario->get_user_by_param("slug", $user_slug);
+			if($user != false) {
+				$user['confirmed_email'] = true;
+				$updating = $this->Usuario->update($user);
+
+				if($updating) {
+					$data['success_message'] = true;
+				}else {
+					$data['error_message'] = "Hubo un error al intentar verificar su correo electronico.";
+				}
+				$this->load->view('Usuarios/verified_email', $data);
+			}else {
+				$this->load->view('Templates/Not_authorized');
+			}
+		}else {
+			$this->load->view('Templates/Not_authorized');
+		}
 	}
 }
