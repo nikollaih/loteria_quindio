@@ -11,14 +11,14 @@ class Mailer {
   }
 
 
-  public function send($content, $subject, $to){
+  public function send1($content, $subject, $to){
     $from = new SendGrid\Email(null, "loteriadelquindiosoporte@gmail.com");
     $subject = "Hello World from the SendGrid PHP Library!";
     $to = new SendGrid\Email(null, $to);
     $content = new SendGrid\Content("text/plain", "Hello, Email!");
     $mail = new SendGrid\Mail($from, $subject, $to, $content);
 
-    $apiKey = getenv('SENDGRID_API_KEY');
+    $apiKey = '1ab2cd3ef4gh5ij6';
     $sg = new \SendGrid($apiKey);
 
     $response = $sg->client->mail()->send()->post($mail);
@@ -27,18 +27,19 @@ class Mailer {
     echo $response->body();
   }
 
-  public function send1($content, $subject, $to){
+  public function send($content, $subject, $to){
     $this->CI->load->library('email');
 
 
     $config = array(
         'protocol'  => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_host' => 'ssl://smtp.gmail.com',
         'smtp_port' => 465,
         'smtp_user' => 'loteriadelquindiosoporte@gmail.com',
         'smtp_pass' => '@LoteriaQuindio',
         'mailtype'  => 'html',
-        'charset'   => 'utf-8'
+        'charset'   => 'utf-8',
+        'wordwrap' => TRUE,
     );
 
     $this->CI->email->initialize($config);
@@ -55,6 +56,13 @@ class Mailer {
     $this->CI->email->message('hola');
 
     //Send email
-    $this->CI->email->send();
+    if ($this->CI->email->send()) {
+      
+    } else {
+        //Do whatever you want if failed 
+        log_message('error', 'Unable to Send Email to Customer.' . print_r($this->CI->email->print_debugger(array('headers', 'subject')), TRUE));
+        print_r($this->CI->email->print_debugger(array('headers', 'subject')));
+        die();
+    }
   }
 }
