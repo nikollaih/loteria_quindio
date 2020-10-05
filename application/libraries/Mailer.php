@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require 'vendor/autoload.php';
+
 class Mailer {
   protected $CI;
 
@@ -8,7 +10,24 @@ class Mailer {
     $this->CI =& get_instance();
   }
 
+
   public function send($content, $subject, $to){
+    $from = new SendGrid\Email(null, "loteriadelquindiosoporte@gmail.com");
+    $subject = "Hello World from the SendGrid PHP Library!";
+    $to = new SendGrid\Email(null, $to);
+    $content = new SendGrid\Content("text/plain", "Hello, Email!");
+    $mail = new SendGrid\Mail($from, $subject, $to, $content);
+
+    $apiKey = getenv('SENDGRID_API_KEY');
+    $sg = new \SendGrid($apiKey);
+
+    $response = $sg->client->mail()->send()->post($mail);
+    echo $response->statusCode();
+    echo $response->headers();
+    echo $response->body();
+  }
+
+  public function send1($content, $subject, $to){
     $this->CI->load->library('email');
 
 
