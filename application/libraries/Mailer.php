@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+require(APPPATH . "/third_party/sendgrid-php/sendgrid-php.php");
 
 class Mailer {
   protected $CI;
