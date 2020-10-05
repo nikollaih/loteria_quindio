@@ -5,7 +5,7 @@
         <div id="sidebar-menu" class="slimscroll-menu">
             <ul class="metismenu" id="menu-bar">
                 <li class="menu-title">Menú</li>
-                <!-- <li>
+                <li>
                     <a href="javascript: void(0);">
                         <i data-feather="users"></i>
                         <span> Usuarios </span>
@@ -14,13 +14,10 @@
 
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="email-inbox.html">Agregar</a>
-                        </li>
-                        <li>
-                            <a href="email-read.html">Ver Todos</a>
+                            <a href="<?= base_url() . 'Usuarios/List'; ?>">Ver Todos</a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
 
                 <?php
                     if(is_admin()){

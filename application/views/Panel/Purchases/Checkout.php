@@ -5,22 +5,8 @@
       if($this->session->has_userdata('draw_number')){
          $draw_number = $this->session->userdata()['draw_number'];
       }
-
-      if(date("w") == 4 && (strtotime(date("H:i:s")) >= strtotime("22:00:00") && strtotime(date("H:i:s")) <= strtotime("23:59:59"))){
-         ?>
-         <div>
-      <div class="row text-center">
-         <div class="col-md-12"><img src="<?= base_url() ?>assets/images/purchase.svg" alt="" srcset="" width="300"></div>
-         <div class="col-md-12 mt-5"><h3 class="font-weight-bold">LO SENTIMOS!</h3></div>
-         <div class="col-md-12"><h4 class="font-weight-light mb-0">En este momento no es posible realizar una compra</h4></div>
-         <div class="col-md-12"><h4 class="font-weight-light mt-0">Estaremos disponibles de nuevo a la media noche</h4></div>
-      </div>
-   </div>
-         <?php
-      }
-      else{
-         ?>
-         <div>
+   ?>
+   <div>
       <div class="py-3 text-center">
          <h2>Formulario de pago sorteo #<?= $draw["draw_number"] ?></h2>
          <h4>Este sorteo jugará en la fecha: <?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?></h4>
@@ -213,45 +199,81 @@
                   <h4 class="d-flex justify-content-between align-items-center mb-3">
                      <span>Sistema de abonados</span>
                   </h4>
-                  <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
-                  <div class="row">
-                     <div class="col-md-12">
-                        <table class="custom-datatable table table-bordered table-striped text-center table-secondary">
-                           <thead>
-                              <tr class="font-weight-bold">
-                                 <td>Plan</td>
-                                 <td>13 SORTEOS</td>
-                                 <td>26 SORTEOS</td>
-                                 <td>52 SORTEOS</td>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td class="font-weight-bold">Descuento</td>
-                                 <td>5%</td>
-                                 <td>8%</td>
-                                 <td>15%</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-md-12 mb-3">
-                        <h5 for="state">Cantidad de sorteos que desea comprar</h5>
-                        <div class="row">
-                           <div class="col-md-4">
-                              <button data-percent="5" data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>
+                  <?php
+                     if(get_remaining_draws() > 13){
+                  ?>
+                        <div>
+                           <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <table class="custom-datatable table table-bordered table-striped text-center table-secondary">
+                                    <thead>
+                                       <tr class="font-weight-bold">
+                                          <td>Plan</td>
+                                          <td>13 SORTEOS</td>
+                                          <td>26 SORTEOS</td>
+                                          <td>52 SORTEOS</td>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td class="font-weight-bold">Descuento</td>
+                                          <td>5%</td>
+                                          <td>8%</td>
+                                          <td>15%</td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
                            </div>
-                           <div class="col-md-4">
-                              <button data-percent="8" data-value="26" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">26</button>
-                           </div>
-                           <div class="col-md-4">
-                              <button data-percent="15" data-value="52" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">52</button>
+                           <div class="row">
+                              <div class="col-md-12 mb-3">
+                                 <h5 for="state">Cantidad de sorteos que desea comprar</h5>
+                                 <div class="row">
+                                    <?php
+                                       if(get_remaining_draws() > 13){
+                                    ?>
+                                       <div class="col-md-4">
+                                          <button data-percent="5" data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>
+                                       </div>
+                                    <?php
+                                       }
+                                    ?>
+                                     <?php
+                                       if(get_remaining_draws() > 26){
+                                    ?>
+                                       <div class="col-md-4">
+                                          <button data-percent="8" data-value="26" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">26</button>
+                                       </div>
+                                    <?php
+                                       }
+                                    ?>
+                                     <?php
+                                       if(get_remaining_draws() > 52){
+                                    ?>
+                                       <div class="col-md-4">
+                                          <button data-percent="15" data-value="52" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">52</button>
+                                       </div>
+                                    <?php
+                                       }
+                                    ?>
+                                 </div>
+                              </div>
                            </div>
                         </div>
-                     </div>
-                  </div>
+                  <?php
+                     }
+                     else{
+                  ?>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                           El sistema de abonados ya no se encuentra disponible para el año en curso.
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <span aria-hidden="true">×</span>
+                           </button>
+                        </div>
+                  <?php
+                     }
+                  ?>
                </div>
                <hr class="mb-4">
                <h4 class="mb-3">Pago</h4>
@@ -266,7 +288,4 @@
          </div>
       </form>
    </div>
-         <?php
-      }
-   ?>
 </div>

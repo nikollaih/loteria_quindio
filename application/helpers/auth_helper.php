@@ -47,17 +47,17 @@ if(!function_exists('is_logged'))
 if(!function_exists('get_alnum_string'))
 {
     function get_alnum_string($long = 28){
-        return random_string("alnum", 28);
+        return random_string("alnum", $long);
     }
 
 }
 
 
 if(!function_exists('create_unique_slug')){
-    function create_unique_slug($table, $field='slug', $key=NULL, $value=NULL)
+    function create_unique_slug($table, $length=28, $field='slug', $key=NULL, $value=NULL)
     {
         $t =& get_instance();
-        $slug = get_alnum_string();
+        $slug = get_alnum_string($length);
         $slug = strtolower($slug);
         $i = 0;
         $params = array ();

@@ -10,7 +10,7 @@ jQuery(document).on("click", ".cancel-edit-draw-button", function() {
 
 // When the delete draw button is pressed
 jQuery(document).on("click", ".btn-add-result", function() {
-    set_dom_result(jQuery(this).attr("data-columns"));
+    set_dom_result(jQuery(this).attr("data-columns"), jQuery(this).attr("data-formated-date"));
 });
 
 // Add datatable options to custom tables
@@ -41,7 +41,7 @@ function stop_editing_draw() {
 function delete_draw(id) {
     swal({
             title: '¿Estás seguro?',
-            text: 'El draw será eliminado!',
+            text: 'El sorteo será eliminado!',
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, Eliminar!',
@@ -73,9 +73,10 @@ function delete_draw(id) {
         });
 }
 
-function set_dom_result(columns) {
+function set_dom_result(columns, date) {
     let data = JSON.parse(columns);
 
-    jQuery("#draw-info").html("#" + data.draw_number + " de " + data.date);
+    jQuery("#input_result").val("");
+    jQuery("#draw-info").html("#" + data.draw_number + " de " + date);
     jQuery("#result-id").val(data.id);
 }

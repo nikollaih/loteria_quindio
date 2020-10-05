@@ -15,6 +15,7 @@
                             <th scope="col">Fracciones</th>
                             <th scope="col">Fecha de compra</th>
                             <th scope="col">Valor</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,9 @@
                                 <td class="text-center"><?= $purchase["parts"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["created_at"]))) ?></td>
                                 <td class="text-center">$<?= number_format($purchase["price"], 0, ',', '.') ?> COP</td>
+                                <td class="text-center">
+                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                </td>
                             </tr>
                         <?php
                                 }

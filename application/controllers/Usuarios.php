@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuarios extends CI_Controller {
+class Usuarios extends Application_Controller {
 
     function __construct()
 	{
@@ -174,10 +174,59 @@ class Usuarios extends CI_Controller {
 		}
 	}
 
+	public function list(){
+		$params["title"] = "Usuarios";
+		$params["subtitle"] = "Usuarios";
+		$params["users"] = $this->get_users_by_role(1, null);
+        $this->load_layout("Usuarios/List", $params);
+	}
+
 	// Logout from admin page
 	public function logout() {
 		$this->session->unset_userdata('logged_in');
 		$data['message_display'] = 'Successfully Logout';
 		header("Location: " . base_url() . "usuarios/login");
 	}
+
+	// Get the users list by role id
+	public function get_users_by_role($role = 1, $response_type = "json"){
+		$users = $this->Usuario->get_user_by_param("roles_id", $role, null);
+		if($response_type == "json"){
+			echo json_encode($users);
+		}
+		else{
+			return $users;
+		}
+	}
+
+	// Change the user status to set it as deleted
+	public function delete_user(){
+        if(is_admin()){
+            $id = $this->input->post("id");
+
+            if($id){
+                $user = $this->Usuario->get_user_by_param("id", $id);
+                if($user != FALSE){
+
+                    $result = $this->Usuario->update_user(array("id" => $id, "user_status" => "2"));
+
+                    if($result){
+                        echo json_encode(array("error" => FALSE, "message" => "Usuario eliminado correctamente."));
+                    }
+                    else{
+                        echo json_encode(array("error" => TRUE, "message" => "Ha ocurrido un error, por favor intente de nuevo más tarde."));
+                    }
+                }
+                else{
+                    echo json_encode(array("error" => TRUE, "message" => "El usuario que intenta eliminar no se encuentra registrado."));
+                }
+            }
+            else{
+                echo json_encode(array("error" => TRUE, "message" => "El campo [id] es requerido."));
+            }
+        }
+        else{
+            echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
+        }
+    }
 }

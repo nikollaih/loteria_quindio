@@ -8,7 +8,7 @@ class Main extends Application_Controller {
         parent::__construct();
         $this->load->helper(["date"]);
         $this->load->library("session");
-        $this->load->model(["Booking", "Draw"]);
+        $this->load->model(["Booking", "Draw", "Purchase", "Usuario"]);
 	}
 
     // Return a random number and serie for current draw
@@ -33,5 +33,13 @@ class Main extends Application_Controller {
         $this->Booking->set_booking(array("created_at" => $created_at, "id_draw" => $draw["id"], "number" => $number, "serie" => $serie));
 
         header("Location: " . base_url() . "Purchases");
+    }
+
+    public function invoice($user_slug = null, $purchase_slug = null){
+        $params["title"] = "Factura";
+        $params["purchase"] = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+        if($params["purchase"] != false && $params["purchase"]["user_slug"] == $user_slug){
+            $this->load->view("Invoice", $params);
+        }
     }
 }
