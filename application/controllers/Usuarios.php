@@ -8,7 +8,7 @@ class Usuarios extends Application_Controller {
 		parent::__construct();
 		$this->load->model(['Usuario', 'Hobbie', 'Identification_Type', 'Location']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation', 'Mailer']);
+		$this->load->library(['Form_validation']);
 	}
 
     // Carga la vista de login con todos los parametros seleccionados
@@ -48,22 +48,15 @@ class Usuarios extends Application_Controller {
 				$username = $this->input->post('username');
 				$result = $this->Usuario->get_user_by_param("email", $username);
 				if ($result != false) {
-					if($result['confirmed_email'] == TRUE) {
-						// Add user data in session
-						$this->session->set_userdata('logged_in', $result);
-						if($this->session->has_userdata("draw_number")){
-							header("Location: " . base_url() . "Purchases");
-						}
-						else{
-							header("Location: " . base_url() . "panel");
-						}
-						exit();
-					}else {
-						$data = array(
-							'error_message' => 'Su direccion de correo no ha sido verificada. <a href=' . base_url() . 'usuarios/send_verification_email/' . $result['slug'] . '>Enviar email de verificación </a>'
-						);
-						$this->load->view('Usuarios/Login', $data);
-					}
+				// Add user data in session
+				$this->session->set_userdata('logged_in', $result);
+				if($this->session->has_userdata("draw_number")){
+					header("Location: " . base_url() . "Purchases");
+				}
+				else{
+					header("Location: " . base_url() . "panel");
+				}
+				exit();
 			}
 			} else {
 				$data = array(
@@ -97,7 +90,7 @@ class Usuarios extends Application_Controller {
 				$params["message"] = $this->user_signin_process($this->input->post("user"), $this->input->post("hobbies"));
 			}
 
-		/* 	if($params["message"]["success"] == true){
+			if($params["message"]["success"] == true){
 				$data = array(
 					'username' => $this->input->post("user")['email'],
 					'password' => md5($this->input->post("user")["password"]),
@@ -121,7 +114,7 @@ class Usuarios extends Application_Controller {
 						exit();
 					}
 				}
-			} */
+			}
 
 			$params["data_form"] = $this->input->post();
 		}
@@ -157,17 +150,12 @@ class Usuarios extends Application_Controller {
 					if($result_user != false){
 						$result_hobbies = $this->Hobbie->set_user_hobbies($result_user["id"], $user_hobbies);
 
-						$email_body = $this->load->view('emails/confirm_email', $result_user, true);
-						$this->mailer->send($email_body, 'Verifica tu correo electronico', $result_user['email']);
-
 						if($result_hobbies){
 							return array("type" => "success", "success" => true, "message" => "Usuario registrado exitosamente.");
 						} 
 						else{
 							return array("type" => "success", "success" => true, "message" => "El usuario ha sido registrado pero ha ocurrido un error con los hobbies.");
 						}
-
-						
 					}
 					else{
 						return array("type" => "danger", "success" => false, "message" => "No se ha podido registrar el usuario, por favor intente de nuevo más tarde.");
@@ -200,42 +188,6 @@ class Usuarios extends Application_Controller {
 		header("Location: " . base_url() . "usuarios/login");
 	}
 
-	public function verify_email($user_slug = '') {
-		if($user_slug != ''){
-			$user = $this->Usuario->get_user_by_param("slug", $user_slug);
-			if($user != false) {
-				$user['confirmed_email'] = true;
-				$updating = $this->Usuario->update($user);
-
-				if($updating) {
-					$data['success_message'] = true;
-				}else {
-					$data['error_message'] = "Hubo un error al intentar verificar su correo electronico.";
-				}
-				$this->load->view('Usuarios/verified_email', $data);
-			}else {
-				$this->load->view('Templates/Not_authorized');
-			}
-		}else {
-			$this->load->view('Templates/Not_authorized');
-		}
-	}
-
-	public function send_verification_email($slug = ''){
-		if($slug != ''){
-			$user = $this->Usuario->get_user_by_param("slug", $slug);
-			if($user != false) {
-				$email_body = $this->load->view('emails/confirm_email', $user, true);
-				$this->mailer->send($email_body, 'Verifica tu correo electronico', $user['email']);
-
-				$data['message']['success'] = true;
-				$this->load->view('Usuarios/Registro', $data);
-
-			}else{
-				$this->load->view('Templates/Not_authorized');
-			}
-		}
-	}
 	// Get the users list by role id
 	public function get_users_by_role($role = 1, $response_type = "json"){
 		$users = $this->Usuario->get_user_by_param("roles_id", $role, null);

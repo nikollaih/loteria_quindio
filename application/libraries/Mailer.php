@@ -31,7 +31,7 @@ class Mailer {
     $this->CI->email->set_newline("\r\n");
 
     $this->CI->email->to($to);
-    $this->CI->email->from('loteriadelquindiosoporte@gmail.com','Loteria del quindio');
+    $this->CI->email->from('loteriadelquindiosoporte@gmail.com','Lotería del Quindio');
     $this->CI->email->subject($subject);
     $this->CI->email->message($content);
 

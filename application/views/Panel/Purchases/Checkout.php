@@ -200,7 +200,7 @@
                      <span>Sistema de abonados</span>
                   </h4>
                   <?php
-                     if(get_remaining_draws() > 13){
+                     if(get_remaining_draws() > 3){
                   ?>
                         <div>
                            <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
@@ -231,7 +231,7 @@
                                  <h5 for="state">Cantidad de sorteos que desea comprar</h5>
                                  <div class="row">
                                     <?php
-                                       if(get_remaining_draws() > 13){
+                                       if(get_remaining_draws() > 3){
                                     ?>
                                        <div class="col-md-4">
                                           <button data-percent="5" data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>

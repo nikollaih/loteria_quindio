@@ -156,15 +156,6 @@ ul.pagination {
     justify-content: flex-end;
 }
 
-
-.alert-danger p {
-    margin: 0;
-}
-
-.vh-100 {
-    height: 100vh;
-}
-
 .background-loading {
     position: fixed;
     width: 100%;

@@ -7,7 +7,7 @@ class Purchases extends Application_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(['url', 'product']);
-		$this->load->library(['session', 'form_validation']);
+		$this->load->library(['session', 'form_validation', 'Mailer']);
 		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber']);
 	}
 
@@ -35,6 +35,12 @@ class Purchases extends Application_Controller {
                 $params["data_form"] = $this->input->post();
 			}
 			else{
+				$data["purchase"] = $params["message"]["data"];
+				$data["subscriber"] = $this->input->post("subscriber");
+				$data['success_message'] = true;
+				$data['button_url'] = generate_invoice_url($data["purchase"]["user_slug"], $data["purchase"]["slug"]);
+				$email_body = $this->load->view('emails/purchase_invoice', $data, true);
+				$this->mailer->send($email_body, 'Compra exitosa', $data["purchase"]["email"]);
 				$this->session->unset_userdata('draw_number');
 			}
 		}
@@ -76,7 +82,7 @@ class Purchases extends Application_Controller {
 					if($subscriber_amount > 1){
 						$this->set_subscriber($subscriber_amount, $result_purchase);
 					}
-					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
+					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 				}
 			}
 			else{
@@ -87,7 +93,7 @@ class Purchases extends Application_Controller {
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
 						}
-						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.");
+						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 					}
 				}
 				else{
