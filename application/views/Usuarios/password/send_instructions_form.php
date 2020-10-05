@@ -1,6 +1,5 @@
 <?php 
   $this->load->view('Templates/Head');
-  echo base_url();
 ?>
 <link rel="stylesheet" href="<?= base_url().'assets/css/login.css'; ?>">
 <body>
