@@ -34,7 +34,7 @@ class Mailer {
     $config = array(
         'protocol'  => 'smtp',
         'smtp_host' => 'ssl://smtp.gmail.com',
-        'smtp_port' => 465,
+        'smtp_port' => 587,
         'smtp_user' => 'loteriadelquindiosoporte@gmail.com',
         'smtp_pass' => '@LoteriaQuindio',
         'mailtype'  => 'html',
@@ -44,7 +44,7 @@ class Mailer {
 
     $this->CI->email->initialize($config);
     $this->CI->email->set_mailtype("html");
-    $this->CI->email->set_newline("rn");
+    $this->CI->email->set_newline("\r\n");
 
     //Email content
     $htmlContent = '<h1>Sending email via SMTP server</h1>';
