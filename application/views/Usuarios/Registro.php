@@ -16,7 +16,7 @@
             ?>
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">¡Registro exitoso!</h5>
+                  <h5 class="card-title">!Proceso exitoso!</h5>
                   <p class="card-text medium-text">Se ha enviado un email de confirmación al buzón de su correo electronico para la verificación de su dirección de correo. Es posible que el email haya llegado a su bandeja de Spam.</p>
                 </div>
               </div>

@@ -48,15 +48,22 @@ class Usuarios extends CI_Controller {
 				$username = $this->input->post('username');
 				$result = $this->Usuario->get_user_by_param("email", $username);
 				if ($result != false) {
-				// Add user data in session
-				$this->session->set_userdata('logged_in', $result);
-				if($this->session->has_userdata("draw_number")){
-					header("Location: " . base_url() . "Purchases");
-				}
-				else{
-					header("Location: " . base_url() . "panel");
-				}
-				exit();
+					if($result['confirmed_email'] == TRUE) {
+						// Add user data in session
+						$this->session->set_userdata('logged_in', $result);
+						if($this->session->has_userdata("draw_number")){
+							header("Location: " . base_url() . "Purchases");
+						}
+						else{
+							header("Location: " . base_url() . "panel");
+						}
+						exit();
+					}else {
+						$data = array(
+							'error_message' => 'Su direccion de correo no ha sido verificada. <a href=' . base_url() . 'usuarios/send_verification_email/' . $result['slug'] . '>Enviar email de verificación </a>'
+						);
+						$this->load->view('Usuarios/Login', $data);
+					}
 			}
 			} else {
 				$data = array(
@@ -204,6 +211,22 @@ class Usuarios extends CI_Controller {
 			}
 		}else {
 			$this->load->view('Templates/Not_authorized');
+		}
+	}
+
+	public function send_verification_email($slug = ''){
+		if($slug != ''){
+			$user = $this->Usuario->get_user_by_param("slug", $slug);
+			if($user != false) {
+				$email_body = $this->load->view('emails/confirm_email', $user, true);
+				$this->mailer->send($email_body, 'Verifica tu correo electronico', $user['email']);
+
+				$data['message']['success'] = true;
+				$this->load->view('Usuarios/Registro', $data);
+
+			}else{
+				$this->load->view('Templates/Not_authorized');
+			}
 		}
 	}
 }
