@@ -56,5 +56,10 @@ Class Usuario extends CI_Model {
             return false;
         }
     }
+
+    public function update($data){
+        $this->db->where("id", $data["id"]);
+        return $this->db->update("users", $data);
+    }
 }
 ?>

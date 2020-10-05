@@ -21,58 +21,64 @@
 		</div>
 	</div>
 	<div class="row" id="rotate">
-		<div class="col-md-3 card-loto">
-			<div class="board">
-				<div class="right-arrow"></div>
-				<div class="left-arrow"></div>
-				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board reel">
-					<div class="numbers ring" id="ring-1">
+		<div class="col-md-12">
+		
+			<div class="roulette">
+				
+				<div class="card-loto">
+					<div class="board">
+						<div class="right-arrow"></div>
+						<div class="left-arrow"></div>
+						<div class="top-shadow"><div class="line"></div></div>
+						<div class="content-board reel">
+							<div class="numbers ring" id="ring-1">
+							</div>
+						</div>
+						<div class="bottom-shadow"><div class="line"></div></div>
+					</div>
+				</div>	
+				<div class="card-loto">
+					<div class="board">
+						<div class="right-arrow"></div>
+						<div class="left-arrow"></div>
+						<div class="top-shadow"><div class="line"></div></div>
+						<div class="content-board reel">
+							<div class="numbers ring" id="ring-2">
+							</div>
+						</div>
+						<div class="bottom-shadow"><div class="line"></div></div>
 					</div>
 				</div>
-				<div class="bottom-shadow"><div class="line"></div></div>
-			</div>
-		</div>	
-		<div class="col-md-3 card-loto">
-			<div class="board">
-				<div class="right-arrow"></div>
-				<div class="left-arrow"></div>
-				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board reel">
-					<div class="numbers ring" id="ring-2">
+				<div class="card-loto">
+					<div class="board">
+						<div class="right-arrow"></div>
+						<div class="left-arrow"></div>
+						<div class="top-shadow"><div class="line"></div></div>
+						<div class="content-board reel">
+							<div class="numbers ring" id="ring-3">
+							</div>
+						</div>
+						<div class="bottom-shadow"><div class="line"></div></div>
+					</div>
+				</div>	
+				<div class="card-loto">
+					<div class="board">
+						<div class="right-arrow"></div>
+						<div class="left-arrow"></div>
+						<div class="top-shadow"><div class="line"></div></div>
+						<div class="content-board reel">
+							<div class="numbers ring" id="ring-4">
+							</div>
+						</div>
+						<div class="bottom-shadow"><div class="line"></div></div>
 					</div>
 				</div>
-				<div class="bottom-shadow"><div class="line"></div></div>
-			</div>
-		</div>
-		<div class="col-md-3 card-loto">
-			<div class="board">
-				<div class="right-arrow"></div>
-				<div class="left-arrow"></div>
-				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board reel">
-					<div class="numbers ring" id="ring-3">
-					</div>
-				</div>
-				<div class="bottom-shadow"><div class="line"></div></div>
-			</div>
-		</div>	
-		<div class="col-md-3 card-loto">
-			<div class="board">
-				<div class="right-arrow"></div>
-				<div class="left-arrow"></div>
-				<div class="top-shadow"><div class="line"></div></div>
-				<div class="content-board reel">
-					<div class="numbers ring" id="ring-4">
-					</div>
-				</div>
-				<div class="bottom-shadow"><div class="line"></div></div>
 			</div>
 		</div>
 	</div>
 	<div class="row justify-content-end">
 		<div class="col-md-6 d-flex align-items-center">
-			<button class="btn btn-yellow btn-simulator invisible btn-purchase"><i data-feather="shopping-cart"></i>  Comprar</button>
+			
 		</div>
 		<div class="col-md-6">
 			<div class="series">
@@ -94,8 +100,11 @@
 		</div>
 	</div>
 	<div class="row justify-content-center">
-		<div class="col-md-3">
-			<button class="btn btn-success btn-block btn-simulator" id="btn-play">Jugar</button>
+		<div class="col-md-6  d-flex justify-content-center">
+			<div class="text-center">
+				<button class="btn btn-yellow btn-simulator invisible btn-purchase mr-4"><i data-feather="shopping-cart"></i>  Comprar</button>
+				<button class="btn btn-success  btn-simulator" id="btn-play"><i data-feather="play"></i> Jugar</button>
+			</div>
 		</div>
 
 	</div>

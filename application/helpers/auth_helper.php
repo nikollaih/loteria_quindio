@@ -52,6 +52,18 @@ if(!function_exists('get_alnum_string'))
 
 }
 
+if(!function_exists('if_exists'))
+{
+    function if_exists($var){
+        return isset($var) ? $var : '';
+    }
+
+}
+
+
+
+
+
 
 if(!function_exists('create_unique_slug')){
     function create_unique_slug($table, $length=28, $field='slug', $key=NULL, $value=NULL)
