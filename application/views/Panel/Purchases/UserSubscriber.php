@@ -13,6 +13,7 @@
                             <th scope="col">Cantidad sorteos</th>
                             <th scope="col">Cantidad restante</th>
                             <th scope="col">Fecha de compra</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,6 +29,9 @@
                                 <td class="text-center"><?= $subscriber["subscriber_amount"] ?></td>
                                 <td class="text-center"><?= $subscriber["subscriber_remaining_amount"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($subscriber["created_at"]))) ?></td>
+                                <td class="text-center">
+                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$subscriber["user_slug"].'/'.$subscriber["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                </td>
                             </tr>
                         <?php
                                 }

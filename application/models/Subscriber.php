@@ -27,8 +27,10 @@ Class Subscriber extends CI_Model {
     // Get the subscribers rows by user
     // $id -> If id is different of null it will return only a row with the subscriber id information
     public function get_user_subscribers($id_user) {
+        $this->db->select('p.*, u.slug as user_slug, s.*');
         $this->db->from('subscribers s');
         $this->db->join('purchases p', 's.id_purchase = p.id_purchase');
+        $this->db->join('users u', 'u.id = p.id_user');
         $this->db->order_by("id_subscriber", "desc");
         $this->db->where("s.id_user", $id_user);
 

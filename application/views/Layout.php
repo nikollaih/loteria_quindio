@@ -2,6 +2,17 @@
 <?php $this->load->view("Templates/Head") ?>
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/app.min.css">
 <body>
+    <div style="display: none;" id="background-loading">
+        <div class="text-center d-inline-flex justify-content-center background-loading">
+            <div class="row align-middle justify-middle">
+                <div class="col-md-12 align-self-center ">
+                    <div class="spinner-border text-light m-2 " role="status">
+                    </div>
+                    <p class="text-light font-weight-bold fs-1">Cargando</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="wrapper">
         <?php $this->load->view("Templates/Header") ?>
         <?php $this->load->view("Templates/Menu") ?>

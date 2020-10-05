@@ -17,11 +17,18 @@ Class Usuario extends CI_Model {
         }
     }
 
+    // Update the user information
+    public function update_user($data){
+        $this->db->where("id", $data["id"]);
+        return $this->db->update("users", $data);
+    }
+
     // Read data using username and password
     public function login($data) {
         $this->db->from('users');
         $this->db->where("email", $data['username']);
         $this->db->where("password", $data['password']);
+        $this->db->where("user_status !=", 2);
         $this->db->limit(1);
         $query = $this->db->get();
 
@@ -33,14 +40,18 @@ Class Usuario extends CI_Model {
     }
 
     // Read data from database to show data in admin page
-    public function get_user_by_param($param, $value){
+    public function get_user_by_param($param, $value, $limit = 1){
         $this->db->from('users');
+        $this->db->order_by('first_name', 'asc');
         $this->db->where($param, $value);
-        $this->db->limit(1);
+        $this->db->where('user_status !=', '2');
+        if($limit > 0){
+            $this->db->limit(1);
+        }
         $query = $this->db->get();
-        
-        if ($query->num_rows() == 1) {
-            return $query->row_array();
+
+        if ($query->num_rows() > 0) {
+            return ($limit == 0) ? $query->result_array() : $query->row_array();
         } else {
             return false;
         }

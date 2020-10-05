@@ -45,6 +45,7 @@ class Draws extends Application_Controller {
     private function draw_register_proccess($data){
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
+                $data["date"] = $data["date"] . " 21:50:00";
                 $result_draw = $this->Draw->set_draw($data);
                 // If the user was registered successfully
                 if($result_draw != false){
@@ -56,6 +57,7 @@ class Draws extends Application_Controller {
             }
             else{
                 if($data["id"] != null && $data["id"] != "null"){
+                    $data["date"] = $data["date"] . " 21:50:00";
                     $result_draw = $this->Draw->update_draw($data);
                     // If the user was registered successfully
                     if($result_draw != false){
