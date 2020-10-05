@@ -18,8 +18,9 @@ jQuery(document).on("click", ".btn-draw-cant", function() {
         var subscriber_percent = jQuery(this).attr("data-percent");
         var subscriber_amount = jQuery(this).attr("data-value");
 
-        purchase_price = fractions_count * fraction_price * subscriber_amount;
-        purchase_discount = purchase_price * (subscriber_percent / 100);
+        var bill_price = (fractions_count * fraction_price);
+        purchase_price = (fractions_count * fraction_price * subscriber_amount) + bill_price;
+        purchase_discount = (purchase_price - bill_price) * (subscriber_percent / 100);
 
         jQuery(".btn-draw-cant").removeClass("btn-success");
         jQuery(".btn-draw-cant").addClass("btn-outline-success");

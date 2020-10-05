@@ -2,37 +2,31 @@
 <div class="modal fade" id="draw-result" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ingresar Resultado</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h6 class="text-center">INGRESAR RESULTADO Y SERIE DEL SORTEO</h6>
-        <h2 class="text-center" id="draw-info">#2056 de 16 septiembre, 2020</h2>
         <form action="">
-            <input type="hidden" name="id" id="result-id">
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <p for="" class="text-center mb-0 font-weight-bold">RESULTADO</p>
-                        <input id="input_result" required name="result" type="number" minlength="4" maxlength="4" class="form-control text-center" placeholder="0000" value="">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ingresar Resultado</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h6 class="text-center">CARGAR EL ARCHIVO DE RESULTADOS DEL SORTEO</h6>
+            <h2 class="text-center" id="draw-info">#2056 de 16 septiembre, 2020</h2>
+                <input type="hidden" name="id" id="result-id">
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p for="" class="mb-0 font-weight-bold">Subir archivo</p>
+                            <input id="input_result" required name="result" type="file" minlength="4" maxlength="4" class="form-control-file text-center" placeholder="0000" value="">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                    <p for="" class="text-center mb-0 font-weight-bold">SERIE</p>
-                        <input id="input_serie" required name="serie" type="number" minlength="3" maxlength="3" class="form-control text-center" placeholder="000" value="">
-                    </div>
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success">Guardar</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar Resultados</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -58,7 +52,7 @@
                                 <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="text" class="form-control flatpickr-input active" value="<?= (isset($data_form)) ? $data_form["date"] : date('Y-m-d') ?>">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Producto (cantidad fracciones/valor por fracción)</label>
                                 <select name="product_id" class="custom-select d-block w-100 bill-data" id="product-id" required="">
@@ -125,7 +119,7 @@
                             <tr>
                                 <th scope="row"><?= $x++; ?></th>
                                 <td><?= $draw["draw_number"] ?></td>
-                                <td><?= $draw["date"] ?></td>
+                                <td><?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?></td>
                                 <td><?= $draw["product_name"] ?> <?= $draw["fractions_count"]?>/$<?= $draw["fraction_value"]?>COP</td>
                                 <td><?php echo ($draw["result"] != null) ? $draw["result"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td><?php echo ($draw["serie"] != null) ? $draw["serie"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
@@ -133,7 +127,7 @@
                                     <?php
                                         if($draw["date"] <= date("Y-m-d") && $draw["result"] == null){
                                     ?>
-                                        <button data-columns='<?= json_encode($draw) ?>' data-toggle="modal" data-target="#draw-result" id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="btn btn-success btn-sm btn-add-result">Agregar Resultado</button>
+                                        <button data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>' data-toggle="modal" data-target="#draw-result" id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="btn btn-success btn-sm btn-add-result">Agregar Resultado</button>
                                     <?php
                                         }
                                     ?>

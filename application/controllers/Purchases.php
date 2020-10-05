@@ -57,11 +57,12 @@ class Purchases extends Application_Controller {
 		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
+		$data["slug"] = create_unique_slug("Purchases", 8);
 		$draw = $this->Draw->get_active_draw();
 
 		if($subscriber_amount > 1){
-			$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"] * $subscriber_amount;
-			$data["discount"] = $data["price"] * ($subcriber_discount / 100);
+			$data["price"] = ($info_data["current_draw"]["fraction_value"] * $data["parts"] * $subscriber_amount) + ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"]);
+			$data["discount"] = ($data["price"] - ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"])) * ($subcriber_discount / 100);
 		}
 
 		// Validate if current active draw is the same for the purchase process

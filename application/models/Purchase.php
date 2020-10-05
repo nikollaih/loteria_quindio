@@ -88,16 +88,45 @@ Class Purchase extends CI_Model {
     // Get the user's purchases list
     // id_user -> The user identification to get his/her purchases list
     public function get_user_purchases($id_user){
-        $this->db->select("d.id, d.draw_number, d.date, p.number, p.serie, p.parts, p.created_at, p.price");
+        $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date');
         $this->db->from('purchases p');
-        $this->db->join("draws d", "d.id = p.id_draw");
-        $this->db->where("id_user", $id_user);
-        $this->db->order_by("created_at", "desc");
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->join('cities c', 'u.city_id = c.id', 'left outer');
+        $this->db->join('states s', 'c.state_id = s.id', 'left outer');
+        $this->db->join('draws d', 'p.id_draw = d.id', 'left outer');
+        $this->db->join('products pro', 'pro.id = d.product_id', 'left outer');
+        $this->db->join('subscribers sub', 'p.id_purchase = sub.id_purchase', 'left outer');
+        $this->db->where("p.id_user", $id_user);
+        $this->db->order_by("p.created_at", "desc");
 
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
+    // Read data from database to show data in admin page
+    public function get_purchase_by_param($param, $value, $limit = 1){
+        $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date');
+        $this->db->from('purchases p');
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->join('cities c', 'u.city_id = c.id', 'left outer');
+        $this->db->join('states s', 'c.state_id = s.id', 'left outer');
+        $this->db->join('draws d', 'p.id_draw = d.id', 'left outer');
+        $this->db->join('products pro', 'pro.id = d.product_id', 'left outer');
+        $this->db->join('subscribers sub', 'p.id_purchase = sub.id_purchase', 'left outer');
+        $this->db->order_by('p.created_at', 'desc');
+        $this->db->where($param, $value);
+        if($limit > 0){
+            $this->db->limit(1);
+        }
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return ($limit == 0) ? $query->result_array() : $query->row_array();
         } else {
             return false;
         }
