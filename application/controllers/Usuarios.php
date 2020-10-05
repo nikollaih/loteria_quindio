@@ -8,7 +8,7 @@ class Usuarios extends CI_Controller {
 		parent::__construct();
 		$this->load->model(['Usuario', 'Hobbie', 'Identification_Type', 'Location']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation']);
+		$this->load->library(['Form_validation', 'Mailer']);
 	}
 
     // Carga la vista de login con todos los parametros seleccionados
