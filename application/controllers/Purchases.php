@@ -57,6 +57,7 @@ class Purchases extends Application_Controller {
 	// Purchase register process
 	function register_purchase_proccess($info_data){
 		$data = $info_data["purchase"];
+		$blend = $this->Blend->get_blends($data["serie"]);
 		$subscriber_amount = $info_data["subscriber"]["amount"];
 		$subcriber_discount = $info_data["subscriber"]["discount"];
 
@@ -73,21 +74,11 @@ class Purchases extends Application_Controller {
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
-			$temp_purchase = $this->Purchase->validate_purchase($data);
+			if($data["number"] >= $blend["start_number"] && $data["number"] <= $blend["end_number"]){
+				$temp_purchase = $this->Purchase->validate_purchase($data);
 
-			// Check if exists a previus purchase with the same number, serie and draw
-			if(!$temp_purchase){
-				$result_purchase = $this->Purchase->set_purchase($data);
-				if($result_purchase != false){
-					if($subscriber_amount > 1){
-						$this->set_subscriber($subscriber_amount, $result_purchase);
-					}
-					return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
-				}
-			}
-			else{
-				// Check is there is any available part for the number purchase
-				if(intval(get_product_available_parts(1, $data)) > intval(0)){
+				// Check if exists a previus purchase with the same number, serie and draw
+				if(!$temp_purchase){
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
 						if($subscriber_amount > 1){
@@ -97,9 +88,22 @@ class Purchases extends Application_Controller {
 					}
 				}
 				else{
-					return array("type" => "danger", "success" => false, "message" => "El número o cantidad de fracciones que desea comprar no se encuentra disponible.");
+					// Check is there is any available part for the number purchase
+					if(intval(get_product_available_parts(1, $data)) > intval(0)){
+						$result_purchase = $this->Purchase->set_purchase($data);
+						if($result_purchase != false){
+							if($subscriber_amount > 1){
+								$this->set_subscriber($subscriber_amount, $result_purchase);
+							}
+							return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
+						}
+					}
+					else{
+						return array("type" => "danger", "success" => false, "message" => "El número o cantidad de fracciones que desea comprar no se encuentra disponible.");
+					}
 				}
 			}
+			return array("type" => "danger", "success" => false, "message" => "El número que desea comprar debe ser mayor que ".$blend["start_number"]." y menor que ".$blend["end_number"].".");
 		}
 		else{
 			return array("type" => "danger", "success" => false, "message" => "El sorteo #".$draw["draw_number"]." ya no se encuentra disponible.");
