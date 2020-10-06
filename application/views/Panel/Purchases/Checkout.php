@@ -14,7 +14,12 @@
          <?php
             if(isset($message)){
          ?>
-            <p class="result-draw-action fs-1-2 text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+            <div class="alert alert-<?= $message["type"] ?> alert-dismissible fade show" role="alert">
+            <?= $message["message"] ?>
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+               </button>
+            </div>
          <?php
             }
          ?>
@@ -161,9 +166,9 @@
                <div class="row">
                   <div class="col-md-4 mb-3">
                      <h5 for="state">Número del billete</h5>
-                     <input value="<?= (is_array($draw_number)) ? $draw_number["number"] : "" ?>" maxlength="4" minlength="4" name="purchase[number]" type="text" class="form-control bill-data" id="bill-number" placeholder="0000" value="" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                     <input value="<?= (is_array($draw_number)) ? $draw_number["number"] : "" ?>" maxlength="4" minlength="4" max="<?= $blends[0]["end_number"] ?>" min="<?= $blends[0]["start_number"] ?>" name="purchase[number]" type="number" class="form-control bill-data" id="bill-number" placeholder="0000" value="" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
                      <div class="invalid-feedback">
-                        Ingrese el número que desea comprar.
+                        Ingrese el número que desea comprar, debe ser mayor que <span id="show-min-value"><?= $blends[0]["start_number"] ?></span> y menor que <span id="show-max-value"><?= $blends[0]["end_number"] ?></span>
                      </div>
                   </div>
                   <div class="col-md-4 mb-3">
@@ -174,7 +179,7 @@
                                $x = 1;
                                foreach ($blends as $blend) {
                            ?>
-                        <option <?= (is_array($draw_number) && $draw_number["serie"] == $blend["serie"]) ? "selected" : "" ?> value="<?= $blend["serie"] ?>"><?= $blend["serie"] ?></option>
+                        <option data-min="<?= $blend["start_number"] ?>" data-max="<?= $blend["end_number"] ?>" <?= (is_array($draw_number) && $draw_number["serie"] == $blend["serie"]) ? "selected" : "" ?> value="<?= $blend["serie"] ?>"><?= $blend["serie"] ?></option>
                         <?php
                            }
                            }
@@ -200,7 +205,7 @@
                      <span>Sistema de abonados</span>
                   </h4>
                   <?php
-                     if(get_remaining_draws() > 3){
+                     if(get_remaining_draws() > 13){
                   ?>
                         <div>
                            <p class="lead">El plan club abonados le permite comprar su billete de lotería hasta por los 52 proximos sorteos, tenga en cuenta que entre más cantidad de sorteos compre con su mismo número, mayor será la cantidad de descuento que le ofreceremos por su compra.</p>
@@ -231,7 +236,7 @@
                                  <h5 for="state">Cantidad de sorteos que desea comprar</h5>
                                  <div class="row">
                                     <?php
-                                       if(get_remaining_draws() > 3){
+                                       if(get_remaining_draws() > 13){
                                     ?>
                                        <div class="col-md-4">
                                           <button data-percent="5" data-value="13" type="button" class="btn btn-outline-success btn-block fs-2 btn-draw-cant font-weight-bold">13</button>

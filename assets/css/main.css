@@ -31,7 +31,8 @@
 .btn-outline-success:not(:disabled):not(.disabled):active,
 .show>.btn-outline-success.dropdown-toggle,
 .page-item.active .page-link,
-.sw-theme-arrows>ul.step-anchor>li.active>a {
+.sw-theme-arrows>ul.step-anchor>li.active>a,
+.alert-success {
     background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
 }
