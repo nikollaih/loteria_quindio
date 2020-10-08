@@ -25,6 +25,7 @@ import "./draws.js";
 import "./purchases.js";
 import "./products.js";
 import "./users.js";
+import "./results.js";
 
 jQuery(document).ready(function() {
     jQuery('.custom-select2').select2();

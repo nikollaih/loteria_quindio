@@ -2,7 +2,7 @@
 <div class="modal fade" id="draw-result" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <form action="">
+        <form action="<?= base_url() ?>Files/import_result" method="post" enctype="multipart/form-data">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ingresar Resultado</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -12,12 +12,11 @@
         <div class="modal-body">
             <h6 class="text-center">CARGAR EL ARCHIVO DE RESULTADOS DEL SORTEO</h6>
             <h2 class="text-center" id="draw-info">#2056 de 16 septiembre, 2020</h2>
-                <input type="hidden" name="id" id="result-id">
                 <div class="row mt-5">
                     <div class="col-md-12">
                         <div class="form-group">
                             <p for="" class="mb-0 font-weight-bold">Subir archivo</p>
-                            <input id="input_result" required name="result" type="file" minlength="4" maxlength="4" class="form-control-file text-center" placeholder="0000" value="">
+                            <input id="input_result" required name="result" type="file" class="form-control-file text-center">
                         </div>
                     </div>
                 </div>
@@ -125,9 +124,16 @@
                                 <td><?php echo ($draw["serie"] != null) ? $draw["serie"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td class="text-center" style="width:160px;">
                                     <?php
-                                        if($draw["date"] <= date("Y-m-d") && $draw["result"] == null){
+                                        if($draw["date"] <= date("Y-m-d") && $draw["result"] == null && $draw["nit"] == null){
                                     ?>
-                                        <button data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>' data-toggle="modal" data-target="#draw-result" id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="btn btn-success btn-sm btn-add-result">Agregar Resultado</button>
+                                        <a href="<?= base_url() ?>Results/import_result/<?= $draw["draw_slug"] ?>" data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>'  id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="btn btn-primary btn-sm">Agregar Resultado</a>
+                                    <?php
+                                        }
+                                    ?>
+                                    <?php
+                                        if($draw["nit"] != null){
+                                    ?>
+                                        <a href="<?= base_url() ?>Draws/results/<?= $draw["draw_slug"] ?>" type="button" class="btn btn-success btn-sm">Ver Resultados</a>
                                     <?php
                                         }
                                     ?>
