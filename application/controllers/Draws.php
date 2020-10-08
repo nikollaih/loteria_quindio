@@ -6,7 +6,7 @@ class Draws extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['Draw', 'Product']);
+		$this->load->model(['Draw', 'Product', 'Result']);
 		$this->load->helper(["url", "form"]);
 		$this->load->library(['Form_validation']);
 	}
@@ -46,6 +46,7 @@ class Draws extends Application_Controller {
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
                 $data["date"] = $data["date"] . " 21:50:00";
+                $data["draw_slug"] = create_unique_slug("Draws", 8);
                 $result_draw = $this->Draw->set_draw($data);
                 // If the user was registered successfully
                 if($result_draw != false){
@@ -105,6 +106,14 @@ class Draws extends Application_Controller {
         else{
             echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
         }
+    }
+
+    public function results($slug){
+        $params["title"] = "Resultados";
+        $params["subtitle"] = "Resultados";
+        $params["draw"] = $this->Draw->get_draws(null, null, $slug);
+        $params["results"] = $this->Result->get_results($params["draw"]["id"]);
+        $this->load_layout("Panel/Draws/Results", $params);
     }
     
 }

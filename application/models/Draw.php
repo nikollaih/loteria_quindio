@@ -7,20 +7,26 @@ Class Draw extends CI_Model {
 
     // Get the draws rows
     // $id -> If id is different of null it will return only a row with the draw id information
-    public function get_draws($id = null, $number = null) {
-        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
+    public function get_draws($id = null, $number = null, $slug = null) {
+        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name, r.nit');
         $this->db->from('draws d');
-        $this->db->join('products p', 'p.id = d.product_id');
+        $this->db->join('products p', 'p.id = d.product_id', 'left outer');
+        $this->db->join('results r', 'd.id = r.id_draw', 'left outer');
         $this->db->order_by("date", "desc");
+        $this->db->group_by("d.id");
         if($number != null && $number != "null"){
-            $this->db->where("draw_number", $number);
+            $this->db->where("d.draw_number", $number);
         }
         if($id != null && $id != "null"){
-            $this->db->where("id", $id);
+            $this->db->where("d.id", $id);
+        }
+        if($slug != null && $slug != "null"){
+            $this->db->where("d.draw_slug", $slug);
         }
         $query = $this->db->get();
+
         if ($query->num_rows() > 0) {
-            return ($id == null) ? $query->result_array() : $query->row_array();
+            return ($id == null && $number == null && $slug == null) ? $query->result_array() : $query->row_array();
         } else {
             return false;
         }
