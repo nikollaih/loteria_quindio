@@ -20,8 +20,27 @@
                             <li>
                                 <a href="<?= base_url() . 'Usuarios/List'; ?>">Ver Todos</a>
                             </li>
+                            <li>
+                                <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
+                            </li>
                         </ul>
                     </li>
+                    <li>
+                    <a href="javascript: void(0);">
+                        <i data-feather="trending-up"></i>
+                        <span> Reportes </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="<?= base_url() . 'Reports/by_date'; ?>">Por Fecha</a>
+                        </li>
+                        <li>
+                            <a href="<?= base_url() . 'Reports/by_state'; ?>">Por Departamento</a>
+                        </li>
+                    </ul>
+                </li>
                     <li>
                         <a href="<?= base_url() . 'Draws'; ?>">
                             <i data-feather="star"></i>

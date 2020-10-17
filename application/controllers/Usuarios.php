@@ -205,6 +205,20 @@ class Usuarios extends Application_Controller {
 		}
 	}
 
+	public function add_user($slug_user = null){
+		$params["title"] = "Usuarios";
+		$params["subtitle"] = "Usuarios";
+		$params["identification_types"] = $this->Identification_Type->get_identification_types();
+		$params["states"] = $this->Location->get_states();
+		$params["user"] = $this->Usuario->get_user_by_param("slug", $slug_user);
+		$params["roles"] = $this->Usuario->get_roles();
+		if(is_array($params["user"])){
+			$params["cities"] = $this->Location->get_cities($params["user"]["state_id"]);
+		}
+        $this->load_layout("Usuarios/Add", $params);
+	}
+
+	// Users listing
 	public function list(){
 		$params["title"] = "Usuarios";
 		$params["subtitle"] = "Usuarios";
@@ -212,6 +226,7 @@ class Usuarios extends Application_Controller {
         $this->load_layout("Usuarios/List", $params);
 	}
 
+	// Send a verification mail
 	public function send_verification_email($slug = ''){
 		if($slug != ''){
 			$user = $this->Usuario->get_user_by_param("slug", $slug);

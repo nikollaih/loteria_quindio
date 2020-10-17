@@ -43,7 +43,8 @@
                                 <td><?= $user["phone"] ?></td>
                                 <td><?= $user["address"] ?></td>
                                 <td class="text-center" style="width:160px;">
-                                        <button id="row-user-<?= $user['id'] ?>" data-id="<?= $user['id'] ?>" type="button" class="btn btn-danger btn-sm delete-user-button">Eliminar</button>
+                                    <a href="<?= base_url() ?>Usuarios/add_user/<?= $user["slug"] ?>" class="btn btn-primary btn-sm text-light">Modificar</a>
+                                    <button id="row-user-<?= $user['id'] ?>" data-id="<?= $user['id'] ?>" type="button" class="btn btn-danger btn-sm delete-user-button">Eliminar</button>
                                 </td>
                             </tr>
                         <?php

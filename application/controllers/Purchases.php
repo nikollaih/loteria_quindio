@@ -61,6 +61,8 @@ class Purchases extends Application_Controller {
 		$subscriber_amount = $info_data["subscriber"]["amount"];
 		$subcriber_discount = $info_data["subscriber"]["discount"];
 
+		$data["bills"] = ($subscriber_amount > 1) ? $subscriber_amount + 1 : 1;
+		$data["parts"] = $info_data["current_draw"]["fractions_count"];
 		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
