@@ -229,6 +229,9 @@
                                             Su compra ha sido procesada de manera exitosa, aquí puede ver la información correspondiente:
                                         </p>
                                         <p style="line-height: 24px;margin-bottom:5px;">
+                                            <strong>Código de factura:</strong> <?= strtoupper($purchase["slug"]) ?>
+                                        </p>
+                                        <p style="line-height: 24px;margin-bottom:5px;">
                                             <strong>Número del sorteo:</strong> <?= $purchase["draw_number"] ?>
                                         </p>
                                         <p style="line-height: 24px;margin-bottom:5px;">

@@ -39,9 +39,24 @@ Class Usuario extends CI_Model {
         }
     }
 
+    // Get the user's roles
+    public function get_roles() {
+        $this->db->from('roles');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
     // Read data from database to show data in admin page
     public function get_user_by_param($param, $value, $limit = 1){
-        $this->db->from('users');
+        $this->db->select("c.name as city_name, s.id as state_id, s.name as state_name, u.*");
+        $this->db->from('users u');
+        $this->db->join('cities c', 'u.city_id = c.id', 'left outer');
+        $this->db->join('states s', 'c.state_id = s.id', 'left outer');
         $this->db->order_by('first_name', 'asc');
         $this->db->where($param, $value);
         $this->db->where('user_status !=', '2');
