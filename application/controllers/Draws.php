@@ -8,7 +8,7 @@ class Draws extends Application_Controller {
 		parent::__construct();
 		$this->load->model(['Draw', 'Product', 'Result']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation']);
+		$this->load->library(['Form_validation', 'GenerateReturn']);
 	}
 
     // Load the draws listing
@@ -76,6 +76,13 @@ class Draws extends Application_Controller {
         else{
             return array("type" => "danger", "success" => false, "message" => "Los datos recibidos son incorrectos.");
         }
+    }
+
+
+
+    public function generate_return($draw){
+        $draw = $this->Draw->get_draws(null, null, $draw);
+        $this->generatereturn->perform($draw);
     }
 
     // Delete a draw

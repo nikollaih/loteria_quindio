@@ -69,5 +69,35 @@ Class Draw extends CI_Model {
             return false;
         }
     }
+
+    // returns cant of sold fractions in a draw
+    public function get_sold_fractions($id) {
+        $this->db->select("SUM(parts) as parts", FALSE);
+        $this->db->from('purchases');
+        $this->db->where("id_draw", $id);
+      
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
+
+    public function get_sold_grouped_by_serie($id){
+        $this->db->select("*");
+        $this->db->from('purchases');
+        $this->db->where("id_draw", $id);
+        $this->db->group_by("serie");
+      
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
 }
 ?>
