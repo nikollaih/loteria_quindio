@@ -124,19 +124,36 @@
                                 <td><?php echo ($draw["serie"] != null) ? $draw["serie"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td class="text-center" style="width:160px;">
                                     <?php
-                                        if($draw["date"] <= date("Y-m-d") && $draw["result"] == null && $draw["nit"] == null){
+                                        if($draw["date"] <= date("Y-m-d")){
                                     ?>
-                                        <a href="<?= base_url() ?>Results/import_result/<?= $draw["draw_slug"] ?>" data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>'  id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="btn btn-primary btn-sm">Agregar Resultado</a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-link dropdown-toggle gray-color" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i data-feather="settings"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                 <?php
+                                                    if($draw["date"] <= date("Y-m-d") && $draw["result"] == null && $draw["nit"] == null){
+                                                ?>
+                                                    <a href="<?= base_url() ?>Results/import_result/<?= $draw["draw_slug"] ?>" data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>'  id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="dropdown-item">Agregar Resultado</a>
+                                                <?php
+                                                    }
+                                                ?>
+
+                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Devolución</a>
+                                            
+                                                <?php
+                                                    if($draw["nit"] != null){
+                                                ?>
+                                                    <a href="<?= base_url() ?>Draws/results/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Ver Resultados</a>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </div>
+                                        </div>
                                     <?php
                                         }
                                     ?>
-                                    <?php
-                                        if($draw["nit"] != null){
-                                    ?>
-                                        <a href="<?= base_url() ?>Draws/results/<?= $draw["draw_slug"] ?>" type="button" class="btn btn-success btn-sm">Ver Resultados</a>
-                                    <?php
-                                        }
-                                    ?>
+                                    
                                 </td>
                             </tr>
                         <?php

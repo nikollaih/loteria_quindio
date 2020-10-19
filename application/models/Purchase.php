@@ -45,6 +45,27 @@ Class Purchase extends CI_Model {
         }
     }
 
+    public function get_sold_numbers_array($id_draw, $serie = null) {
+        $this->db->select("number");
+        $this->db->from('purchases');
+        $this->db->where("id_draw", $id_draw);
+        if($serie != null){
+            $this->db->where("serie", $serie);
+        }
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $return = array();
+
+            foreach ($query->result_array() as $row) {
+                array_push($return, $row['number']);
+            }
+            return $return;
+        } else {
+            return array();
+        }
+    }
+
     // Add a new purchase
     // $data -> The purchase data with id as null and name
     public function set_purchase($data){

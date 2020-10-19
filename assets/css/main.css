@@ -179,3 +179,7 @@ ul.pagination {
     z-index: 999;
     background-color: rgb(0 0 0 / 37%);
 }
+
+.gray-color {
+    color: #8c8c8c !important;
+}
