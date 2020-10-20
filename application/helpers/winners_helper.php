@@ -66,14 +66,10 @@
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 $array_purchase = str_split($purchase["number"]);
                 $array_result = str_split($draw["result"]);
-                $validate = 0;
-                for ($i=0; $i < 4; $i++) { 
-                    if(in_array($array_purchase[$i], $array_result)){
-                        $validate++;
-                    }
-                }
+                sort($array_purchase);
+                sort($array_result);
 
-                if($validate == 4 && $purchase["number"] != $draw["result"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
+                if(implode("", $array_purchase) == implode("", $array_result) && $purchase["number"] != $draw["result"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
                     return true;
                 }
                 else{

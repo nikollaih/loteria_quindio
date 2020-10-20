@@ -1,12 +1,12 @@
 var results = [];
 
-jQuery(document).on("change", "#input_result", function() {
+jQuery(document).on("change", "#input_result", function () {
     jQuery("#save-result-txt").hide();
     jQuery("#background-loading").show();
     load_results(jQuery(this).attr("data-draw"));
 });
 
-jQuery(document).on("click", "#save-results-btn", function() {
+jQuery(document).on("click", "#save-results-btn", function () {
     save_results();
 });
 
@@ -22,7 +22,7 @@ function load_results(draw_number = null) {
         data: formData,
         processData: false, // tell jQuery not to process the data
         contentType: false, // tell jQuery not to set contentType
-        success: function(data) {
+        success: function (data) {
             data = (JSON.parse(data));
             results = data.object;
             var temp_rows = "";
@@ -52,19 +52,44 @@ function load_results(draw_number = null) {
 }
 
 function save_results() {
+    jQuery("#background-loading").show();
+    $('#draw-result').modal('hide');
     $.ajax({
         url: base_url + "Results/save_results",
         type: 'POST',
         data: { data: results },
-        success: function(data) {
+        success: function (data) {
             data = (JSON.parse(data));
-
             if (data.status) {
-                window.location = base_url + "Draws/results/" + data.object.draw_slug;
+                generate_winners(data.object.id);
+                swal({
+                    title: 'Exito!',
+                    text: 'Resultados y ganadores registrados exitosamente!',
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'Volver a sorteos!',
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function() {
+                    window.location = base_url + "Draws";
+                });
             } else {
                 jQuery("#save-result-txt > span").html(data.message);
                 jQuery("#save-result-txt").css("display", "block");
             }
+        }
+    });
+}
+
+function generate_winners(id_draw){
+    jQuery("#background-loading").show();
+    $.ajax({
+        url: base_url + "Winners/generate_winners",
+        type: 'POST',
+        data: { id_draw: id_draw},
+        success: function () {
+            jQuery("#background-loading").hide();
         }
     });
 }
