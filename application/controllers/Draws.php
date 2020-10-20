@@ -45,7 +45,7 @@ class Draws extends Application_Controller {
     private function draw_register_proccess($data){
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
-                $data["date"] = $data["date"] . " 21:50:00";
+                $data["date"] = $data["date"] . " 21:30:00";
                 $data["draw_slug"] = create_unique_slug("Draws", 8, "draw_slug");
                 $result_draw = $this->Draw->set_draw($data);
                 // If the user was registered successfully
@@ -58,7 +58,7 @@ class Draws extends Application_Controller {
             }
             else{
                 if($data["id"] != null && $data["id"] != "null"){
-                    $data["date"] = $data["date"] . " 21:50:00";
+                    $data["date"] = $data["date"] . " 21:30:00";
                     $result_draw = $this->Draw->update_draw($data);
                     // If the user was registered successfully
                     if($result_draw != false){
@@ -122,5 +122,12 @@ class Draws extends Application_Controller {
         $params["results"] = $this->Result->get_results($params["draw"]["id"]);
         $this->load_layout("Panel/Draws/Results", $params);
     }
-    
+
+    public function winners($slug){
+        $params["title"] = "Ganadores";
+        $params["subtitle"] = "Ganadores";
+        $params["draw"] = $this->Draw->get_draws(null, null, $slug);
+        $params["winners"] = $this->Draw->get_draws_winners($params["draw"]["id"]);
+        $this->load_layout("Panel/Draws/Winners", $params);
+    }
 }

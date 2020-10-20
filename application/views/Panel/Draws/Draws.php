@@ -148,6 +148,13 @@
                                                 <?php
                                                     }
                                                 ?>
+                                                <?php
+                                                    if($draw["result"] != null && $draw["serie"] != null){
+                                                ?>
+                                                    <a href="<?= base_url() ?>Draws/winners/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Ver Ganadores</a>
+                                                <?php
+                                                    }
+                                                ?>
                                             </div>
                                         </div>
                                     <?php

@@ -32,6 +32,28 @@ Class Draw extends CI_Model {
         }
     }
 
+    // Get the draws rows
+    // $id -> If id is different of null it will return only a row with the draw id information
+    public function get_draws_winners($id = null) {
+        $this->db->select('u.*, p.*, p.serie as purchase_serie, w.*, r.*, d.*');
+        $this->db->from('draws d');
+        $this->db->join('purchases p', 'p.id_draw = d.id');
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->join('winners w', 'w.id_purchase = p.id_purchase');
+        $this->db->join('rewards r', 'w.id_reward = r.id_reward');
+
+        if($id != null && $id != "null"){
+            $this->db->where("d.id", $id);
+        }
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
     // Add a new draw
     // $data -> The draw data with id as null and name
     public function set_draw($data){
@@ -69,6 +91,25 @@ Class Draw extends CI_Model {
             return false;
         }
     }
+
+     // Get the last played draw
+     public function get_previous_draw(){
+        $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
+        $this->db->from("draws d");
+        $this->db->join("products p", "d.product_id = p.id");
+        $this->db->where("date <=", date("Y-m-d"));
+        $this->db->order_by("date", "desc");
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
+
 
     // returns cant of sold fractions in a draw
     public function get_sold_fractions($id) {
