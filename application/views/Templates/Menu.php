@@ -20,9 +20,9 @@
                             <li>
                                 <a href="<?= base_url() . 'Usuarios/List'; ?>">Ver Todos</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <li>

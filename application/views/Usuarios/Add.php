@@ -21,7 +21,7 @@
                               if($roles != false && is_array($roles)){
                                  foreach ($roles as $rol) {
                                  ?>
-                                    <option <?= (isset($user) && $user["roles_id"] == $rol["id"]) ? "selected" : "" ?> value='<?= $rol["id"] ?>'><?= $rol["name"] ?></option>
+                                    <option <?= (isset($user["roles_id"]) && $user["roles_id"] == $rol["id"]) ? "selected" : "" ?> value='<?= $rol["id"] ?>'><?= $rol["name"] ?></option>
                                  <?php
                                  }
                               }
@@ -45,19 +45,19 @@
                      </div>
                      <div class="col-md-6 form-group">
                         <label for="identification_number">Número de documento <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control" value="<?= (isset($user)) ? $user["identification_number"] : "" ?>" required>
+                        <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control" value="<?= (isset($user["identification_number"])) ? $user["identification_number"] : "" ?>" required>
                      </div>
                      <div class="col-md-6 form-group">
                         <label for="name">Nombre <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($user)) ? $user["first_name"] : "" ?>">
+                        <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($user["first_name"])) ? $user["first_name"] : "" ?>">
                      </div>
                      <div class="col-md-6 form-group">
                         <label for="last_name">Apellidos <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($user)) ? $user["last_name"] : "" ?>">
+                        <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($user["last_name"])) ? $user["last_name"] : "" ?>">
                      </div>
                      <div class="col-md-12 form-group">
                         <label for="email">Correo electrónico <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="ejemplo@correo.com" type="email" id="email" name="user[email]" class="form-control" required value="<?= (isset($user)) ? $user["email"] : "" ?>">
+                        <input placeholder="ejemplo@correo.com" type="email" id="email" name="user[email]" class="form-control" required value="<?= (isset($user["email"])) ? $user["email"] : "" ?>">
                      </div>
                   </div>
                </div>
@@ -71,7 +71,7 @@
                               if($states != false && is_array($states)){
                               foreach ($states as $state) {
                               ?>
-                           <option <?= (isset($user) && $user["state_id"] == $state["id"]) ? "selected" : "" ?> value='<?= $state["id"] ?>'><?= $state["name"] ?></option>
+                           <option <?= (isset($user["state_id"]) && $user["state_id"] == $state["id"]) ? "selected" : "" ?> value='<?= $state["id"] ?>'><?= $state["name"] ?></option>
                            <?php
                               }
                               }
@@ -86,7 +86,7 @@
                               if($cities != false && is_array($cities)){
                               foreach ($cities as $city) {
                               ?>
-                           <option <?= (isset($cities) && isset($user) && $user["city_id"] == $city["id"]) ? "selected" : "" ?> value='<?= $city["id"] ?>'><?= $city["name"] ?></option>
+                           <option <?= (isset($cities) && isset($user["city_id"]) && $user["city_id"] == $city["id"]) ? "selected" : "" ?> value='<?= $city["id"] ?>'><?= $city["name"] ?></option>
                            <?php
                               }
                               }
@@ -95,15 +95,15 @@
                      </div>
                      <div class="col-md-6 form-group">
                         <label for="phone">Teléfono</label>
-                        <input placeholder="3212233444" min="7" type="number" id="phone" name="user[phone]" class="form-control" value="<?= (isset($user)) ? $user["phone"] : "" ?>">
+                        <input placeholder="3212233444" min="7" type="number" id="phone" name="user[phone]" class="form-control" value="<?= (isset($user["phone"])) ? $user["phone"] : "" ?>">
                      </div>
                      <div class="col-md-6 form-group">
                         <label for="birth_date">Fecha de nacimiento</label>
-                        <input type="text" id="birth_date" name="user[birth_date]" class="form-control flatpickr-input active" placeholder="" value="<?= (isset($user)) ? $user["birth_date"] : "" ?>">
+                        <input type="text" id="birth_date" name="user[birth_date]" class="form-control flatpickr-input active" placeholder="" value="<?= (isset($user["birth_date"])) ? $user["birth_date"] : "" ?>">
                      </div>
                      <div class="col-md-12 form-group">
                         <label for="phone">Dirección</label>
-                        <input placeholder="Ej: Calle 2 # 3 - 45" type="text" id="address" name="user[address]" class="form-control" value="<?= (isset($user)) ? $user["address"] : "" ?>">
+                        <input placeholder="Ej: Calle 2 # 3 - 45" type="text" id="address" name="user[address]" class="form-control" value="<?= (isset($user["address"])) ? $user["address"] : "" ?>">
                      </div>
                   </div>
                </div>
