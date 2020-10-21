@@ -59,11 +59,6 @@
                             <input data-draw="<?= $draw["draw_number"] ?>" accept=".txt" id="input_result" required name="result" type="file" class="form-control-file text-center">
                         </div>
                     </div>
-                    <!-- <div class="col-md-12 text-center">
-                        <div class="form-group">
-                            <button id="load-results-btn" class="btn btn-success">Cargar Resultados</button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

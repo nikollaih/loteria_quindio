@@ -9,12 +9,13 @@ class Usuarios extends Application_Controller {
 		$this->load->model(['Usuario', 'Hobbie', 'Identification_Type', 'Location']);
 		$this->load->helper(["url", "form"]);
 		$this->load->library(['Form_validation', 'Mailer']);
+		$this->HEADER_LOCATION = "Location: ";
 	}
 
     // Carga la vista de login con todos los parametros seleccionados
 	public function login(){
 		if(is_logged()){
-			header("Location: " . base_url() . "panel");
+			header($this->HEADER_LOCATION . base_url() . "panel");
 		}
 
 		$data["title"] = "Login | Lotería del Quindío";
@@ -32,7 +33,7 @@ class Usuarios extends Application_Controller {
 		// Check if input rules are ok
 		if ($this->form_validation->run() == FALSE) {
 			if(isset($this->session->userdata['logged_in'])){
-				header("Location: " . base_url() . "panel");
+				header($this->HEADER_LOCATION. base_url() . "panel");
 				exit();
 			}else{
 				$this->load->view('Usuarios/Login');
@@ -53,10 +54,10 @@ class Usuarios extends Application_Controller {
 					// Add user data in session
 					$this->session->set_userdata('logged_in', $result);
 					if($this->session->has_userdata("draw_number")){
-						header("Location: " . base_url() . "Purchases");
+						header($this->HEADER_LOCATION. base_url() . "Purchases");
 					}
 					else{
-						header("Location: " . base_url() . "panel");
+						header($this->HEADER_LOCATION. base_url() . "panel");
 					}
 					exit();
 				}else {
@@ -98,7 +99,7 @@ class Usuarios extends Application_Controller {
 	// Carga la vista de login con todos los parametros seleccionados
 	public function registro(){
 		if($this->session->has_userdata('logged_in')){
-			header("Location: " . base_url() . "panel");
+			header($this->HEADER_LOCATION. base_url() . "panel");
 		}
 
 		if($this->input->post()){
@@ -134,10 +135,10 @@ class Usuarios extends Application_Controller {
 						$this->session->set_userdata('logged_in', $result);
 						$this->session->set_userdata('register', true);
 						if($this->session->has_userdata("draw_number")){
-							header("Location: " . base_url() . "Purchases");
+							header($this->HEADER_LOCATION. base_url() . "Purchases");
 						}
 						else{
-							header("Location: " . base_url() . "panel");
+							header($this->HEADER_LOCATION. base_url() . "panel");
 						}
 						exit();
 					}
@@ -212,9 +213,48 @@ class Usuarios extends Application_Controller {
 		$params["states"] = $this->Location->get_states();
 		$params["user"] = $this->Usuario->get_user_by_param("slug", $slug_user);
 		$params["roles"] = $this->Usuario->get_roles();
+
 		if(is_array($params["user"])){
 			$params["cities"] = $this->Location->get_cities($params["user"]["state_id"]);
 		}
+
+		if($this->input->post()){
+			// Set the inputs rules
+			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
+			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
+
+			// Check if input rules are ok
+			if ($this->form_validation->run() == false) {
+				$params["message"] = array("type" => "danger", "message" => "Ha ocurrido un error, por favor intente de nuevo más tarde", "success" => false);
+			}else{
+				if($this->input->post("user")["id"]){
+					// Get the user by password
+					if ($this->Usuario->update($this->input->post("user"))){
+						$params["message"] = array("type" => "success", "message" => "Usuario modificado exitosamente", "success" => true, "updated" => TRUE);
+					}
+					else{
+						$params["message"] = array("type" => "danger", "message" => "Ha ocurrido un error intentando modificar el usuario", "success" => false);
+					}
+				}
+				else{
+					if($this->input->post("user")["password"] == $this->input->post("r_new_password")){
+						$params["message"] = $this->user_signin_process($this->input->post("user"), false);
+					}
+					else{
+						$params["message"] = array("type" => "danger", "message" => "Las contraseñas no coinciden", "success" => false);
+					}
+				}
+			}
+
+			if(!$params["message"]["success"] || isset($params["message"]["updated"])){
+				$params["user"] = $this->input->post("user");
+			}
+		}
+
         $this->load_layout("Usuarios/Add", $params);
 	}
 
@@ -222,6 +262,7 @@ class Usuarios extends Application_Controller {
 	public function list(){
 		$params["title"] = "Usuarios";
 		$params["subtitle"] = "Usuarios";
+		$params["roles"] = $this->Usuario->get_roles();
 		$params["users"] = $this->get_users_by_role(1, null);
         $this->load_layout("Usuarios/List", $params);
 	}
@@ -247,7 +288,7 @@ class Usuarios extends Application_Controller {
 	public function logout() {
 		$this->session->unset_userdata('logged_in');
 		$data['message_display'] = 'Successfully Logout';
-		header("Location: " . base_url() . "usuarios/login");
+		header($this->HEADER_LOCATION. base_url() . "usuarios/login");
 	}
 
 	// Get the users list by role id

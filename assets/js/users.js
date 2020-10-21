@@ -10,27 +10,27 @@ var table_users = jQuery("#table-users").DataTable({
 });
 
 // When the load button is pressed
-jQuery(document).on("click", ".slt-role", function() {
+jQuery(document).on("click", ".slt-role", function () {
     jQuery("#background-loading").show();
     load_users(jQuery(this).attr("role-id"));
 });
 
 // When the delete user button is pressed
-jQuery(document).on("click", ".delete-user-button", function() {
+jQuery(document).on("click", ".delete-user-button", function () {
     delete_user(jQuery(this).attr("data-id"));
 });
 
 function load_users(role = 1) {
     var text_role = "Admiistradores";
     jQuery.post(base_url + "Usuarios/get_users_by_role/" + role, {},
-        function(data) {
+        function (data) {
             table_users
                 .clear()
 
             for (let i = 0; i < data.length; i++) {
                 const e = data[i];
                 table_users
-                    .row.add([e.identification_number, e.first_name + " " + e.last_name, e.email, e.phone, e.address, '<button id="row-user-' + e.id + '" data-id="' + e.id + '" type="button" class="btn btn-danger btn-sm delete-user-button">Eliminar</button>'])
+                    .row.add([e.identification_number, e.first_name + " " + e.last_name, e.email, e.phone, e.address, '<a href="'+base_url+'Usuarios/add_user/' + e.slug + '" class="btn btn-primary btn-sm text-light">Modificar</a><button id="row-user-' + e.id + '" data-id="' + e.id + '" type="button" class="btn btn-danger btn-sm delete-user-button">Eliminar</button>'])
             }
             table_users
                 .draw();
@@ -41,6 +41,9 @@ function load_users(role = 1) {
                     break;
                 case "2":
                     text_role = "Clientes";
+                    break;
+                case "3":
+                    text_role = "Asistentes";
                     break;
                 default:
                     text_role = "Administradores";
@@ -53,17 +56,17 @@ function load_users(role = 1) {
 
 function delete_user(id) {
     swal({
-            title: '¿Estás seguro?',
-            text: 'El usuario será eliminado!',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Si, Eliminar!',
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true
-        },
-        function() {
+        title: '¿Estás seguro?',
+        text: 'El usuario será eliminado!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, Eliminar!',
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    },
+        function () {
             jQuery.post(base_url + "Usuarios/delete_user", { id: id },
-                function(data) {
+                function (data) {
                     if (data.error == false) {
                         table_users
                             .row($("#row-user-" + id).parents('tr'))

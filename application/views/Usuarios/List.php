@@ -12,8 +12,15 @@
                             <i class="icon"><span data-feather="chevron-down"></span></i>
                         </button>
                         <div class="dropdown-menu">
-                            <a role-id="1" class="dropdown-item slt-role" href="#">Administradores</a>
-                            <a role-id="2" class="dropdown-item slt-role" href="#">Clientes</a>
+                            <?php
+                              if($roles && is_array($roles)){
+                                 foreach ($roles as $rol) {
+                                 ?>
+                                    <a role-id="<?= $rol["id"] ?>" class="dropdown-item slt-role" href="#"><?= $rol["name"] ?></a>
+                                 <?php
+                                 }
+                              }
+                           ?>
                         </div>
                     </div>
                 </div>

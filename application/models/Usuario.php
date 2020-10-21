@@ -17,12 +17,6 @@ Class Usuario extends CI_Model {
         }
     }
 
-    // Update the user information
-    public function update_user($data){
-        $this->db->where("id", $data["id"]);
-        return $this->db->update("users", $data);
-    }
-
     // Read data using username and password
     public function login($data) {
         $this->db->from('users');
@@ -72,6 +66,7 @@ Class Usuario extends CI_Model {
         }
     }
 
+    // Update the user information
     public function update($data){
         $this->db->where("id", $data["id"]);
         return $this->db->update("users", $data);

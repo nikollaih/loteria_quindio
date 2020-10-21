@@ -11,7 +11,7 @@
                 ?>
                     <li>
                         <a href="javascript: void(0);">
-                            <i data-feather="users"></i>
+                            <em data-feather="users"></em>
                             <span> Usuarios </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -20,14 +20,14 @@
                             <li>
                                 <a href="<?= base_url() . 'Usuarios/List'; ?>">Ver Todos</a>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
-                            </li> -->
+                            </li>
                         </ul>
                     </li>
                     <li>
                     <a href="javascript: void(0);">
-                        <i data-feather="trending-up"></i>
+                        <em data-feather="trending-up"></em>
                         <span> Reportes </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -43,26 +43,26 @@
                 </li>
                     <li>
                         <a href="<?= base_url() . 'Draws'; ?>">
-                            <i data-feather="star"></i>
+                            <em data-feather="star"></em>
                             <span> Sorteos </span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= base_url() . 'Blends'; ?>">
-                            <i data-feather="settings"></i>
+                            <em data-feather="settings"></em>
                             <span> Mezclas </span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= base_url() . 'Hobbies'; ?>">
-                            <i data-feather="coffee"></i>
+                            <em data-feather="coffee"></em>
                             <span> Hobbies </span>
                         </a>
                     </li>
 
                     <li>
                         <a href="<?= base_url() . 'Products'; ?>">
-                            <i data-feather="tag"></i>
+                            <em data-feather="tag"></em>
                             <span> Productos </span>
                         </a>
                     </li>
@@ -71,7 +71,7 @@
                 ?>
                 <li>
                     <a href="javascript: void(0);">
-                        <i data-feather="dollar-sign"></i>
+                        <em data-feather="dollar-sign"></em>
                         <span> Compras </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -87,7 +87,7 @@
                 </li>
                 <li>
                         <a href="<?= base_url() . 'Purchases/user_subscriber'; ?>">
-                            <i data-feather="refresh-cw"></i>
+                            <em data-feather="refresh-cw"></em>
                             <span> Abonados </span>
                         </a>
                     </li>
