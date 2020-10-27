@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0">Lista de resultados registrados para el sorteo #<?= $draw["draw_number"] ?></h4>
+                <h4 class="header-title mt-0">Lista de resultados registrados para el sorteo #<?= $draw["draw_number"]?> </h4>
                 <hr class="mb-4">
                 <table id="table-results" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
