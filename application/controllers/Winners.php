@@ -183,8 +183,8 @@ class Winners extends Application_Controller {
     }
 
     public function manage_rewards(){
-        $params["title"] = "Aproximaciones | Lotería del Quindío";
-        $params["subtitle"] = "Aproximaciones";
+        $params["title"] = "Premios | Lotería del Quindío";
+        $params["subtitle"] = "Premios";
         $params["rewards"] = $this->Reward->get_rewards();
         $this->load_layout("Panel/Rewards/Rewards", $params);
     }

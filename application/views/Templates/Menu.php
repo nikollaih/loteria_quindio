@@ -30,7 +30,7 @@
                     <li>
                         <a href="<?= base_url() . 'Winners/manage_rewards'; ?>">
                             <em data-feather="dollar-sign"></em>
-                            <span> Aproximaciones </span>
+                            <span> Premios </span>
                         </a>
                     </li>
                     <li>
