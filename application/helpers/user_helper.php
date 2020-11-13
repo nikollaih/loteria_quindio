@@ -71,4 +71,18 @@
       return $CI->Usuario->update($user_update);
     }
   }
+
+  if(!function_exists('get_user_profile')){
+    function get_user_profile($user_id = null){
+      $CI = &get_instance();
+      $CI->load->model(['Usuario']);
+
+
+      if($user_id == null){
+        $user_id = logged_user()["id"];
+      }
+
+      return $CI->Usuario->get_user_by_param("u.id", $user_id);
+    }
+  }
 ?>

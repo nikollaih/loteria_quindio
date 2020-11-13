@@ -3,7 +3,9 @@
     <div class="sidebar-content">
         <!--- Sidemenu -->
         <div id="sidebar-menu" class="slimscroll-menu">
+
             <ul class="metismenu" id="menu-bar">
+            <li class="menu-title">Saldo: $ <?= number_format(get_user_profile()["balance_total"], 0, ',', '.') ?> COP</li>
                 <li class="menu-title">Menú</li>
                 
                 <?php
