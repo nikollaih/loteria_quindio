@@ -20,7 +20,8 @@ Class Winner extends CI_Model {
 
     // Set a new winner
     public function set_winner($data) {
-       return $this->db->insert("winners", $data);
+       $this->db->insert("winners", $data);
+       return $this->get_winner($data["id_purchase"]);
     }
 }
 ?>

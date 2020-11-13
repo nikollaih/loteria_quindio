@@ -17,12 +17,18 @@
             // Get the booking numbers list
             $booking_number = $CI->Booking->get_bookings(array("serie" => $blend["serie"], "id_draw" => $active_draw["id"]));
 
+
+
             // Merge the sold and booked numbers to get a complete
             $exclude_array = array_merge($sold_numbers, $booking_number);
+            $temp_exclude = [];
+            for ($i=0; $i < count($exclude_array); $i++) { 
+                array_push($temp_exclude, array_values($exclude_array[$i])[0]) ;
+            }
 
-            do {   
+            do {
                 $rand_number = sprintf("%04s", rand($blend["start_number"], $blend["end_number"]));
-            } while(in_array($rand_number, $exclude_array));
+            } while(in_array(intval($rand_number), $temp_exclude));
             
             return array("draw" => $active_draw, "number" => $rand_number, "serie" => $blend["serie"]);
         }

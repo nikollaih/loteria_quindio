@@ -45,6 +45,7 @@ Class Draw extends CI_Model {
         if($id != null && $id != "null"){
             $this->db->where("d.id", $id);
         }
+        $this->db->order_by("w.id_reward");
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

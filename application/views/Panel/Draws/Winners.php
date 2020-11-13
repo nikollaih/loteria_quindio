@@ -9,8 +9,8 @@
                         <tr>
                             <th scope="col">Premio</th>
                             <th scope="col">Ganador</th>
-                            <th scope="col">Resultado</th>
-                            <th scope="col">Serie</th>
+                            <th scope="col">Resultado MAYOR</th>
+                            <th scope="col">Serie MAYOR</th>
                             <th scope="col">Número Comprado</th>
                             <th scope="col">Serie Comprada</th>
                         </tr>

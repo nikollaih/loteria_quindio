@@ -26,6 +26,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="<?= base_url() . 'Winners/manage_rewards'; ?>">
+                            <em data-feather="dollar-sign"></em>
+                            <span> Aproximaciones </span>
+                        </a>
+                    </li>
+                    <li>
                     <a href="javascript: void(0);">
                         <em data-feather="trending-up"></em>
                         <span> Reportes </span>

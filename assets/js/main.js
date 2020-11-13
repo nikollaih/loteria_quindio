@@ -27,6 +27,7 @@ import "./products.js";
 import "./users.js";
 import "./results.js";
 import "./reports.js";
+import "./rewards.js";
 import "./app.min.js";
 
 jQuery(document).ready(function() {

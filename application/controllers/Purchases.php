@@ -8,7 +8,7 @@ class Purchases extends Application_Controller {
 		parent::__construct();
 		$this->load->helper(['url', 'product']);
 		$this->load->library(['session', 'form_validation', 'Mailer']);
-		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber']);
+		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber', 'Usuario']);
 	}
 
 	public function index()
@@ -47,6 +47,7 @@ class Purchases extends Application_Controller {
 
         $params["title"] = "Compra";
 		$params["subtitle"] = "Compra";
+		$params["user"] = $this->Usuario->get_user_by_param("u.id", logged_user()["id"]);
 		$params["states"] = $this->Location->get_states();
 		$params["blends"] = $this->Blend->get_blends();
 		$params["cities"] = $this->Location->get_cities_by_city(logged_user()["city_id"]);
@@ -58,6 +59,7 @@ class Purchases extends Application_Controller {
 	function register_purchase_proccess($info_data){
 		$data = $info_data["purchase"];
 		$blend = $this->Blend->get_blends($data["serie"]);
+		$user = $this->Usuario->get_user_by_param("u.id", logged_user()["id"]);
 		$subscriber_amount = $info_data["subscriber"]["amount"];
 		$subcriber_discount = $info_data["subscriber"]["discount"];
 
@@ -67,12 +69,15 @@ class Purchases extends Application_Controller {
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
 		$data["slug"] = create_unique_slug("Purchases", 8);
+		$data["discount"] = 0;
 		$draw = $this->Draw->get_active_draw();
 
 		if($subscriber_amount > 1){
 			$data["price"] = ($info_data["current_draw"]["fraction_value"] * $data["parts"] * $subscriber_amount) + ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"]);
 			$data["discount"] = ($data["price"] - ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"])) * ($subcriber_discount / 100);
 		}
+
+		$this->do_payment($data, $user["balance_total"]);
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
@@ -109,6 +114,20 @@ class Purchases extends Application_Controller {
 		}
 		else{
 			return array("type" => "danger", "success" => false, "message" => "El sorteo #".$draw["draw_number"]." ya no se encuentra disponible.");
+		}
+	}
+
+	function do_payment($purchase, $user_balance){
+		$purchase_total = $purchase["price"] - $purchase["discount"];
+		if($purchase["payment_method"] == 2){
+			if(($purchase_total) <= $user_balance){
+				$new_balance = $user_balance - ($purchase_total);
+			}
+			else{
+				$new_balance = 0;
+			}
+
+			if(update_balance($new_balance, $purchase["id_user"]));
 		}
 	}
 

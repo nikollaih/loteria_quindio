@@ -54,7 +54,7 @@
                             <th scope="col">Serie</th>
                             <th scope="col">Sorteo</th>
                             <th scope="col">Abonados</th>
-                            <th scope="col">Valor</th>
+                            <th scope="col">Total</th>
                         </tr>
                     </thead>
                     <tbody>

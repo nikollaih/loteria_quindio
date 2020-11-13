@@ -55,4 +55,20 @@
       return $scope->form_validation->run();
     }
   }
+
+  if(!function_exists('update_balance')){
+    function update_balance($new_balance, $user_id = null){
+      $CI = &get_instance();
+      $CI->load->model(['Usuario']);
+
+      $user_update["id"] = $user_id;
+      if($user_id == null){
+        $user_update["id"] = logged_user()["id"];
+      }
+
+      $user_update["balance_total"] = $new_balance;
+      // Update the user balance
+      return $CI->Usuario->update($user_update);
+    }
+  }
 ?>

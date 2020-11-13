@@ -24,6 +24,7 @@ function load_results(draw_number = null) {
         contentType: false, // tell jQuery not to set contentType
         success: function (data) {
             data = (JSON.parse(data));
+            console.log(data)
             results = data.object;
             var temp_rows = "";
 

@@ -34,6 +34,7 @@ class Files extends CI_Controller {
                                         if(count($result) == 10){
                                             if(strlen($result[8]) == 4 && strlen($result[9]) == 3){
                                                 $data["id_draw"] = $draw["id"];
+                                                $data["id_reward"] = get_id_reward_by_line($i);
                                                 $data["award_name"] = get_result_name_by_line($i);
                                                 $data["nit"] = $result[0];
                                                 $data["dv"] = $result[1];
@@ -146,7 +147,7 @@ class Files extends CI_Controller {
                 $sheet->setCellValue('E'.$line, 'SERIE'); 
                 $sheet->setCellValue('F'.$line, 'SORTEO'); 
                 $sheet->setCellValue('G'.$line, 'ABONADOS'); 
-                $sheet->setCellValue('H'.$line, 'PRECIO'); 
+                $sheet->setCellValue('H'.$line, 'SUBTOTAL'); 
                 $sheet->setCellValue('I'.$line, 'DESCUENTO'); 
                 $sheet->setCellValue('J'.$line, 'TOTAL'); 
 
@@ -176,7 +177,7 @@ class Files extends CI_Controller {
 
                 // Set the prices summary
                 $sheet->mergeCells("A4:B4");
-                $sheet->setCellValue('A4', 'PRECIO'); 
+                $sheet->setCellValue('A4', 'SUBTOTAL'); 
                 $sheet->getStyle("A4:B4")->applyFromArray($this->getItemTitleStyle());
                 $sheet->mergeCells("C4:D4");
                 $sheet->setCellValue('C4', $price); 
@@ -262,7 +263,7 @@ class Files extends CI_Controller {
                 // Set the table titles
                 $sheet->setCellValue('A'.$line, 'DEPARTAMENTO'); 
                 $sheet->setCellValue('B'.$line, 'BILLETES VENDIDOS'); 
-                $sheet->setCellValue('C'.$line, 'PRECIO'); 
+                $sheet->setCellValue('C'.$line, 'SUBTOTAL'); 
                 $sheet->setCellValue('D'.$line, 'DESCUENTO'); 
                 $sheet->setCellValue('E'.$line, 'TOTAL'); 
 
@@ -286,7 +287,7 @@ class Files extends CI_Controller {
 
                 // Set the prices summary
                 $sheet->mergeCells("A4:B4");
-                $sheet->setCellValue('A4', 'PRECIO'); 
+                $sheet->setCellValue('A4', 'SUBTOTAL'); 
                 $sheet->getStyle("A4:B4")->applyFromArray($this->getItemTitleStyle());
                 $sheet->mergeCells("C4:D4");
                 $sheet->setCellValue('C4', $price); 

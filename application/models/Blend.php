@@ -45,6 +45,7 @@ Class Blend extends CI_Model {
         $this->db->where("start_number", $data["start_number"]);
         $this->db->where("end_number", $data["end_number"]);
         $this->db->where("serie", $data["serie"]);
+        $this->db->where("blend_status", 1);
 
         $query = $this->db->get();
 

@@ -279,14 +279,18 @@
                         </div>
                   <?php
                      }
-                  ?>
+                  ?> 
                </div>
                <hr class="mb-4">
                <h4 class="mb-3">Pago</h4>
                <div class="d-block my-3">
                   <div class="custom-control custom-radio">
-                     <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
-                     <label class="custom-control-label" for="credit">Banco Ejemplo</label>
+                     <input id="bank" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="1">
+                     <label class="custom-control-label" for="bank">Banco Ejemplo</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                  <input id="balance" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="2">
+                     <label class="custom-control-label" for="balance">Saldo en plataforma: $<?= number_format($user["balance_total"], 0, ',', '.') ?> COP</label>
                   </div>
                </div>
                <img src="<?= base_url() ?>assets/images/mediosdepago.png" alt="" srcset="" width="100%">

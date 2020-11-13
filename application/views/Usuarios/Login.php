@@ -44,8 +44,8 @@
           ¡La de todos!
         </div>
         <br>
-        <div class="width-70-percent mt-4">
-          <img class="mb-4 text-center img-100" src="<?= base_url().'assets/images/login-picture.svg' ?>">
+        <div class="width-70-percent mt-4 text-center">
+          <img width="180" class="mb-4 text-center" src="<?= base_url().'assets/images/cafeterito.png' ?>">
         </div>
       </div>
     </div>

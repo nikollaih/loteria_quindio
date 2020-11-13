@@ -25,6 +25,7 @@ class Results extends Application_Controller {
                         $result = explode("|", $result_rows[$i]);
 
                         $data["id_draw"] = $draw["id"];
+                        $data["id_reward"] = get_id_reward_by_line($i);
                         $data["award_name"] = get_result_name_by_line($i);
                         $data["nit"] = $result[0];
                         $data["dv"] = $result[1];
@@ -65,7 +66,6 @@ class Results extends Application_Controller {
             // Check is there is any post data
             if($this->input->post()){
                 $data = $this->input->post("data");
-                
                 if(count($data) == 38){
                     $result_insert = $this->Result->set_results($data);
 

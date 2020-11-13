@@ -3,8 +3,27 @@
         function check_premio_mayor($purchase, $draw, $check_serie = false){
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 if($purchase["number"] == $draw["result"] && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
-                    echo "Claro que si";
                     return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    if(!function_exists('check_seco')){
+        function check_seco($purchase, $draw, $results, $id_reward){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                if(is_array($results)){
+                    for ($i=0; $i < count($results); $i++) { 
+                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] == $results[$i]["result_serie"] && $id_reward == $results[$i]["id_reward"]){
+                            $i = count($results);
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
                 else{
                     return false;
@@ -60,7 +79,6 @@
         }
     }
 
-    // ================= REVISAR =============== //
     if(!function_exists('check_combinado')){
         function check_combinado($purchase, $draw, $check_serie = false){
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
