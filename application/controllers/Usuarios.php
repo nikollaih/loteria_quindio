@@ -308,10 +308,10 @@ class Usuarios extends Application_Controller {
             $id = $this->input->post("id");
 
             if($id){
-                $user = $this->Usuario->get_user_by_param("id", $id);
+                $user = $this->Usuario->get_user_by_param("u.id", $id);
                 if($user != FALSE){
 
-                    $result = $this->Usuario->update_user(array("id" => $id, "user_status" => "2"));
+                    $result = $this->Usuario->update(array("id" => $id, "user_status" => "2"));
 
                     if($result){
                         echo json_encode(array("error" => FALSE, "message" => "Usuario eliminado correctamente."));
@@ -331,5 +331,42 @@ class Usuarios extends Application_Controller {
         else{
             echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
         }
+	}
+	
+	// Change the user password
+	public function change_password(){
+            $data = $this->input->post();
+
+            if(isset($data["current_password"]) && isset($data["new_password"]) && isset($data["r_new_password"])){
+                $user = $this->Usuario->get_user_by_param("u.id", logged_user()["id"]);
+                if($user != FALSE){
+					if(md5($data["current_password"]) == $user["password"]){
+						if($data["new_password"] == $data["r_new_password"] && strlen($data["new_password"]) > 5){
+							$new_user["password"] = md5($data["new_password"]);
+							$new_user["id"] = $user["id"];
+
+							if ($this->Usuario->update($new_user)){
+								echo json_encode(array("error" => FALSE, "message" => "Contraseña modificada exitosamente."));
+							}
+							else{
+								echo json_encode(array("error" => TRUE, "message" => "Ha ocurrio un error, por favor intente de nuevo más tarde."));
+							}
+						}
+						else{
+							echo json_encode(array("error" => TRUE, "message" => "Las contraseñas nuevas no coinciden o no cumplen con la longitud minima requerida (6)."));
+						}
+					}
+					else{
+						echo json_encode(array("error" => TRUE, "message" => "La contraseña actual es incorrecta, por favor intente nuevamente."));
+					}
+                }
+                else{
+                    echo json_encode(array("error" => TRUE, "message" => "El usuario que intenta modificar no se encuentra registrado."));
+                }
+            }
+            else{
+                echo json_encode(array("error" => TRUE, "message" => "Todos los campos son requeridos."));
+            }
+        
     }
 }

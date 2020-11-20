@@ -11,6 +11,17 @@ if(!function_exists('is_admin'))
 
 }
 
+if(!function_exists('is_client'))
+{
+    function is_client(){
+        $CI = &get_instance();
+        $CI->load->library('session');
+
+        return ($CI->session->userdata('logged_in')["roles_id"] == 2);
+    }
+
+}
+
 if(!function_exists('logged_user'))
 {
     function logged_user(){
