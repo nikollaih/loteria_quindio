@@ -1,4 +1,4 @@
-<footer class="footer bg-light">
+<!-- <footer class="footer bg-light">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -6,7 +6,7 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
 <script type="module" src="<?= base_url().'assets/js/main.js' ?>"></script>
 <script src="<?= base_url().'assets/libs/select2/select2.min.js' ?>"></script>
 <!-- end Footer -->

@@ -88,3 +88,74 @@ function delete_user(id) {
                 }, 'json')
         });
 }
+
+function change_password(data) {
+    $.ajax({
+        url: base_url + "Usuarios/change_password",
+        type: 'POST',
+        data: data,
+        success: function (result) {
+            result = (JSON.parse(result));
+            console.log(result);
+            if (result.error) {
+                swal({
+                    title: 'Error!',
+                    text: result.message,
+                    type: 'error',
+                    showCancelButton: false,
+                    confirmButtonText: 'Continuar',
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                })
+            }
+            else {
+                swal({
+                    title: 'Exito!',
+                    text: result.message,
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'Continuar',
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                },
+                function(){
+                    jQuery("#change_password_modal").modal("hide");
+                })
+            }
+
+            jQuery("#spinner-change-password").css("display", "none");
+            jQuery("#btn-save-change-password").css("display", "block");
+        }
+    });
+}
+
+(function() {
+	function toJSONString( form ) {
+		var obj = {};
+		var elements = form.querySelectorAll( "input, select, textarea" );
+		for( var i = 0; i < elements.length; ++i ) {
+			var element = elements[i];
+			var name = element.name;
+			var value = element.value;
+
+			if( name ) {
+				obj[ name ] = value;
+			}
+		}
+
+		return  obj ;
+	}
+
+	document.addEventListener( "DOMContentLoaded", function() {
+		var form = document.getElementById( "change-password-form" );
+		form.addEventListener( "submit", function( e ) {
+            jQuery("#spinner-change-password").css("display", "block");
+            jQuery("#btn-save-change-password").css("display", "none");
+			e.preventDefault();
+            var json = toJSONString( this );
+            change_password(json);
+		}, false);
+
+	});
+
+})();

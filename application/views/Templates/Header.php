@@ -22,10 +22,14 @@
                     aria-haspopup="false" aria-expanded="false">
                     <i data-feather="chevron-down"></i>
                 </a>
-                <div class="dropdown-menu profile-dropdown-items dropdown-menu-right">
-                    <a href="pages-profile.html" class="dropdown-item notify-item">
+                <div style="width:250px !important;" class="dropdown-menu profile-dropdown-items dropdown-menu-right">
+                    <a href="<?= base_url() . 'Usuarios/add_user/' . logged_user()['slug']; ?>" class="dropdown-item notify-item">
                         <i data-feather="user" class="icon-dual icon-xs mr-2"></i>
                         <span>Cuenta</span>
+                    </a>
+                    <a href="#" data-toggle="modal" data-target="#change_password_modal" class="dropdown-item notify-item">
+                        <i data-feather="lock" class="icon-dual icon-xs mr-2"></i>
+                        <span>Cambiar contraseña</span>
                     </a>
                     <div class="dropdown-divider"></div>
 

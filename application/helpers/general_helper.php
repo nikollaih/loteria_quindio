@@ -44,4 +44,55 @@
         }
     
     }
+
+    // Get the banls listing
+    if(!function_exists('get_array_banks'))
+    {
+        function get_array_banks(){
+            $banks = "BANCAMIA S.A.,BANCO AGRARIO,BANCO AV VILLAS,BANCO BBVA COLOMBIA S.A.,BANCO CAJA SOCIAL,BANCO COOPERATIVO COOPCENTRAL,BANCO DAVIVIENDA,BANCO DE BOGOTA,BANCO DE OCCIDENTE,BANCO FALABELLA,BANCO GNB SUDAMERIS,BANCO ITAU,BANCO PICHINCHA S.A.,BANCO POPULAR,BANCO PROCREDIT,BANCO SANTANDER COLOMBIA,BANCO SERFINANZA,BANCOLOMBIA,BANCOOMEVA S.A.,CFA COOPERATIVA FINANCIERA,CITIBANK,COLTEFINANCIERA,CONFIAR COOPERATIVA FINANCIERA,COTRAFA,DAVIPLATA,NEQUI,RAPPIPAY,SCOTIABANK COLPATRIA";
+            return explode(",", $banks);
+        }
+    
+    }
+
+    // Get an array with the identification types
+    if(!function_exists('get_identification_types'))
+    {
+        function get_identification_types(){
+            $CI = &get_instance();
+            $CI->load->model(['Identification_Type']);
+
+            return $CI->Identification_Type->get_identification_types();
+        }
+    
+    }
+
+    // Get the class name given the status name
+    if(!function_exists('get_class_by_status'))
+    {
+        function get_class_by_status($status){
+            switch (strtolower($status)) {
+                case 'pendiente':
+                    return "secondary";
+                    break;
+                case 'cancelado':
+                    return "danger";
+                    break;
+                case 'denegado':
+                    return "warning";
+                    break;
+                case 'confirmado':
+                    return "primary";
+                    break;
+                case 'completado':
+                    return "success";
+                    break;
+                
+                default:
+                    return "primary";
+                    break;
+            }
+        }
+    
+    }
 ?>

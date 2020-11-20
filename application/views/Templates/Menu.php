@@ -3,9 +3,28 @@
     <div class="sidebar-content">
         <!--- Sidemenu -->
         <div id="sidebar-menu" class="slimscroll-menu">
-
             <ul class="metismenu" id="menu-bar">
-            <li class="menu-title">Saldo: $ <?= number_format(get_user_profile()["balance_total"], 0, ',', '.') ?> COP</li>
+                <?php
+                    if(is_client() || is_admin()){
+                ?>
+                    <li>
+                        <a href="javascript: void(0);">
+                            <span> Saldo: $ <?= number_format(get_user_profile()["balance_total"], 0, ',', '.') ?> COP </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                                <a href="#" id="btn-generate-withdraw">Solicitar retiro</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url() . 'Withdraws'; ?>">Historial de retiros</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php
+                    }
+                ?>
                 <li class="menu-title">Menú</li>
                 
                 <?php
@@ -26,6 +45,12 @@
                                 <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="<?= base_url() . 'Withdraws'; ?>">
+                            <em data-feather="credit-card"></em>
+                            <span> Solicitudes de retiro </span>
+                        </a>
                     </li>
                     <li>
                         <a href="<?= base_url() . 'Winners/manage_rewards'; ?>">
