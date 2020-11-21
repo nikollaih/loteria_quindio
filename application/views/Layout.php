@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Número de documento</label>
-                    <input type="number" name="document_number" id="document_number" class="form-control" required="required" value="<?= logged_user()["identification_number"] ?>"/>
+                    <input readonly type="number" name="document_number" id="document_number" class="form-control" required="required" value="<?= logged_user()["identification_number"] ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="">Banco</label>
