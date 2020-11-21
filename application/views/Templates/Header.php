@@ -31,6 +31,16 @@
                         <i data-feather="lock" class="icon-dual icon-xs mr-2"></i>
                         <span>Cambiar contraseña</span>
                     </a>
+                    <?php 
+                        if(is_admin()){
+                    ?>
+                        <a href="<?= base_url() ?>Settings" class="dropdown-item notify-item">
+                            <i data-feather="settings" class="icon-dual icon-xs mr-2"></i>
+                            <span>Configuración</span>
+                        </a>
+                    <?php
+                        }
+                    ?>
                     <div class="dropdown-divider"></div>
 
                     <a href="<?= base_url() . 'usuarios/logout' ?>" class="dropdown-item notify-item">

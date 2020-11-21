@@ -61,7 +61,7 @@ class Withdraws extends Application_Controller {
                     $this->Usuario->update($new_user);
 
                     $email_body = $this->load->view('emails/withdraw', $result, true);
-				    $this->mailer->send($email_body, 'Solicitud de pago', WITHDRAW_EMAIL);
+				    $this->mailer->send($email_body, 'Solicitud de pago', get_setting("withdraw_email"));
 
                     echo json_encode(array("error" => FALSE, "message" => "Retiro solicitado exitosamente."));
                 }
