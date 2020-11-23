@@ -1,5 +1,5 @@
 // Add datatable options to custom tables
-var table_users = jQuery("#table-withdraws").DataTable({
+var table_withdraws = jQuery("#table-withdraws").DataTable({
     "language": {
         "url": base_url + "assets/json/datatable_spanish.json"
     },

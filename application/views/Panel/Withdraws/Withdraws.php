@@ -52,13 +52,7 @@
                             <th scope="col">Cantidad (COP)</th>
                             <th scope="col">Fecha de solicitud</th>
                             <th scope="col">Notas</th>
-                            <?php
-                                if(is_admin()){
-                            ?>
-                                <th scope="col"></th>
-                            <?php
-                                }
-                            ?>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -7,16 +7,22 @@ Class Subscriber extends CI_Model {
 
     // Get the subscribers rows
     // $id -> If id is different of null it will return only a row with the subscriber id information
-    public function get_subscribers($id = null) {
+    public function get_subscribers($id = null, $validate = true) {
+        $this->db->select('p.*, u.slug as user_slug, s.*');
         $this->db->from('subscribers s');
         $this->db->join('purchases p', 'p.id_purchase = s.id_purchase');
+        $this->db->join('users u', 'u.id = p.id_user');
         if($id != null && $id != "null"){
             $this->db->where("id_subscriber", $id);
         }
-        $this->db->where("s.subscriber_remaining_amount >", 0);
-        $this->db->where("p.purchase_status", 1);
+
+        if($validate){
+            $this->db->where("s.subscriber_remaining_amount >", 0);
+            $this->db->where("p.purchase_status", 1);
+        }
 
         $query = $this->db->get();
+
         if ($query->num_rows() > 0) {
             return ($id == null) ? $query->result_array() : $query->row_array();
         } else {

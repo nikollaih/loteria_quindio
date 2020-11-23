@@ -14,7 +14,7 @@ class Files extends CI_Controller {
     
     // Get the cities list rows by an state id
 	public function import_result(){
-        if(is_admin()){
+        if(is_admin() || is_assistant()){
             if(isset($_FILES["result"]) && ($this->input->post("draw_number"))){
                 if($_FILES["result"]["type"] == "text/plain"){
                     $string = read_file($_FILES["result"]["tmp_name"]);
@@ -102,7 +102,7 @@ class Files extends CI_Controller {
         if($end_date == null){
             $end_date = date("Y-m-d");
         }
-        if(is_admin()){
+        if(is_admin() || is_assistant()){
 
             $purchases = $this->Purchase->get_purchases_by_dates($start_date, $end_date);
 
@@ -228,7 +228,7 @@ class Files extends CI_Controller {
         if($end_date == null){
             $end_date = date("Y-m-d");
         }
-        if(is_admin()){
+        if(is_admin() || is_assistant()){
 
             $purchases = $this->Purchase->get_purchases_by_dates($start_date, $end_date, 0);
 

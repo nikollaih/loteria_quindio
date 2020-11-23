@@ -5,7 +5,7 @@
         <div id="sidebar-menu" class="slimscroll-menu">
             <ul class="metismenu" id="menu-bar">
                 <?php
-                    if(is_client() || is_admin()){
+                    if(is_client()){
                 ?>
                     <li>
                         <a href="javascript: void(0);">
@@ -28,7 +28,8 @@
                 <li class="menu-title">Menú</li>
                 
                 <?php
-                    if(is_admin()){
+                    if(is_admin() || is_assistant()){
+                        if(is_admin()){
                 ?>
                     <li>
                         <a href="javascript: void(0);">
@@ -36,7 +37,6 @@
                             <span> Usuarios </span>
                             <span class="menu-arrow"></span>
                         </a>
-
                         <ul class="nav-second-level" aria-expanded="false">
                             <li>
                                 <a href="<?= base_url() . 'Usuarios/List'; ?>">Ver Todos</a>
@@ -45,6 +45,15 @@
                                 <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
                             </li>
                         </ul>
+                    </li>
+                <?php
+                        }
+                ?>
+                    <li>
+                        <a href="<?= base_url() . 'Purchases/user_list'; ?>">
+                            <em data-feather="dollar-sign"></em>
+                            <span> Compras </span>
+                        </a>
                     </li>
                     <li>
                         <a href="<?= base_url() . 'Withdraws'; ?>">
@@ -102,28 +111,34 @@
                 <?php
                     }
                 ?>
-                <li>
-                    <a href="javascript: void(0);">
-                        <em data-feather="dollar-sign"></em>
-                        <span> Compras </span>
-                        <span class="menu-arrow"></span>
-                    </a>
+                <?php
+                    if(is_client()){
+                ?>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <em data-feather="dollar-sign"></em>
+                                <span> Compras </span>
+                                <span class="menu-arrow"></span>
+                            </a>
 
-                    <ul class="nav-second-level" aria-expanded="false">
-                        <li>
-                            <a href="<?= base_url() . 'Purchases'; ?>">Nueva Compra</a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="<?= base_url() . 'Purchases'; ?>">Nueva Compra</a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url() . 'Purchases'; ?>/user_list">Mis Compras</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="<?= base_url() . 'Purchases'; ?>/user_list">Mis Compras</a>
-                        </li>
-                    </ul>
-                </li>
+                <?php
+                    }
+                ?>
                 <li>
-                        <a href="<?= base_url() . 'Purchases/user_subscriber'; ?>">
-                            <em data-feather="refresh-cw"></em>
-                            <span> Abonados </span>
-                        </a>
-                    </li>
+                    <a href="<?= base_url() . 'Purchases/user_subscriber'; ?>">
+                        <em data-feather="refresh-cw"></em>
+                        <span> Abonados </span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- End Sidebar -->

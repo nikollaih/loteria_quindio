@@ -42,7 +42,13 @@
                             <th scope="col">Valor sin descuento</th>
                             <th scope="col">Valor con descuento</th>
                             <th scope="col">Total</th>
-                            <th scope="col"></th>
+                            <?php
+                                if(is_admin()){
+                            ?>
+                                <th scope="col"></th>
+                            <?php
+                                }
+                            ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +62,13 @@
                                 <td class="text-right">$<?= number_format($reward["bill_without_discount"], 2, ',', '.') ?></td>
                                 <td class="text-right">$<?= number_format($reward["bill_with_discount"], 2, ',', '.') ?></td>
                                 <td class="text-right">$<?= number_format($reward["total_plan"], 2, ',', '.') ?></td>
-                                <td><button data-reward='<?= json_encode($reward) ?>' class="btn btn-sm btn-primary edit-reward">Editar</button></td>
+                                <?php
+                                    if(is_admin()){
+                                ?>
+                                    <td><button data-reward='<?= json_encode($reward) ?>' class="btn btn-sm btn-primary edit-reward">Editar</button></td>
+                                <?php
+                                    }
+                                ?>
                             </tr>
                         <?php
                                 }

@@ -13,7 +13,7 @@ class Hobbies extends Application_Controller {
 
 	public function index()
 	{
-        if(is_admin()){
+        if(is_admin() || is_assistant()){
             if($this->input->post()){
                 // Set the inputs rules
                 $this->form_validation->set_rules('name', 'Name', 'required');
@@ -53,7 +53,7 @@ class Hobbies extends Application_Controller {
     }
     
     public function delete_hobbie(){
-        if(is_admin()){
+        if(is_admin() || is_assistant()){
             $id = $this->input->post("id");
 
             if($id){
