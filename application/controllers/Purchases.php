@@ -145,7 +145,12 @@ class Purchases extends Application_Controller {
 	function user_list(){
 		$params["title"] = "Mis Compras";
 		$params["subtitle"] = "Mis Compras";
-		$params["purchases"] = $this->Purchase->get_user_purchases(logged_user()["id"]);
+		if(is_admin() || is_assistant()){
+			$params["purchases"] = $this->Purchase->get_purchases();
+		}
+		else{
+			$params["purchases"] = $this->Purchase->get_user_purchases(logged_user()["id"]);
+		}
 
         $this->load_layout("Panel/Purchases/UserList", $params);
 	}
@@ -153,7 +158,13 @@ class Purchases extends Application_Controller {
 	function user_subscriber(){
 		$params["title"] = "Mis Abonados";
 		$params["subtitle"] = "Mis Abonados";
-		$params["subscribers"] = $this->Subscriber->get_user_subscribers(logged_user()["id"]);
+
+		if(is_admin() || is_assistant()){
+			$params["subscribers"] = $this->Subscriber->get_subscribers(null, false);
+		}
+		else{
+			$params["subscribers"] = $this->Subscriber->get_user_subscribers(logged_user()["id"]);
+		}
 
         $this->load_layout("Panel/Purchases/UserSubscriber", $params);
 	}

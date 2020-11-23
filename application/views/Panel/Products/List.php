@@ -1,4 +1,5 @@
 <div class="row">
+<?php if(is_admin()){ ?>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -52,7 +53,8 @@
                 </form>
             </div>
         </div>
-    </div>    
+    </div>   
+                    <?php } ?> 
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -65,7 +67,9 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Cantidad de fracciones</th>
                             <th scope="col">Valor de cada fracción (COP)</th>
+                            <?php if(is_admin()){ ?>
                             <th scope="col"></th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,10 +83,12 @@
                                 <td><?= $product["product_name"] ?></td>
                                 <td><?= $product["fractions_count"] ?></td>
                                 <td>$<?= number_format($product["fraction_value"], 0, ',', '.') ?> COP</td>
+                                <?php if(is_admin()){ ?>
                                 <td class="text-center" style="width:160px;">
                                     <button data-name="<?= $product['product_name'] ?>" data-id="<?= $product['id'] ?>" data-fractions-count="<?= $product['fractions_count']?>" data-fraction-value="<?= $product['fraction_value']?>" type="button" class="btn btn-primary btn-sm edit-product-button">Editar</button>
                                     <button id="row-product-<?= $product['id'] ?>" data-id="<?= $product['id'] ?>" type="button" class="btn btn-danger btn-sm delete-product-button">Eliminar</button>
                                 </td>
+                                <?php } ?>
                             </tr>
                         <?php
                                 }

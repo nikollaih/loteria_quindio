@@ -38,6 +38,7 @@ class Main extends Application_Controller {
     public function invoice($user_slug = null, $purchase_slug = null){
         $params["title"] = "Factura";
         $params["purchase"] = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+
         if($params["purchase"] != false && $params["purchase"]["user_slug"] == $user_slug){
             $this->load->view("Invoice", $params);
         }

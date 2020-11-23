@@ -1,4 +1,5 @@
 <div class="row">
+<?php if(is_admin()){ ?>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -57,7 +58,8 @@
                 </form>
             </div>
         </div>
-    </div>    
+    </div>  
+                    <?php } ?>  
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -71,7 +73,9 @@
                             <th scope="col">Hasta</th>
                             <th scope="col">Serie</th>
                             <th scope="col">Estado</th>
+                            <?php if(is_admin()){ ?>
                             <th scope="col"></th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,10 +90,12 @@
                                 <td><?= $blend["end_number"] ?></td>
                                 <td><?= $blend["serie"] ?></td>
                                 <td><?php echo ($blend["blend_status"] == 1) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' ?></td>
-                                <td class="text-center" style="width:160px;">
-                                    <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button>
-                                    <button id="row-blend-<?= $blend['id'] ?>" data-id="<?= $blend['id'] ?>" type="button" class="btn btn-danger btn-sm delete-blend-button">Eliminar</button>
-                                </td>
+                                <?php if(is_admin()){ ?>
+                                    <td class="text-center" style="width:160px;">
+                                        <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button>
+                                        <button id="row-blend-<?= $blend['id'] ?>" data-id="<?= $blend['id'] ?>" type="button" class="btn btn-danger btn-sm delete-blend-button">Eliminar</button>
+                                    </td>
+                                <?php } ?>
                             </tr>
                         <?php
                                 }

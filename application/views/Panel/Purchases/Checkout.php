@@ -214,12 +214,12 @@
                               <div class="col-md-12">
                                  <table class="custom-datatable table table-bordered table-striped text-center table-secondary">
                                     <thead>
-                                       <tr class="font-weight-bold">
+                                       <th class="font-weight-bold">
                                           <td>Plan</td>
                                           <td>13 SORTEOS</td>
                                           <td>26 SORTEOS</td>
                                           <td>52 SORTEOS</td>
-                                       </tr>
+                                       </th>
                                     </thead>
                                     <tbody>
                                        <tr>
@@ -285,11 +285,11 @@
                <h4 class="mb-3">Pago</h4>
                <div class="d-block my-3">
                   <div class="custom-control custom-radio">
-                     <input id="bank" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="1">
-                     <label class="custom-control-label" for="bank">Banco Ejemplo</label>
+                     <input id="bank-purchase" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="1">
+                     <label class="custom-control-label" for="bank-purchase">Banco Ejemplo</label>
                   </div>
                   <div class="custom-control custom-radio">
-                  <input id="balance" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="2">
+                     <input id="balance" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="2">
                      <label class="custom-control-label" for="balance">Saldo en plataforma: $<?= number_format($user["balance_total"], 0, ',', '.') ?> COP</label>
                   </div>
                </div>

@@ -12,7 +12,7 @@ class Products extends Application_Controller {
 	}
 
 	public function index(){
-	    if(is_admin()){
+	    if(is_admin() || is_assistant()){
             if($this->input->post()){
                 // Set the inputs rules
                 $this->form_validation->set_rules('product_name', 'Nombre', 'required');

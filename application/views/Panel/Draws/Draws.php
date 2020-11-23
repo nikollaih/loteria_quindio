@@ -31,67 +31,73 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="header-title mt-0 add-draw-title">Agregar Sorteo</h4>
-                <hr class="mb-4">
-                <form action="" method="post" id="form-draw">
-                    <input type="hidden" name="id" id="input_id_draw" value="null">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="">Número</label>
-                                <input id="input_draw_number" required name="draw_number" type="number" minlength="4" maxlength="4" class="form-control" placeholder="0000" value="<?= (isset($data_form)) ? $data_form["draw_number"] : "" ?>">
+    <?php 
+        if(is_admin()){
+    ?>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 add-draw-title">Agregar Sorteo</h4>
+                    <hr class="mb-4">
+                    <form action="" method="post" id="form-draw">
+                        <input type="hidden" name="id" id="input_id_draw" value="null">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Número</label>
+                                    <input id="input_draw_number" required name="draw_number" type="number" minlength="4" maxlength="4" class="form-control" placeholder="0000" value="<?= (isset($data_form)) ? $data_form["draw_number"] : "" ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Fecha</label>
+                                    <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="text" class="form-control flatpickr-input active" value="<?= (isset($data_form)) ? $data_form["date"] : date('Y-m-d') ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Producto (cantidad fracciones/valor por fracción)</label>
+                                    <select name="product_id" class="custom-select d-block w-100 bill-data" id="product-id" required="">
+                                        <?php
+                                        if(isset($products) && is_array($products)){
+                                            $x = 1;
+                                            foreach ($products as $product) {
+                                        ?>
+                                        <option value="<?= $product["id"] ?>"><?= $product["product_name"] ?> <?= $product["fractions_count"] ?>/$<?= $product["fraction_value"] ?>COP</option>
+                                        <?php
+                                        }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="">Fecha</label>
-                                <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="text" class="form-control flatpickr-input active" value="<?= (isset($data_form)) ? $data_form["date"] : date('Y-m-d') ?>">
+                        <?php
+                            if(isset($message)){
+                        ?>
+                            <p class="result-draw-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+                        <?php
+                            }
+                        ?>
+                        <div class="row justify-content-end">
+                            <div class="col-md-3">
+                                <div class="form-group">    
+                                    <a class="btn btn-light btn-block cancel-edit-draw-button invisible" type="submit">Cancelar</a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-block" type="submit">Guardar</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Producto (cantidad fracciones/valor por fracción)</label>
-                                <select name="product_id" class="custom-select d-block w-100 bill-data" id="product-id" required="">
-                                    <?php
-                                    if(isset($products) && is_array($products)){
-                                        $x = 1;
-                                        foreach ($products as $product) {
-                                    ?>
-                                    <option value="<?= $product["id"] ?>"><?= $product["product_name"] ?> <?= $product["fractions_count"] ?>/$<?= $product["fraction_value"] ?>COP</option>
-                                    <?php
-                                    }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                        if(isset($message)){
-                    ?>
-                        <p class="result-draw-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
-                    <?php
-                        }
-                    ?>
-                    <div class="row justify-content-end">
-                        <div class="col-md-3">
-                            <div class="form-group">    
-                                <a class="btn btn-light btn-block cancel-edit-draw-button invisible" type="submit">Cancelar</a>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <button class="btn btn-success btn-block" type="submit">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>    
+    <?php
+        }
+    ?>    
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -106,7 +112,11 @@
                             <th scope="col">Producto</th>
                             <th scope="col">Resultado</th>
                             <th scope="col">Serie</th>
+                            <?php 
+        if(is_admin()){
+    ?>
                             <th scope="col"></th>
+        <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,6 +132,9 @@
                                 <td><?= $draw["product_name"] ?> <?= $draw["fractions_count"]?>/$<?= $draw["fraction_value"]?>COP</td>
                                 <td><?php echo ($draw["result"] != null) ? $draw["result"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
                                 <td><?php echo ($draw["serie"] != null) ? $draw["serie"] : '<span class="badge badge-danger">No disponible</span>' ?></td>
+                                <?php 
+        if(is_admin()){
+    ?>
                                 <td class="text-center" style="width:160px;">
                                     <?php
                                         if($draw["date"] <= date("Y-m-d")){
@@ -162,6 +175,7 @@
                                     ?>
                                     
                                 </td>
+                                    <?php } ?>
                             </tr>
                         <?php
                                 }
