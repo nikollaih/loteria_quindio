@@ -35,8 +35,7 @@ body {
 .btn-outline-success:not(:disabled):not(.disabled):active,
 .show>.btn-outline-success.dropdown-toggle,
 .page-item.active .page-link,
-.sw-theme-arrows>ul.step-anchor>li.active>a,
-.alert-success {
+.sw-theme-arrows>ul.step-anchor>li.active>a{
     background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
 }
@@ -186,4 +185,10 @@ ul.pagination {
 
 .gray-color {
     color: #8c8c8c !important;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }

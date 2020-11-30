@@ -5,7 +5,7 @@
         <div id="sidebar-menu" class="slimscroll-menu">
             <ul class="metismenu" id="menu-bar">
                 <?php
-                    if(is_client()){
+                    if(true){
                 ?>
                     <li>
                         <a href="javascript: void(0);">
@@ -21,6 +21,24 @@
                                 <a href="<?= base_url() . 'Withdraws'; ?>">Historial de retiros</a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <?php $lottopoints = get_user_profile()["lotto_points"] ?>
+                        <?php $points_for_play = get_setting('points_for_play') ?>
+                        <a href="javascript: void(0);">
+                            <span > LotoPuntos: <?= $lottopoints ?></span>
+                            <?php if ($lottopoints >= $points_for_play){ ?>
+                                <span class="menu-arrow"></span>
+                            <?php } ?>
+                        </a>
+                        <?php if ($lottopoints >= $points_for_play){ ?>
+
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="<?= base_url() . 'games/slot_machine'; ?>">Jugar</a>
+                                </li>
+                            </ul>
+                        <?php } ?>
                     </li>
                 <?php
                     }

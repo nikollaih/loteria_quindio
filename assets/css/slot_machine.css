@@ -1,0 +1,219 @@
+html {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url('../images/background_game.svg');
+}
+body .partyfrog {
+  position: absolute;
+  bottom: -200px;
+  width: 200px;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+body .partyfrog.left {
+  left: 30px;
+}
+body .partyfrog.right {
+  right: 30px;
+}
+body .partyparrot {
+  position: absolute;
+  bottom: -100%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+body.winner .partyfrog {
+  bottom: 0px;
+}
+body.winner .partyparrot {
+  bottom: 0px;
+}
+body.meh .partyparrot {
+  bottom: 0px;
+}
+body .money {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  font-size: 24px;
+  color: #222;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+body .gameover {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+body .gameover h1 {
+  font-size: 36px;
+  color: #222;
+}
+body .gameover a {
+  font-size: 18px;
+  color: #111;
+}
+body .container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  overflow: hidden;
+  margin-left: 65px;
+  margin-right: 65px;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+body .container .slot {
+  width: 200px;
+  position: absolute;
+  top: 400px;
+  height: 400px;
+  text-align: center;
+}
+body .container .slot i {
+  display: inline-block;
+  width: 200px;
+  height: 400px;
+  font-size: 100px;
+  line-height: 400px;
+  color: #222;
+}
+body .container .slot:nth-child(1) {
+  left: 0;
+}
+body .container .slot:nth-child(2) {
+  left: 200px;
+}
+body .container .slot:nth-child(3) {
+  left: 400px;
+}
+
+
+body .container .slot img    {
+  display: inline-block;
+  width: 200px;
+  height: 400px;
+  font-size: 100px;
+  line-height: 400px;
+  color: #222;
+}
+
+body {
+  background: url('../images/background_game.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.play-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LIGHTS */
+.side_light
+{
+	width: 68px;
+	background-image: url("../images/backlight.png");
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-position: center;
+}
+
+.side_light img
+{
+	position: absolute;
+	width: 100%;
+	height: auto;
+}
+
+#right_light
+{
+	right: 32%;
+}
+
+#ycslotmachine
+{
+	width: 1200px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	top: 40%;
+	height: 50%;
+}
+
+.big_container {
+  height: 100vh;
+  margin: auto;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn-play {
+  background-color: #ea462f;
+    color: #fff;
+    width: 181px;
+    height: 53px;
+    border: none;
+    border-radius: 28px;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none;
+}
+
+#btn-play:hover{
+  opacity: 0.8;
+}
+
+.play-container {
+  background-color: #000000c7;
+  flex-direction: column;
+  box-shadow: 0 0 8px 8px #121c25 inset;
+}
+
+.slots {
+  box-shadow: 0 0 8px 8px #121c25 inset;
+}
+
+.lose {
+  display: none;
+  margin-bottom: 50px;
+  color: #fff;
+  text-align: center;
+}
+
+.meh {
+  font-size: 30px;
+}
+.try {
+  font-size: 24px;
+}
+
+.header-container {
+  height: 50px !important;
+}
