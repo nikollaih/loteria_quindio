@@ -46,6 +46,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="<?= base_url() ?>GameProducts">
+                            <em data-feather="tag"></em>
+                            <span> Productos del juego </span>
+                        </a>
+                    </li>
                 <?php
                         }
                 ?>
