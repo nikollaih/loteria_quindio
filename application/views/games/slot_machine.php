@@ -6,9 +6,15 @@
 		<link rel="stylesheet" href="<?= base_url() ?>assets/css/slot_machine.css">
 		<body class="prueba" >
 			<div class="big_container header-container">
-
+				<div class="lottopoints ">
+					LotoPuntos
+					<span><?= $lottopoints ?></span>
+				</div>
+				<div class="rombo">
+					<img src="<?= base_url() ?>assets/images/rombo.svg" class="rombo-image" alt="">
+				</div>
 			</div>
-			<div class="big_container">
+			<div class="big_container slotter">
 				<div id="left_light" class="side_light">
 					<img src="<?= base_url() ?>assets/images/light-a.png" style="opacity: 0.999744;">
 					<img src="<?= base_url() ?>assets/images/light-b.png" class="no-display" style="display: inline; opacity: 0.000256;">
