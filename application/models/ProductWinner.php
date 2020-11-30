@@ -5,9 +5,12 @@ Class ProductWinner extends CI_Model {
       $this->load->database();
   }
 
-  public function get_product_winners() {
-    $this->db->from('product_winners');
-    $this->db->order_by("id", "desc");
+  public function get_product_winners($id = null) {
+    $this->db->select('u.first_name, u.last_name, gp.g_product_name, pw.*');
+    $this->db->from('product_winners pw');
+    $this->db->join('users u', 'pw.user_id = u.id');
+    $this->db->join('game_products gp', 'gp.id_game_product = pw.product_id');
+    $this->db->order_by("pw.id", "desc");
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {

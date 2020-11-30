@@ -30,6 +30,7 @@ import "./reports.js";
 import "./rewards.js";
 import "./withdraws.js";
 import "./game_products.js";
+import "./physical_winners.js";
 import "./app.min.js";
 
 jQuery(document).ready(function() {

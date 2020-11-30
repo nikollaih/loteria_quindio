@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Games extends CI_Controller {
+class Games extends Application_Controller {
 
 	function __construct()
 	{
@@ -35,5 +35,29 @@ class Games extends CI_Controller {
 		}else {
 			echo json_encode(array("success" => FALSE));
 		}
+	}
+
+	function winners(){
+		$params["winners"] = $this->ProductWinner->get_product_winners();
+		$params["title"] = "Lista de ganadores";
+        $params["subtitle"] = "Lista de ganadores";
+        $this->load_layout("Panel/GameProducts/Winners", $params);
+	}
+	
+	function update_winner(){
+		if(isset($this->input->post()["id"])){
+            $data = $this->input->post();
+
+           if ($this->ProductWinner->update_product_winners($data)){
+				echo json_encode(array("error" => FALSE, "message" => "Registro modificado exitosamente."));
+		   }
+		   else{
+				echo json_encode(array("error" => TRUE, "message" => "No se ha podido modificar el registro."));
+		   }
+            
+        }
+        else{
+            echo json_encode(array("error" => TRUE, "message" => "No se ha podido generar el retiro."));
+        }
 	}
 }

@@ -78,13 +78,13 @@
                 case 'cancelado':
                     return "danger";
                     break;
-                case 'denegado':
+                case 'denegado': case 'en proceso':
                     return "warning";
                     break;
-                case 'confirmado':
+                case 'confirmado': case 'enviado':
                     return "primary";
                     break;
-                case 'completado':
+                case 'completado': case 'entregado':
                     return "success";
                     break;
                 

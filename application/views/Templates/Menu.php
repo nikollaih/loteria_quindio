@@ -65,10 +65,19 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="<?= base_url() ?>GameProducts">
+                        <a href="javascript: void(0);">
                             <em data-feather="tag"></em>
                             <span> Productos del juego </span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                                <a href="<?= base_url() ?>GameProducts">Ver Todos</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url() ?>Games/Winners">Ganadores</a>
+                            </li>
+                        </ul>
                     </li>
                 <?php
                         }
