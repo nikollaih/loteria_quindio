@@ -2,7 +2,9 @@
 <?php
     if(isset($message)){
 ?>
-    <p class="result-draw-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+    <div class="alert alert-success" role="alert">
+        <?= $message["message"] ?>
+    </div>
 <?php
     }
 ?>
@@ -28,7 +30,7 @@
                                                         ?>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <input id="<?= $setting["key"] ?>" required name="data[<?= $setting["key"] ?>]" type="text" class="form-control"  value="<?= $setting["value"] ?>">
+                                                                    <input id="<?= $setting["key"] ?>" required name="data[<?= $setting["key"] ?>]" type="<?= $setting["input_type"] ?>" class="form-control"  value="<?= $setting["value"] ?>">
                                                                 </div>
                                                             </div>
                                                         <?php
@@ -38,7 +40,7 @@
                                                         ?>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <input id="<?= $setting["key"] ?>" required name="<?= $setting["key"] ?>" type="text" class="form-control"  value="<?= $setting["value"] ?>">
+                                                                    <input id="<?= $setting["key"] ?>" required name="<?= $setting["key"] ?>" type="<?= $setting["input_type"] ?>" class="form-control"  value="<?= $setting["value"] ?>">
                                                                 </div>
                                                             </div>
                                                         <?php
