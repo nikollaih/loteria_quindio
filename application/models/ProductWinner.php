@@ -53,5 +53,9 @@ Class ProductWinner extends CI_Model {
       $this->db->where("id", $data["id"]);
       return $this->db->update("product_winners", $data);
   }
+
+  public function get_points_for_play($user_id){
+
+  }
 }
 ?>
