@@ -74,12 +74,52 @@ class Files extends CI_Controller {
                             }
                         }
                         else{
-                            json_response(null, false, "Una de las lineas del archivo tiene más o menos elementos de los requeridos por favor verifique la linea: 1");
+                            json_response(null, false, "Una de las lineas del archivo tiene más o menos elementos de los requeridos, por favor verifique la linea: 1");
                         }
                     }
                     else{
                         json_response(null, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($result_rows));
                     }
+                }
+                else{
+                    json_response(null, false, "Archivo de texto no válido.");
+                }
+            }
+            else{
+                json_response(null, false, "No se ha recibido el archivo de texto.");
+            }
+        }
+        else{
+            json_response(null, false, "Usted no puede realizar esta acción.");
+        }
+    }
+
+    // Import the blends listing
+	public function import_blends(){
+        if(is_admin() || is_assistant()){
+            if(isset($_FILES["result"])){
+                if($_FILES["result"]["type"] == "text/plain"){
+                    $string = read_file($_FILES["result"]["tmp_name"]);
+                    $result_rows = explode("\n", $string);
+                    array_pop($result_rows);
+                    $tmp_array = [];
+
+                    for ($i=0; $i < count($result_rows); $i++) { 
+                        $result = explode(",", $result_rows[$i]);
+
+                        if(count($result) > 4 && count($result) < 7){
+                            if(!isset($tmp_array[$result[2]])){
+                                $tmp_array[$result[2]] = [];
+                            }
+                                    array_push($tmp_array[$result[2]], $result[1]);
+                        }
+                        else{
+                            json_response(null, false, "Una de las lineas del archivo tiene más o menos elementos de los requeridos, por favor verifique la linea: ".($i + 1));
+                        }
+                            
+                    }
+
+                    json_response($tmp_array, true, "Mezclas cargadas correctamente");
                 }
                 else{
                     json_response(null, false, "Archivo de texto no válido.");

@@ -1,5 +1,5 @@
 <div class="row">
-<?php if(is_admin()){ ?>
+<!-- <?php if(is_admin()){ ?>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>  
-                    <?php } ?>  
+                    <?php } ?>   -->
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -69,9 +69,10 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Desde</th>
-                            <th scope="col">Hasta</th>
+                            <!-- <th scope="col">Desde</th>
+                            <th scope="col">Hasta</th> -->
                             <th scope="col">Serie</th>
+                            <th scope="col">Cantidad números</th>
                             <th scope="col">Estado</th>
                             <?php if(is_admin()){ ?>
                             <th scope="col"></th>
@@ -86,13 +87,14 @@
                         ?>
                             <tr>
                                 <th scope="row"><?= $x++; ?></th>
-                                <td><?= $blend["start_number"] ?></td>
-                                <td><?= $blend["end_number"] ?></td>
-                                <td><?= $blend["serie"] ?></td>
+                                <!-- <td><?= $blend["start_number"] ?></td>
+                                <td><?= $blend["end_number"] ?></td> -->
+                                <td><strong><?= $blend["serie"] ?></strong></td>
+                                <td><?= $blend["numbers_quantity"] ?></td>
                                 <td><?php echo ($blend["blend_status"] == 1) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' ?></td>
                                 <?php if(is_admin()){ ?>
                                     <td class="text-center" style="width:160px;">
-                                        <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button>
+                                        <!-- <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button> -->
                                         <button id="row-blend-<?= $blend['id'] ?>" data-id="<?= $blend['id'] ?>" type="button" class="btn btn-danger btn-sm delete-blend-button">Eliminar</button>
                                     </td>
                                 <?php } ?>

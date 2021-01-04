@@ -12,6 +12,8 @@
             $blends_list = $CI->Blend->get_blends();
             // Get a random blend
             $blend = $blends_list[rand(0, count($blends_list) - 1)];
+            $blend_numbers = unserialize($blend["blend_numbers"]);
+
             //Get the sold number
             $sold_numbers = $CI->Purchase->get_sold_numbers($active_draw["id"], $blend["serie"]);
             // Get the booking numbers list
@@ -27,7 +29,7 @@
             }
 
             do {
-                $rand_number = sprintf("%04s", rand($blend["start_number"], $blend["end_number"]));
+                $rand_number = sprintf("%04s",  $blend_numbers[rand(0, count($blend_numbers))]);
             } while(in_array(intval($rand_number), $temp_exclude));
             
             return array("draw" => $active_draw, "number" => $rand_number, "serie" => $blend["serie"]);
