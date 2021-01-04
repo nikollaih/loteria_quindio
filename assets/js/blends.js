@@ -1,6 +1,23 @@
+var imported_blends = [];
 // When the edit blend button is pressed
 jQuery(document).on("click", ".edit-blend-button", function() {
     set_update_blend(jQuery(this).attr("data-columns"));
+});
+
+jQuery(document).on("change", "#input_blends", function () {
+    jQuery("#save-result-txt").hide();
+    jQuery("#background-loading").show();
+    load_blends(jQuery(this).attr("data-draw"));
+});
+
+jQuery(document).on("change", "#input_result", function () {
+    jQuery("#save-result-txt").hide();
+    jQuery("#background-loading").show();
+    load_results(jQuery(this).attr("data-draw"));
+});
+
+jQuery(document).on("click", "#save-blends-btn", function () {
+    save_blends();
 });
 
 // When the cancel edit blend button is pressed
@@ -22,7 +39,8 @@ jQuery(document).on("click", ".delete-blend-button", function() {
 var table_blends = jQuery("#table-blends").DataTable({
     "language": {
         "url": "assets/json/datatable_spanish.json"
-    }
+    },
+    "pageLength": 50,
 });
 
 function check_blend_start_end() {
@@ -85,4 +103,68 @@ function delete_blend(id) {
                     }
                 }, 'json')
         });
+}
+
+// Load the txt file and convert it into a results table
+function load_blends(draw_number = null) {
+    var formData = new FormData();
+    formData.append('result', $('#input_blends')[0].files[0]);
+
+    $.ajax({
+        url: base_url + 'Files/import_blends',
+        type: 'POST',
+        data: formData,
+        processData: false, // tell jQuery not to process the data
+        contentType: false, // tell jQuery not to set contentType
+        success: function (data) {
+            data = (JSON.parse(data));
+            imported_blends = data.object;
+            console.log(data)
+
+            if (data.status) {
+                jQuery("#save-result-txt > span").html(data.message);
+                jQuery("#save-result-txt").removeClass("alert-warning");
+                jQuery("#save-result-txt").addClass("alert-success");
+                jQuery("#save-result-txt").css("display", "block");
+                jQuery(".success-import").css("display", "block");
+            } else {
+                jQuery("#save-result-txt > span").html(data.message);
+                jQuery("#save-result-txt").removeClass("alert-success");
+                jQuery("#save-result-txt").addClass("alert-warning");
+                jQuery("#save-result-txt").css("display", "block");
+                jQuery(".success-import").css("display", "none");
+            }
+
+            jQuery("#background-loading").hide();
+        }
+    });
+}
+
+function save_blends() {
+    jQuery("#background-loading").show();
+    $.ajax({
+        url: base_url + "Blends/save_blends",
+        type: 'POST',
+        data: { data: JSON.stringify(imported_blends) },
+        success: function (data) {
+            data = (JSON.parse(data));
+            if (data.status) {
+                swal({
+                    title: 'Exito!',
+                    text: data.message,
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ir a mezclas!',
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function() {
+                    window.location = base_url + "Blends";
+                });
+            } else {
+                jQuery("#save-result-txt > span").html(data.message);
+                jQuery("#save-result-txt").css("display", "block");
+            }
+        }
+    });
 }

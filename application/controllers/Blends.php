@@ -41,12 +41,19 @@ class Blends extends Application_Controller {
         $this->load_layout("Panel/Blends/Blends", $params);
     }
 
+    public function import(){
+        $params["title"] = "Importar Mezclas";
+        $params["subtitle"] = "Importar Mezclas";
+        $params["blends"] = $this->Blend->get_blends();
+        $this->load_layout("Panel/Blends/Import", $params);
+    }
+
     private function blend_register_proccess($data){
         if(is_array($data)){
             if (!$this->Blend->validate_blend($data) && $data["id"] == "null"){
-                $result_blend = $this->Blend->set_blend($data);
+                $blend_blend = $this->Blend->set_blend($data);
                 // If the user was registered successfully
-                if($result_blend != false){
+                if($blend_blend != false){
                     return array("type" => "success", "success" => true, "message" => "Mezcla registrada exitosamente.");
                 }
                 else{
@@ -55,9 +62,9 @@ class Blends extends Application_Controller {
             }
             else{
                 if($data["id"] != null){
-                    $result_blend = $this->Blend->update_blend($data);
+                    $blend_blend = $this->Blend->update_blend($data);
                     // If the user was registered successfully
-                    if($result_blend != false){
+                    if($blend_blend != false){
                         return array("type" => "success", "success" => true, "message" => "Mezcla modificada exitosamente.");
                     }
                     else{
@@ -82,9 +89,9 @@ class Blends extends Application_Controller {
                 $blend = $this->Blend->get_blends(null, $id);
                 if($blend != FALSE){
 
-                    $result = $this->Blend->update_blend(array("id" => $id, "blend_status" => "2"));
+                    $blend = $this->Blend->update_blend(array("id" => $id, "blend_status" => "2"));
 
-                    if($result){
+                    if($blend){
                         echo json_encode(array("error" => FALSE, "message" => "Mezcla eliminada correctamente."));
                     }
                     else{
@@ -101,6 +108,45 @@ class Blends extends Application_Controller {
         }
         else{
             echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
+        }
+    }
+
+    // Save the draw blends
+    public function save_blends(){
+        // Check if the logged user is admin
+        if(is_admin()){
+            // Check is there is any post data
+            if($this->input->post()){
+                $blends = json_decode($this->input->post("data"));
+                $tmp_array = [];
+
+                foreach ($blends as $key => $blend) {
+                    $data["start_number"] = 0;
+                    $data["end_number"] = 0;
+                    $data["blend_status"] = 1;
+                    $data["serie"] = $key;
+                    $data["blend_numbers"] = serialize($blend);
+                    $data["numbers_quantity"] = count($blend);
+
+                    array_push($tmp_array, $data);
+                }
+
+                $this->Blend->delete_blends();
+                $blend_insert = $this->Blend->set_blends($tmp_array);
+
+                if($blend_insert){
+                    json_response(null, true, "Mezclas guardadas exitosamente");
+                }
+                else{
+                    json_response(null, false, "Ha ocurrido un error al intentar guardar las mezclas.");
+                }
+            }
+            else{
+                json_response(null, false, "No se ha recibido ningún dato.");
+            }
+        }
+        else{
+            json_response(null, false, "No tiene permisos para realizar esta acción.");
         }
     }
     

@@ -123,10 +123,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url() . 'Blends'; ?>">
+                        <a href="#">
                             <em data-feather="settings"></em>
                             <span> Mezclas </span>
+                            <span class="menu-arrow"></span>
                         </a>
+
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li>
+                                <a href="<?= base_url() . 'Blends'; ?>">Ver Todas</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url() . 'Blends/import'; ?>">Importar</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="<?= base_url() . 'Hobbies'; ?>">

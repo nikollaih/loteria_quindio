@@ -10,7 +10,7 @@
 				</div>
 				<div class="header-item">
 					|
-					<a href="<?= base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit">Iniciar sesión</a>
+					<a href="<?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? base_url() . 'panel' : base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit"><?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? $this->session->userdata("logged_in")["first_name"]." ".$this->session->userdata("logged_in")["last_name"] : "Iniciar sesión" ?></a>
 				</div>
 			</div>
 		</div>

@@ -51,5 +51,15 @@ Class Blend extends CI_Model {
 
         return ($query->num_rows() > 0) ? true : false;
     }
+
+    // Save the blends rows
+    public function set_blends($data) {
+        return $this->db->insert_batch('blends', $data); 
+    }
+
+    public function delete_blends(){
+        $this->db->where("id >", 0);
+        $this->db->delete("blends");
+    }
 }
 ?>
