@@ -19,6 +19,14 @@ class Games extends Application_Controller {
 		$this->load->view('games/slot_machine');
 	}
 
+	public function slot_game(){
+		if(!is_logged()){
+			header("Location: " . base_url() . "usuarios/login");
+		}
+
+		$this->load->view('games/slot_game');
+	}
+
 	public function validate_slot_machine_result(){
 		$slots = $this->input->post("slots");
 		$product_id = $this->input->post("product_id");

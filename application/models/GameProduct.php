@@ -6,13 +6,16 @@
         }
 
         // Get the game products or just a product by id
-        function get($id = null, $status = null){
+        function get($id = null, $status = null, $limit = null){
             $this->db->from("game_products");
             if($id != null){
                 $this->db->where("id_game_product", $id);
             }
             if($status != null){
                 $this->db->where("g_product_status", $status);
+            }
+            if($limit != null){
+                $this->db->limit($limit);
             }
 
             $result = $this->db->get();

@@ -118,11 +118,11 @@ class GameProducts extends Application_Controller {
     }
 
     function get_products(){
-        $products = $this->GameProduct->get(null, 1);
+        $products = $this->GameProduct->get(null, 1, 8);
 
         if(is_array($products)){
             for ($i=0; $i < count($products); $i++) { 
-                $products[$i]["g_product_path"] = (@getimagesize(base_url().$products[$i]["g_product_path"])) ? base_url().$products[$i]["g_product_path"] : "https://dummyimage.com/600x400/bdbdbd/fff&text=Imagen no disponible";
+                //$products[$i]["g_product_path"] = (@getimagesize(base_url().$products[$i]["g_product_path"])) ? base_url().$products[$i]["g_product_path"] : "https://dummyimage.com/600x400/bdbdbd/fff&text=Imagen no disponible";
             }
 
             echo json_encode($products);
