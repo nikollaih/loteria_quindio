@@ -81,7 +81,9 @@ class Purchases extends Application_Controller {
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
-			if($data["number"] >= $blend["start_number"] && $data["number"] <= $blend["end_number"]){
+
+			// if($data["number"] >= $blend["start_number"] && $data["number"] <= $blend["end_number"]){
+			if(check_number_blend($data["serie"], $data["number"])){
 				$temp_purchase = $this->Purchase->validate_purchase($data);
 
 				// Check if exists a previus purchase with the same number, serie and draw
@@ -110,7 +112,7 @@ class Purchases extends Application_Controller {
 					}
 				}
 			}
-			return array("type" => "danger", "success" => false, "message" => "El número que desea comprar debe ser mayor que ".$blend["start_number"]." y menor que ".$blend["end_number"].".");
+			return array("type" => "danger", "success" => false, "message" => "El número que desea comprar no se encuentra disponible con la serie ".$data["serie"].".");
 		}
 		else{
 			return array("type" => "danger", "success" => false, "message" => "El sorteo #".$draw["draw_number"]." ya no se encuentra disponible.");

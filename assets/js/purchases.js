@@ -70,8 +70,8 @@ jQuery(document).on("change", "#bill-serie", function() {
     var min_value = jQuery(this).find(":selected").attr("data-min");
     var max_value = jQuery(this).find(":selected").attr("data-max");
 
-    jQuery("#bill-number").attr("min", min_value);
-    jQuery("#bill-number").attr("max", max_value);
+    // jQuery("#bill-number").attr("min", min_value);
+    // jQuery("#bill-number").attr("max", max_value);
     jQuery("#show-min-value").html(min_value);
     jQuery("#show-max-value").html(max_value);
     set_show_bill_data();

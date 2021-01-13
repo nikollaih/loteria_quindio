@@ -97,4 +97,20 @@
         }
     
     }
+
+     // Get the banls listing
+     if(!function_exists('check_number_blend'))
+     {
+         function check_number_blend($blend, $number){
+            $CI = &get_instance();
+            $CI->load->model(['Blend']);
+        
+            // Get the blends list
+            $blend = $CI->Blend->get_blends($blend);
+            $blend_numbers = unserialize($blend["blend_numbers"]);
+
+            return (in_array($number, $blend_numbers)) ? true : false;
+         }
+     
+     }
 ?>
