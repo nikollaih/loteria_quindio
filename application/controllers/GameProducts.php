@@ -6,7 +6,7 @@ class GameProducts extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['GameProduct']);
+		$this->load->model(['GameProduct', 'ProductWinner', 'Usuario']);
 		$this->load->helper(["url", "form", "files"]);
 		$this->load->library(['Form_validation']);
 	}
@@ -117,19 +117,70 @@ class GameProducts extends Application_Controller {
         }
     }
 
-    function get_products(){
-        $products = $this->GameProduct->get(null, 1);
+  function get_products_for_game(){
+    $products = $this->GameProduct->get(null, 1, 8);
+    if(is_array($products)){
+      $result = array(
+        'products' => $products,
+        'current_user' => logged_user()["id"]  
+      );
+      echo json_encode($result);
+    }
+    else{
+      echo json_encode([]);
+    }
+  }
 
-        if(is_array($products)){
-            for ($i=0; $i < count($products); $i++) { 
-                $products[$i]["g_product_path"] = (@getimagesize(base_url().$products[$i]["g_product_path"])) ? base_url().$products[$i]["g_product_path"] : "https://dummyimage.com/600x400/bdbdbd/fff&text=Imagen no disponible";
-            }
-
-            echo json_encode($products);
-        }
-        else{
-            echo json_encode([]);
-        }
+  function get_result_for_game(){
+    $products = $this->input->post("products");
+    $user_id = $this->input->post("user");
+    $result = [];
+    for ($i = 0; $i < 3; $i++) {
+      $random_result = array_rand($products, 1);
+      array_push($result, $products[$random_result]['id_game_product']);
     }
     
+    $won = false;
+    $salt = '55ca4060468c976905aa4c4c48a83842-2e53c5d186c6366a3cd908986db85df9';
+    if($result[0] == $result[1] && $result[0] == $result[2]){
+      $salt = $this->GameProduct->winner_salt();
+      $won = true;
+    }
+
+    
+    $lotto_points = $this->Usuario->get_loto_points($user_id);
+    $this->Usuario->substract_lotto_point($user_id);
+    $products = $this->GameProduct->get(null, 1, 8);
+
+    $result =  array(
+      "won"  =>  $won,
+      "ids"  => $result,
+      "salt"  =>  $salt,
+      "lotto_points" => $lotto_points,
+      "products" => $products
+    );
+
+    //sleep(4);
+
+    echo json_encode($result);
+  }
+
+  function validate_result_for_game(){
+    $salt = $this->input->post("salt");
+    $product = $this->input->post("product");
+    $user = $this->input->post("user");
+    $winner_salt = $this->GameProduct->winner_salt();
+    if($salt == $winner_salt){
+      $slug = create_unique_slug('product_winners', 6);
+      $data = array(
+        'product_id' =>  $product,
+        'user_id' => $user,
+        'slug' => $slug
+      );
+      $this->ProductWinner->set_product_winners($data);
+      echo json_encode(array('result' => true));
+    }else{
+      echo json_encode(array('result' => false));
+    }
+  }
 }
