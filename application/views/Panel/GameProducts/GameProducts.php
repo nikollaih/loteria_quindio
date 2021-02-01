@@ -70,6 +70,7 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
+                            <th scope="col">Ref</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Cantidad</th>
                             <th scope="col">Estado</th>
@@ -88,6 +89,7 @@
                                 <th scope="row">
                                     <img height="80px" src="<?= (@getimagesize(base_url().$game_product["g_product_path"])) ? base_url().$game_product["g_product_path"] : "https://dummyimage.com/600x400/bdbdbd/fff&text=Imagen no disponible" ?>" alt="<?= $game_product["g_product_name"] ?>" srcset="">
                                 </th>
+                                <td><?= "P-". $game_product["id_game_product"] ?></td>
                                 <td><?= $game_product["g_product_name"] ?></td>
                                 <td><?= $game_product["g_product_quantity"] ?></td>
                                 <td><?php echo ($game_product["g_product_status"] == 1) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' ?></td>
