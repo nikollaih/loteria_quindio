@@ -5,43 +5,57 @@ var SLOTS_PER_REEL = 8;
 // current settings give a value of 149, rounded to 150
 const REEL_RADIUS = 150;
 
-var products = [
-  {
-    id_game_product: 1,
-    g_product_path: "https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 2,
-    g_product_path:  "https://images.unsplash.com/photo-1528825871115-3581a5387919?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 3,
-    g_product_path:  "https://images.unsplash.com/photo-1579613832125-5d34a13ffe2a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 4,
-    g_product_path: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 5,
-    g_product_path: "https://images.unsplash.com/photo-1528821128474-27f963b062bf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8OXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 6,
-    g_product_path: "https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTJ8fHxlbnwwfHx8&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 7,
-    g_product_path: "https://images.unsplash.com/photo-1577730618729-76ab611700b3?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTZ8fHxlbnwwfHx8&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id_game_product: 8,
-    g_product_path: "https://images.unsplash.com/photo-1572635148818-ef6fd45eb394?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTl8fHxlbnwwfHx8&auto=format&fit=crop&w=500&q=60"
+var current_user = '';
+var lotto_points = 0;
+
+var products = [];
+// var products = [
+//   {
+//     id_game_product: 111,
+//     g_product_path: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 281,
+//     g_product_path:  "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 333,
+//     g_product_path:  "https://images.unsplash.com/photo-1587840171670-8b850147754e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 444,
+//     g_product_path: "https://images.unsplash.com/photo-1583312708610-fe16a34b0826?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 555,
+//     g_product_path: "https://images.unsplash.com/photo-1542144761-531051972ae0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 666,
+//     g_product_path: "https://images.unsplash.com/photo-1600375226700-5ce19fbe1a6f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 777,
+//     g_product_path: "https://images.unsplash.com/photo-1587145717184-e7ee5311253d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   },
+//   {
+//     id_game_product: 888,
+//     g_product_path: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+//   }
+// ];
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
   }
-];
+
+  return array;
+}
+
 
 function createSlots (ring) {
-	console.log(SLOTS_PER_REEL);
+  var shufle_products = shuffleArray(products);
 	var slotAngle = 360 / SLOTS_PER_REEL;
 
 	var seed = getSeed();
@@ -59,11 +73,11 @@ function createSlots (ring) {
 		// setup the number to show inside the slots
 		// the position is randomized to 
 
-		if(i >= products.length){
-			var random = Math.floor(Math.random()*(products.length));
-			var content = $(slot).append('<img src="' + products[random].g_product_path + '" class="image-' + products[random].id_game_product +'"></img>');
+		if(i >= shufle_products.length){
+			var random = Math.floor(Math.random()*(shufle_products.length));
+			$(slot).append('<img src="' + shufle_products[random].g_product_path + '" class="image-' + shufle_products[random].id_game_product +'"></img>');
 		}else {
-			var content = $(slot).append('<img src="' + products[i].g_product_path + '" class="image-' + products[i].id_game_product +'"></img>');
+			$(slot).append('<img src="' + shufle_products[i].g_product_path + '" class="image-' + shufle_products[i].id_game_product +'"></img>');
 		}
 		// add the poster to the row
 		ring.append(slot);
@@ -108,30 +122,61 @@ function initialize_game(){
  	// hook start button
  	$('#btn-play').on('click',function(){
 		$.ajax({
-			url: "Main/get_random_draw_number",
+			url: "../GameProducts/get_result_for_game",
+			type: 'POST',
+			data: { products: products, user: current_user },
 			beforeSend: function( xhr ) {
-				$('.ring div p').removeClass('winner-number');
-				$('.btn-purchase').addClass('invisible');
 				var timer = 2;
 				spin(timer);
 			}
 		})
 		.done(function( data ) {
-			var result = jQuery.parseJSON(data);
-			var numbers = result.number.split('');
-			var series = result.serie.split('');
-			$('.ring').css('animation', '');
-			for(var i = 1; i <= 4; i ++) {
-				$('#ring-' + i + ' div:nth-child(1) p').html(numbers[i - 1]);
-				$('#ring-' + i + ' div:nth-child(1) p').addClass('winner-number');
-			}
-			$('.serie-1').html(series[0]);
-			$('.serie-2').html(series[1]);
-			$('.serie-3').html(series[2]);
-			$('.btn-purchase').attr('number', result.number);
-			$('.btn-purchase').attr('serie', result.serie);
-			$('.btn-purchase').attr('date', result.draw.date);
-			$('.btn-purchase').removeClass('invisible');
+      var result = jQuery.parseJSON(data);
+      lotto_points = result['lotto_points'];
+
+			if(lotto_points > 0) {
+        var won = result['won'];
+
+        if(won == false) {
+          var suffle_products = shuffleArray(products);
+          var selected = [suffle_products[1], suffle_products[2], suffle_products[3]];
+          for(var i = 1; i <= 3; i ++) {
+            $('#ring-' + i + ' div:nth-child(1)').html('');
+            $('#ring-' + i + ' div:nth-child(1)').append('<img src="' + suffle_products[i].g_product_path + '" class="image-' + suffle_products[i].id_game_product +'"></img>');
+          }
+          not_won(selected);
+        }else{
+          var product = result['ids'][0];
+          var img = '';
+          for (var i = 0; i < products.length; i ++) {
+            if(products[i].id_game_product == product){
+              img = products[i].g_product_path;
+            }
+          }
+          for(var i = 1; i <= 3; i ++) {
+            $('#ring-' + i + ' div:nth-child(1)').html('');
+            $('#ring-' + i + ' div:nth-child(1)').append('<img src="' + img + '" class="image-' + product +'"></img>');
+          }
+
+          $.ajax({
+            url: "../GameProducts/validate_result_for_game",
+            method: 'POST',
+            data: { salt: result['salt'], product: product, user: current_user }
+          })
+          .done(function( data ) {
+            var result = jQuery.parseJSON(data);
+            
+            if(result['result'] == true){
+              winner(img);
+            }
+          });
+        }
+      }else{
+        not_points();
+      }
+
+      
+      setInterval($('.ring').css('animation', ''), 150000);
 		});
  	
 	})
@@ -184,39 +229,74 @@ $(window).resize(function() {
 });
 
 
-function try_to_buy(btn) {
-	var number = btn.getAttribute('number');
-	var serie = btn.getAttribute('serie');
-	var date = btn.getAttribute('date');
-	var d = new Date(date);
-	date = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " ;
+function not_points(){
+  swal({
+    title: 'No tienes intentos disponibles.',
+    showCancelButton: false,
+    confirmButtonText: 'Volver a inicio',
+    showLoaderOnConfirm: true
+  },
+  function() {
+    window.location.href = '../Panel';
+  });
+}
 
-	var content = "<div class='buying'><div><label>Numero</label><p class='number-confirm'>" + number + "</p></div><div><label>Serie</label><p class='serie-confirm'>" + serie + "</p></div><div><label>Fecha de sorteo</label><p class='fecha-confirm'>" + date +"</p></div></div>";
+function not_won(selected){
+  var images = "<div class='images'><img src='" + selected[0].g_product_path +"'></img><img src='" + selected[1].g_product_path +"'></img><img src='" + selected[2].g_product_path +"'></img></div>"
+  var tries = "<div class='tries'>Te quedan " + (lotto_points - 1) +" intentos.</div>"
+  var content = "<div class='game-modal'><div class='title'></div>" + images +  tries +"</div>";
+  var play_again = false;
+  if(lotto_points > 1) { play_again = true; }
 	swal({
-					title: '¿Deseas hacer esta compra?',
-					html: true,
-					text: content,
-					showCancelButton: true,
-					confirmButtonText: 'Si, comprar!',
-					closeOnConfirm: false,
-					showLoaderOnConfirm: true
-			},
-			function() {
-				window.location.href = 'Main/set_session_draw_number/' + number + '/' + serie;
-			});
+      title: 'Oh, mala suerte!',
+      html: true,
+      text: content,
+      showCancelButton: play_again,
+      cancelButtonText: 'Jugar de nuevo',
+      confirmButtonText: 'Volver a inicio',
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true
+  },
+  function() {
+    window.location.href = '../Panel';
+  });
+}
+
+function winner(img){
+  var images = "<div class='images'><img src='" + img +"'></img><img src='" + img +"'></img><img src='" + img +"'></img></div>"
+  var winner = "<div class='winner'>Ganaste este producto, nos comunicaremos contigo para coordinar el proceso de entrega, gracias por hacer parte de nosotros.</div>"
+  var tries = "<div class='tries'>Te quedan " + (lotto_points - 1) +" intentos.</div>"
+  var content = "<div class='game-modal'><div class='title'></div>" + images + winner  +"</div>";
+  var play_again = false;
+  if(lotto_points > 1) { play_again = true; }
+	swal({
+      title: '¡Felicidades!',
+      html: true,
+      text: content,
+      showCancelButton: play_again,
+      cancelButtonText: 'Jugar de nuevo',
+      confirmButtonText: 'Volver a inicio',
+      closeOnConfirm: false,
+      showLoaderOnConfirm: true
+  },
+  function() {
+    window.location.href = '../Panel';
+  });
 }
 
 
 function set_products() {
 	$.ajax({
-		url: "../GameProducts/get_products",
+		url: "../GameProducts/get_products_for_game",
 		beforeSend: function( xhr ) {
-			console.log('loading products');
+	
 		}
 	})
 	.done(function( data ) {
-		var result = jQuery.parseJSON(data);
-		//products = result;
+    var result = jQuery.parseJSON(data);
+    
+    current_user = result.current_user;
+    products = result.products;
 		initialize_game();
 	});
 }
@@ -225,3 +305,4 @@ $(document).ready(function() {
 	set_card_lotto_height();
 	set_products();
 });
+
