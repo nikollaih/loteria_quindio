@@ -38,7 +38,7 @@ class GameProducts extends Application_Controller {
                         mkdir($dir, 0755);
                     }
                     if(move_uploaded_file($_FILES['g_product_path']["tmp_name"], $dir.'product.'.$img_type)){
-                        createThumb('product.'.$img_type, $img_type, $dir);
+                        createThumb('product.'.$img_type, $img_type, $dir, true);
                         $params["message"]["product"]["g_product_path"] = substr($dir, 2).'sproduct.'.$img_type;
                         $this->GameProduct->update($params["message"]["product"]);
                     }

@@ -5,13 +5,14 @@
             <div class="card-body">
                 <h4 class="header-title mt-0 add-game_product-title">Agregar Producto</h4>
                 <hr class="mb-4">
+                <p><strong>Nota: </strong>Asegurese de que la imagen que desea subir para el producto sea de dimensiones cuadradas, esto para que no pierda la proporción a la hora de ser cargada al sistema.</p>
                 <form action="" method="post" id="form-game_product" enctype="multipart/form-data">
                     <input type="hidden" name="id_game_product" id="input_id_game_product" value="<?= (isset($data_form)) ? $data_form["id_game_product"] : "null" ?>">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Imagen</label>
-                                <input id="g_product_path" name="g_product_path" type="file" class="form-control "  value="">
+                                <input id="g_product_path" name="g_product_path" type="file" class="form-control "  value="" accept="image/*">
                             </div>
                         </div>
                         <div class="col-md-3">
