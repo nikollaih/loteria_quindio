@@ -60,7 +60,7 @@
                                 <td><strong><?= strtoupper($winner["slug"]) ?></strong></td>
                                 <td><div class="badge badge-<?= get_class_by_status($winner["status"]) ?> float-right"><?= $winner["status"] ?></div></td>
                                 <td><?= $winner["first_name"]." ".$winner["last_name"] ?></td>
-                                <td><?= $winner["g_product_name"] ?></td>
+                                <td><?= "P-".$winner["product_id"]. " " . $winner["g_product_name"] ?></td>
                                 <td>
                                 <?php
                                         if($winner["comments"] != ""){

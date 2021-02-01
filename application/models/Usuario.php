@@ -10,7 +10,7 @@ Class Usuario extends CI_Model {
         // Query to insert data in database
         $this->db->insert('users', $data);
         if ($this->db->affected_rows() > 0) {
-            return $this->get_user_by_param("email", $data["email"]);;
+            return $this->get_user_by_param("email", $data["email"]);
         }
         else{
             return false;
@@ -70,6 +70,28 @@ Class Usuario extends CI_Model {
     public function update($data){
         $this->db->where("id", $data["id"]);
         return $this->db->update("users", $data);
+    }
+
+
+    public function get_loto_points($id){
+      $this->db->from('users');
+      $this->db->order_by("id", "desc");
+      if($id != null){
+          $this->db->where("id", $id);
+      }
+      $query = $this->db->get();
+
+      if ($query->num_rows() > 0) {
+          return ($id == null) ? $query->result_array() : $query->row_array()['lotto_points'];
+      } else {
+          return false;
+      }
+    }
+
+    public function substract_lotto_point($id){
+      $this->db->set('lotto_points', ($this->get_loto_points($id) - 1));
+      $this->db->where('id', $id);
+      $this->db->update('users');
     }
 }
 ?>
