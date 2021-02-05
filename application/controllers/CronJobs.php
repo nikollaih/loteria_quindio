@@ -6,12 +6,13 @@ class CronJobs extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-        $this->load->helper(['url', 'winners']);
-        $this->load->model(["Purchase", "Subscriber", "Draw", "Booking", "Winner"]);
+        $this->load->helper(['url', 'winners', 'games']);
+        $this->load->model(["Purchase", "Subscriber", "Draw", "Booking", "Winner", "Usuario"]);
 		$this->load->library(['session']);
 	}
 
     // Add the rows to purchase table with the subscriber information
+    // Run every friday at 00:00
 	public function subscriber_to_purchase()
 	{
         // Get the subscriber list
@@ -38,9 +39,11 @@ class CronJobs extends Application_Controller {
                     $result_purchase = $this->Purchase->set_purchase($data);
                     // If purchase was created successfully then it will update the remaining subscriber amount
                     if(is_array($result_purchase)){
+                        add_loto_punto();
                         $result_subscriber = $this->Subscriber->update_subscriber(array("subscriber_remaining_amount" => $s["subscriber_remaining_amount"] - 1, "id_subscriber" => $s["id_subscriber"]));
                         // If there is any error while updating the subscriber then the purchase will be removed
                         if(!$result_subscriber){
+                            add_loto_punto("substract");
                             $this->Purchase->delete_purchase($result_purchase["id_purchase"]);
                         }
                     }
@@ -50,8 +53,15 @@ class CronJobs extends Application_Controller {
     }
     
     // Delete the old booking register, (more than 10 minutes since it was created)
+    // Run every 10 minutes
     public function clear_booking(){
         $datetime_from = date("Y-m-d H:i:s", strtotime("-10 minutes", strtotime(date("Y-m-d H:i"))));
         $this->Booking->clear_booking($datetime_from);
+    }
+
+    // Set the lotto points to 0
+    // Run after finished the current draw
+    function clear_lotto_points(){
+        $this->Usuario->clear_lotto_points();
     }
 }

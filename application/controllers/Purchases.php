@@ -6,7 +6,7 @@ class Purchases extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(['url', 'product']);
+		$this->load->helper(['url', 'product', 'games']);
 		$this->load->library(['session', 'form_validation', 'Mailer']);
 		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber', 'Usuario']);
 	}
@@ -93,6 +93,8 @@ class Purchases extends Application_Controller {
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
 						}
+						// Add a new loto point
+						add_loto_punto();
 						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 					}
 				}
@@ -104,6 +106,8 @@ class Purchases extends Application_Controller {
 							if($subscriber_amount > 1){
 								$this->set_subscriber($subscriber_amount, $result_purchase);
 							}
+							// Add a new loto point
+							add_loto_punto();
 							return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 						}
 					}

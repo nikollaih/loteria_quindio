@@ -88,10 +88,19 @@ Class Usuario extends CI_Model {
       }
     }
 
-    public function substract_lotto_point($id){
-      $this->db->set('lotto_points', ($this->get_loto_points($id) - 1));
+    public function substract_lotto_point($id, $action = "substract"){
+      $this->db->set('lotto_points', (($action == "substract") ? $this->get_loto_points($id) - 1 : $this->get_loto_points($id) + 1));
       $this->db->where('id', $id);
       $this->db->update('users');
+    }
+
+    // Set the lotto points to 0
+    public function clear_lotto_points($id = null){
+        $this->db->set('lotto_points', 0);
+        if($id != null){
+            $this->db->where('id', $id);
+        }
+        $this->db->update('users');
     }
 }
 ?>
