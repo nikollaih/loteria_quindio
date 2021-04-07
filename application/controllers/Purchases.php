@@ -9,6 +9,7 @@ class Purchases extends Application_Controller {
 		$this->load->helper(['url', 'product', 'games']);
 		$this->load->library(['session', 'form_validation', 'Mailer']);
 		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber', 'Usuario']);
+		$this->paymentUrl = "https://test.placetopay.com/redirection/api/session/";
 	}
 
 	public function index()
@@ -77,7 +78,7 @@ class Purchases extends Application_Controller {
 			$data["discount"] = ($data["price"] - ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"])) * ($subcriber_discount / 100);
 		}
 
-		$this->do_payment($data, $user["balance_total"]);
+		
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
@@ -90,6 +91,9 @@ class Purchases extends Application_Controller {
 				if(!$temp_purchase){
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
+
+						$this->do_payment($result_purchase, $user["balance_total"]);
+						
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
 						}
@@ -135,6 +139,23 @@ class Purchases extends Application_Controller {
 
 			if(update_balance($new_balance, $purchase["id_user"]));
 		}
+		else{
+			$jsonData = generate_payment_json($purchase["id_purchase"]);
+
+			$ch = curl_init( $this->paymentUrl );
+			# Setup request to send json via POST.
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+			# Return response instead of printing.
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			# Send request.
+			$result = json_decode(curl_exec($ch));
+			curl_close($ch);
+
+			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'request_id' => $result->requestId ));
+			# Print response.
+			header("Location:".$result->processUrl);
+		}
 	}
 
 	// Set the subscriber rows
@@ -173,5 +194,28 @@ class Purchases extends Application_Controller {
 		}
 
         $this->load_layout("Panel/Purchases/UserSubscriber", $params);
+	}
+
+	// Show the purchase resume, purchase status
+	function resume($purchase_slug = null){
+		$params["title"] = "Resumen";
+		$params["subtitle"] = "Compra finalizada";
+		$params["request"] = [];
+		$params["purchase"] = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+
+		if($params["purchase"]["request_id"] != null){
+			$jsonData = generate_payment_json($params["purchase"]["id_purchase"]);
+			$ch = curl_init( $this->paymentUrl.$params["purchase"]["request_id"] );
+			# Setup request to send json via POST.
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+			# Return response instead of printing.
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			# Send request.
+			$params["request"]  = (array) json_decode(curl_exec($ch));
+			curl_close($ch);
+		}
+
+        $this->load_layout("Panel/Purchases/Resume", $params);
 	}
 }

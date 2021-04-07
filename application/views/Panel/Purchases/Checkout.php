@@ -289,11 +289,11 @@
                      <label class="custom-control-label" for="bank-purchase">Place To Pay</label>
                   </div>
                   <div class="custom-control custom-radio">
-                     <input id="balance" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="2">
+                     <input id="balance" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="2"><br>
+                     <img class="mb-4" src="https://static.placetopay.com/placetopay-logo.svg " alt="" srcset="" width="250px"><br>
                      <label class="custom-control-label" for="balance">Saldo en plataforma: $<?= number_format($user["balance_total"], 0, ',', '.') ?> COP</label>
                   </div>
                </div>
-               <img src="<?= base_url() ?>assets/images/mediosdepago.png" alt="" srcset="" width="100%">
             </div>
          </div>
       </form>

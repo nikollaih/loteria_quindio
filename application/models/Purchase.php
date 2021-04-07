@@ -76,7 +76,7 @@ Class Purchase extends CI_Model {
     // Update an existing purchase
     // $data -> The new updated data with id and name
     public function update_purchase($data){
-        $this->db->where("id", $data["id"]);
+        $this->db->where("id_purchase", $data["id_purchase"]);
         return $this->db->update("purchases", $data);
     }
 
