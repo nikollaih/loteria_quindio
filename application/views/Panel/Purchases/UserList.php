@@ -28,7 +28,7 @@
                                 <th scope="row"><span class="badge badge-primary">Pendiente</span></th>
                                 <td class="text-center"><?= $purchase["draw_number"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["date"]))) ?></td>
-                                <td class="text-center"><?= $purchase["number"] ?></td>
+                                <td class="text-center"><?= $purchase["number"]." ".$purchase["slug"] ?></td>
                                 <td class="text-center"><?= $purchase["serie"] ?></td>
                                 <td class="text-center"><?= $purchase["parts"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["created_at"]))) ?></td>
