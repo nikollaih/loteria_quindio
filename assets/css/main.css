@@ -32,6 +32,42 @@ body {
     font-weight: 700;
 }
 
+.label-PENDING{
+    background-color: var(--secondary-color) !important;
+    color: #fff;
+}
+
+.label-REJECTED{
+    background-color: var(--orange-color) !important;
+    color: #fff;
+}
+
+.label-FAILED{
+    background-color: var(--danger-color) !important;
+    color: #fff;
+}
+
+.label-APPROVED{
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+
+.text-PENDING{
+    color: var(--secondary-color) !important;
+}
+
+.text-REJECTED{
+    color: var(--orange-color) !important;
+}
+
+.text-FAILED{
+    color: var(--danger-color) !important;
+}
+
+.text-APPROVED{
+    color: var(--primary-color) !important;
+}
+
 .btn-success,
 .badge-success,
 .btn-outline-success:hover,

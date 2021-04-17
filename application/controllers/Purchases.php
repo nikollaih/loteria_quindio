@@ -9,7 +9,6 @@ class Purchases extends Application_Controller {
 		$this->load->helper(['url', 'product', 'games']);
 		$this->load->library(['session', 'form_validation', 'Mailer']);
 		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber', 'Usuario']);
-		$this->paymentUrl = "https://test.placetopay.com/redirection/api/session/";
 	}
 
 	public function index()
@@ -71,6 +70,7 @@ class Purchases extends Application_Controller {
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
 		$data["slug"] = create_unique_slug("Purchases", 8);
 		$data["discount"] = 0;
+		$data["purchase_status"] = "PENDING";
 		$draw = $this->Draw->get_active_draw();
 
 		if($subscriber_amount > 1){
@@ -142,7 +142,7 @@ class Purchases extends Application_Controller {
 		else{
 			$jsonData = generate_payment_json($purchase["id_purchase"]);
 
-			$ch = curl_init( $this->paymentUrl );
+			$ch = curl_init( get_setting("pse_api_url") );
 			# Setup request to send json via POST.
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
 			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -205,7 +205,7 @@ class Purchases extends Application_Controller {
 
 		if($params["purchase"]["request_id"] != null){
 			$jsonData = generate_payment_json($params["purchase"]["id_purchase"]);
-			$ch = curl_init( $this->paymentUrl.$params["purchase"]["request_id"] );
+			$ch = curl_init( get_setting("pse_api_url").$params["purchase"]["request_id"] );
 			# Setup request to send json via POST.
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
 			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -216,6 +216,19 @@ class Purchases extends Application_Controller {
 			curl_close($ch);
 		}
 
+		$this->Purchase->update_purchase(array('id_purchase' => $params["purchase"]["id_purchase"], 'purchase_status' => $params["request"]["status"]->status ));
+
         $this->load_layout("Panel/Purchases/Resume", $params);
+	}
+
+	// Update a purchase status
+	function notification(){
+		$response = json_decode(file_get_contents('php://input'));
+		$signature = sha1($response->requestId.$response->status->status.$response->status->date.get_setting("pse_api_secret_key"));
+		$purchase = $this->Purchase->get_purchase_by_param("p.request_id", $response->requestId);
+
+		if($signature == $response->signature && $purchase && $purchase["purchase_status"] == "PENDING"){
+			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status ));
+		}
 	}
 }
