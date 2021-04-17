@@ -35,15 +35,17 @@ jQuery(document).on("click", ".btn-draw-cant", function() {
 // Add datatable options to custom tables
 var table_purchases = jQuery("#table-purchases").DataTable({
     "language": {
-        "url": base_url + "assets/json/datatable_spanish.json"
-    }
+        "url": base_url + "assets/json/datatable_spanish.json",
+    },
+    "order":[],
 });
 
 // Add datatable options to custom tables
 var table_subscribers = jQuery("#table-subscribers").DataTable({
     "language": {
-        "url": base_url + "assets/json/datatable_spanish.json"
-    }
+        "url": base_url + "assets/json/datatable_spanish.json",
+    },
+    "order":[],
 });
 
 // When the select parts changes
