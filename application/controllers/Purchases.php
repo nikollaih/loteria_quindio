@@ -34,15 +34,6 @@ class Purchases extends Application_Controller {
             if(!$params["message"]["success"]){
                 $params["data_form"] = $this->input->post();
 			}
-			else{
-				$data["purchase"] = $params["message"]["data"];
-				$data["subscriber"] = $this->input->post("subscriber");
-				$data['success_message'] = true;
-				$data['button_url'] = generate_invoice_url($data["purchase"]["user_slug"], $data["purchase"]["slug"]);
-				$email_body = $this->load->view('emails/purchase_invoice', $data, true);
-				$this->mailer->send($email_body, 'Compra exitosa', $data["purchase"]["email"]);
-				$this->session->unset_userdata('draw_number');
-			}
 		}
 
         $params["title"] = "Compra";
@@ -61,7 +52,24 @@ class Purchases extends Application_Controller {
 		$blend = $this->Blend->get_blends($data["serie"]);
 		$user = $this->Usuario->get_user_by_param("u.id", logged_user()["id"]);
 		$subscriber_amount = $info_data["subscriber"]["amount"];
-		$subcriber_discount = $info_data["subscriber"]["discount"];
+
+		switch ($subscriber_amount) {
+			case '52':
+				$subcriber_discount = 15;
+				break;
+			
+			case '26':
+				$subcriber_discount = 8;
+				break;
+
+			case '13':
+				$subcriber_discount = 5;
+				break;
+			
+			default:
+			$subcriber_discount = 0;
+				break;
+		}
 
 		$data["bills"] = ($subscriber_amount > 1) ? $subscriber_amount + 1 : 1;
 		$data["parts"] = $info_data["current_draw"]["fractions_count"];
@@ -91,15 +99,18 @@ class Purchases extends Application_Controller {
 				if(!$temp_purchase){
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
-
-						$this->do_payment($result_purchase, $user["balance_total"]);
-						
+						$this->session->unset_userdata('draw_number');
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
 						}
 						// Add a new loto point
 						add_loto_punto();
-						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
+
+						$payment_result = $this->do_payment($result_purchase, $user["balance_total"]);
+						if(is_array($payment_result)){
+							return $payment_result;
+						}
+						//return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 					}
 				}
 				else{
@@ -116,7 +127,7 @@ class Purchases extends Application_Controller {
 						}
 					}
 					else{
-						return array("type" => "danger", "success" => false, "message" => "El número o cantidad de fracciones que desea comprar no se encuentra disponible.");
+						return array("type" => "danger", "success" => false, "message" => "El número y serie que desea comprar no se encuentra disponible.");
 					}
 				}
 			}
@@ -132,12 +143,11 @@ class Purchases extends Application_Controller {
 		if($purchase["payment_method"] == 2){
 			if(($purchase_total) <= $user_balance){
 				$new_balance = $user_balance - ($purchase_total);
+				update_balance($new_balance, $purchase["id_user"]);
 			}
 			else{
-				$new_balance = 0;
+				return array("type" => "danger", "success" => false, "message" => "Saldo insuficiente.");
 			}
-
-			if(update_balance($new_balance, $purchase["id_user"]));
 		}
 		else{
 			$jsonData = generate_payment_json($purchase["id_purchase"]);
@@ -199,11 +209,11 @@ class Purchases extends Application_Controller {
 	// Show the purchase resume, purchase status
 	function resume($purchase_slug = null){
 		$params["title"] = "Resumen";
-		$params["subtitle"] = "Compra finalizada";
+		$params["subtitle"] = "";
 		$params["request"] = [];
 		$params["purchase"] = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
 
-		if($params["purchase"]["request_id"] != null){
+		if($params["purchase"]["request_id"] != null && $params["purchase"]){
 			$jsonData = generate_payment_json($params["purchase"]["id_purchase"]);
 			$ch = curl_init( get_setting("pse_api_url").$params["purchase"]["request_id"] );
 			# Setup request to send json via POST.
@@ -216,7 +226,7 @@ class Purchases extends Application_Controller {
 			curl_close($ch);
 		}
 
-		$this->Purchase->update_purchase(array('id_purchase' => $params["purchase"]["id_purchase"], 'purchase_status' => $params["request"]["status"]->status ));
+		$this->Purchase->update_purchase(array('id_purchase' => $params["purchase"]["id_purchase"], 'purchase_status' => $params["request"]["status"]->status, 'payment_response' =>  serialize($params["request"]), 'authorization' => ($params["request"]["status"]->status == "APPROVED") ? $params["request"]["payment"][0]->authorization : ""));
 
         $this->load_layout("Panel/Purchases/Resume", $params);
 	}
@@ -229,6 +239,16 @@ class Purchases extends Application_Controller {
 
 		if($signature == $response->signature && $purchase && $purchase["purchase_status"] == "PENDING"){
 			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status ));
+		}
+	}
+
+	// Retry the payment
+	function retry_payment($purchase_slug){
+		if(is_logged()){
+			$purchase = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+			if($purchase){
+				$this->do_payment($purchase, 0);
+			}
 		}
 	}
 }

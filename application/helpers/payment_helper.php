@@ -40,12 +40,11 @@ if(!function_exists('generate_payment_json'))
                     "nonce" => base64_encode($purchase["id_purchase"]),
                     "seed" =>  $seed
                 ), 
-            "locale" => "en_CO",
+            "locale" => "es_CO",
             "buyer" =>
                 array(
                     "name" => $purchase["first_name"],
                     "surname" => $purchase["last_name"],
-                    "lastName" => $purchase["last_name"],
                     "email" => $purchase["email"],
                     "document" => $purchase["identification_number"],
                     "documentType" => "CC",
@@ -79,12 +78,32 @@ if(!function_exists('convert_purchase_status'))
     function convert_purchase_status($purchase_status){
         $status = array(
             'PENDING' => 'Pendiente', 
-            'APPROVED' => 'Aprovado', 
+            'APPROVED' => 'Aprobado', 
             'REJECTED' => 'Rechazado', 
             'FAILED' => 'Falló', 
         );
 
         return (isset($status[$purchase_status])) ? $status[$purchase_status] : $purchase_status;
+    }
+
+}
+
+// Generate tranKey
+if(!function_exists('after_aprroved'))
+{
+    function after_aprroved($id_purchase){
+        $CI = &get_instance();
+        $CI->load->model(['Purchase', 'Subscriber']);
+        $CI->load->library('Mailer');
+
+        $data["purchase"] = $CI->Purchase->get_purchases($id_purchase);
+        $data["subscriber"] = $CI->Subscriber->get_purchase_subscriber($data["purchase"]["id"]);
+        $data['success_message'] = true;
+        $data['button_url'] = generate_invoice_url($data["purchase"]["user_slug"], $data["purchase"]["slug"]);
+
+        $email_body = $CI->load->view('emails/purchase_invoice', $data, true);
+		$test = $CI->mailer->send($email_body, 'Compra exitosa', $data["purchase"]["email"]);
+        print_r($test);
     }
 
 }

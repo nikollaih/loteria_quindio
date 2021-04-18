@@ -247,7 +247,7 @@
                                             <strong>Cantidad de fracciones compradas:</strong> <?= $purchase["parts"] ?>
                                         </p>
                                         <p style="line-height: 24px;margin-bottom:15px;">
-                                            <strong>Sistema de abonados:</strong> <?= ($subscriber["amount"] > 1) ? "x".$subscriber["amount"]." sorteos" : "No aplica"; ?>
+                                            <strong>Sistema de abonados:</strong> <?= (is_array($subscriber)) ? "x".$subscriber["amount"]." sorteos" : "No aplica"; ?>
                                         </p>
                                         <p style="line-height: 24px; margin-bottom:20px;">
                                             Para ver la factura por favor haga click en el siguiente enlace:

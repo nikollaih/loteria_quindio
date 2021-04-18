@@ -2,8 +2,12 @@ var purchase_price = 0;
 var purchase_discount = 0;
 var purchase_total = 0;
 
+jQuery(document).ready(function(){
+    jQuery("#bill-number").trigger("change");
+})
+
 // When the subscriber button is pressed
-jQuery(document).on("click", ".btn-draw-cant", function() {
+jQuery(document).on("click", ".btn-draw-cant", function () {
     var fractions_count = jQuery("#slt-parts-cant").attr("data-amount");
     var fraction_price = jQuery("#slt-parts-cant").attr("data-value");
 
@@ -37,7 +41,7 @@ var table_purchases = jQuery("#table-purchases").DataTable({
     "language": {
         "url": base_url + "assets/json/datatable_spanish.json",
     },
-    "order":[],
+    "order": [],
 });
 
 // Add datatable options to custom tables
@@ -45,11 +49,11 @@ var table_subscribers = jQuery("#table-subscribers").DataTable({
     "language": {
         "url": base_url + "assets/json/datatable_spanish.json",
     },
-    "order":[],
+    "order": [],
 });
 
 // When the select parts changes
-jQuery(document).on("change", "#slt-parts-cant", function() {
+jQuery(document).on("change", "#slt-parts-cant", function () {
     purchase_discount = 0;
     purchase_price = jQuery(this).val() * jQuery(this).attr("data-value");
     var fractions_count = jQuery("#slt-parts-cant").attr("data-amount");
@@ -68,7 +72,7 @@ jQuery(document).on("change", "#slt-parts-cant", function() {
 });
 
 // When the select serie changes
-jQuery(document).on("change", "#bill-serie", function() {
+jQuery(document).on("change", "#bill-serie", function () {
     var min_value = jQuery(this).find(":selected").attr("data-min");
     var max_value = jQuery(this).find(":selected").attr("data-max");
 
@@ -76,10 +80,11 @@ jQuery(document).on("change", "#bill-serie", function() {
     // jQuery("#bill-number").attr("max", max_value);
     jQuery("#show-min-value").html(min_value);
     jQuery("#show-max-value").html(max_value);
+    get_available_numbers(jQuery("#bill-serie").val());
     set_show_bill_data();
 });
 
-jQuery(document).on("keyup", "#bill-number", function() {
+jQuery(document).on("change", "#bill-number", function () {
     set_show_bill_data();
 });
 
@@ -98,5 +103,19 @@ function set_susbcriber(value) {
 function set_show_bill_data() {
     var number = jQuery("#bill-number").val();
     var serie = jQuery("#bill-serie").val();
-    jQuery("#text-show-number-serie").html(number + " - " + serie);
+    jQuery("#text-show-number-serie").html(((number == null) ? "0000" : number) + " - " + serie);
+}
+
+function get_available_numbers(serie_id) {
+    jQuery("#bill-number").html("");
+    jQuery.get(base_url + "Blends/available_number/" + serie_id, {},
+        function (data) {
+            let numbers = data.object.numbers;
+
+            for (let i = 0; i < numbers.length; i++) {
+                let new_option = new Option(numbers[i], numbers[i], false, false);
+                jQuery("#bill-number").append(new_option);
+            }
+            jQuery("#bill-number").trigger("change");
+        }, 'json')
 }

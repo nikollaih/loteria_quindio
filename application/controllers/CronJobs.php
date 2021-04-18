@@ -55,7 +55,7 @@ class CronJobs extends Application_Controller {
     // Delete the old booking register, (more than 10 minutes since it was created)
     // Run every 10 minutes
     public function clear_booking(){
-        $datetime_from = date("Y-m-d H:i:s", strtotime("-10 minutes", strtotime(date("Y-m-d H:i"))));
+        $datetime_from = date("Y-m-d H:i:s", strtotime("-20 minutes", strtotime(date("Y-m-d H:i"))));
         $this->Booking->clear_booking($datetime_from);
     }
 
@@ -65,6 +65,7 @@ class CronJobs extends Application_Controller {
         $this->Usuario->clear_lotto_points();
     }
 
+    
     function update_purchases_status(){
         $purchases = $this->Purchase->get_purchase_by_param("p.purchase_status", "PENDING", 0);
 
