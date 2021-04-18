@@ -1,6 +1,7 @@
 @import "bootstrap.min.css";
 @import "variables.css";
 @import "icons.min.css";
+@import "../libs/select2/select2.min.css";
 @import "../libs/dataTables/dataTables.bootstrap4.min.css";
 @import "../libs/dataTables/responsive.bootstrap4.min.css";
 @import "../libs/dataTables/buttons.bootstrap4.min.css";
@@ -68,6 +69,10 @@ body {
     color: var(--primary-color) !important;
 }
 
+.bg-white{
+    background-color: #fff;
+}
+
 .btn-success,
 .badge-success,
 .btn-outline-success:hover,
@@ -92,6 +97,10 @@ body {
 
 .btn-outline-success {
     border-color: var(--primary-color);
+}
+
+.content{
+    padding-bottom: 80px;
 }
 
 .sw-theme-arrows>ul.step-anchor>li.done>a {

@@ -19,8 +19,6 @@
             // Get the booking numbers list
             $booking_number = $CI->Booking->get_bookings(array("serie" => $blend["serie"], "id_draw" => $active_draw["id"]));
 
-
-
             // Merge the sold and booked numbers to get a complete
             $exclude_array = array_merge($sold_numbers, $booking_number);
             $temp_exclude = [];
@@ -33,6 +31,38 @@
             } while(in_array(intval($rand_number), $temp_exclude));
             
             return array("draw" => $active_draw, "number" => $rand_number, "serie" => $blend["serie"]);
+        }
+    
+    }
+
+    // Get a random number and serie 
+    if(!function_exists('get_available_numbers'))
+    {
+        function get_available_numbers($serie_id){
+            $CI = &get_instance();
+            $CI->load->model(['Blend', 'Draw', 'Purchase', 'Booking']);
+            
+            // Get current active draw
+            $active_draw = $CI->Draw->get_active_draw();
+            // Get the blends list
+            $blend = $CI->Blend->get_blends($serie_id);
+            $blend_numbers = unserialize($blend["blend_numbers"]);
+
+            //Get the sold number
+            $sold_numbers = $CI->Purchase->get_sold_numbers($active_draw["id"], $blend["serie"]);
+            // Get the booking numbers list
+            $booking_number = $CI->Booking->get_bookings(array("serie" => $blend["serie"], "id_draw" => $active_draw["id"]));
+
+            // Merge the sold and booked numbers to get a complete
+            $exclude_array = array_merge($sold_numbers, $booking_number);
+            $temp_exclude = [];
+            for ($i=0; $i < count($exclude_array); $i++) { 
+                array_push($temp_exclude, array_values($exclude_array[$i])[0]) ;
+            }
+
+            $available_numbers = array_diff($blend_numbers, $temp_exclude);
+            
+            return array("draw" => $active_draw, "numbers" => array_values($available_numbers), "serie" => $blend["serie"]);
         }
     
     }

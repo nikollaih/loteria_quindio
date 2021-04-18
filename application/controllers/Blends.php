@@ -149,5 +149,9 @@ class Blends extends Application_Controller {
             json_response(null, false, "No tiene permisos para realizar esta acción.");
         }
     }
+
+    function available_number($serie_id){
+        json_response(get_available_numbers($serie_id), true, "Lista de números disponibles");
+    }
     
 }

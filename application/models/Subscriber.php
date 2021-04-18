@@ -48,6 +48,22 @@ Class Subscriber extends CI_Model {
         }
     }
 
+    public function get_purchase_subscriber($id_purchase) {
+        $this->db->select('p.*, u.slug as user_slug, s.*');
+        $this->db->from('subscribers s');
+        $this->db->join('purchases p', 's.id_purchase = p.id_purchase');
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->order_by("id_subscriber", "desc");
+        $this->db->where("s.id_purchase", $id_purchase);
+
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
+
     // Add a new subscriber
     // $data -> The subscriber data with id as null and name
     public function set_subscriber($data){
