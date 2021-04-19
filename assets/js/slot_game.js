@@ -75,9 +75,9 @@ function createSlots (ring) {
 
 		if(i >= shufle_products.length){
 			var random = Math.floor(Math.random()*(shufle_products.length));
-			$(slot).append('<img src="' + shufle_products[random].g_product_path + '" class="image-' + shufle_products[random].id_game_product +'"></img>');
+			$(slot).append('<img src="../' + shufle_products[random].g_product_path + '" class="image-' + shufle_products[random].id_game_product +'"></img>');
 		}else {
-			$(slot).append('<img src="' + shufle_products[i].g_product_path + '" class="image-' + shufle_products[i].id_game_product +'"></img>');
+			$(slot).append('<img src="../' + shufle_products[i].g_product_path + '" class="image-' + shufle_products[i].id_game_product +'"></img>');
 		}
 		// add the poster to the row
 		ring.append(slot);
@@ -121,19 +121,27 @@ function initialize_game(){
 
  	// hook start button
  	$('#btn-play').on('click',function(){
+		$('#btn-play').hide();
+		var timer = 2;
+		spin(timer);
+	
+		setTimeout(function(){
+			fetchDataForGame();
+		}, 6000);
+ 	
+	})
+	 
+
+	function fetchDataForGame(){
 		$.ajax({
 			url: "../GameProducts/get_result_for_game",
 			type: 'POST',
 			data: { products: products, user: current_user },
-			beforeSend: function( xhr ) {
-				var timer = 2;
-				spin(timer);
-			}
 		})
 		.done(function( data ) {
       var result = jQuery.parseJSON(data);
-      lotto_points = result['lotto_points'];
-
+			lotto_points = result['lotto_points'];
+			$('.ring').css('animation', '');
 			if(lotto_points > 0) {
         var won = result['won'];
 
@@ -142,7 +150,7 @@ function initialize_game(){
           var selected = [suffle_products[1], suffle_products[2], suffle_products[3]];
           for(var i = 1; i <= 3; i ++) {
             $('#ring-' + i + ' div:nth-child(1)').html('');
-            $('#ring-' + i + ' div:nth-child(1)').append('<img src="' + suffle_products[i].g_product_path + '" class="image-' + suffle_products[i].id_game_product +'"></img>');
+            $('#ring-' + i + ' div:nth-child(1)').append('<img src="../' + suffle_products[i].g_product_path + '" class="image-' + suffle_products[i].id_game_product +'"></img>');
           }
           not_won(selected);
         }else{
@@ -155,7 +163,7 @@ function initialize_game(){
           }
           for(var i = 1; i <= 3; i ++) {
             $('#ring-' + i + ' div:nth-child(1)').html('');
-            $('#ring-' + i + ' div:nth-child(1)').append('<img src="' + img + '" class="image-' + product +'"></img>');
+            $('#ring-' + i + ' div:nth-child(1)').append('<img src="../' + img + '" class="image-' + product +'"></img>');
           }
 
           $.ajax({
@@ -175,12 +183,9 @@ function initialize_game(){
         not_points();
       }
 
-      
-      setInterval($('.ring').css('animation', ''), 150000);
+			$('#btn-play').show();
 		});
- 	
-	})
-	 
+	}
 	$('#btn-stop').on('click',function(){
 		$('.ring').css('animation', '');
 	})
@@ -242,16 +247,58 @@ function not_points(){
 }
 
 function not_won(selected){
-  var images = "<div class='images'><img src='" + selected[0].g_product_path +"'></img><img src='" + selected[1].g_product_path +"'></img><img src='" + selected[2].g_product_path +"'></img></div>"
+	$('#btn-play').hide();
+  var images = "<div class='images'><img src='../" + selected[0].g_product_path +"'></img><img src='../" + selected[1].g_product_path +"'></img><img src='../" + selected[2].g_product_path +"'></img></div>"
   var tries = "<div class='tries'>Te quedan " + (lotto_points - 1) +" intentos.</div>"
   var content = "<div class='game-modal'><div class='title'></div>" + images +  tries +"</div>";
   var play_again = false;
   if(lotto_points > 1) { play_again = true; }
 	swal({
-      title: 'Oh, mala suerte!',
+      title: '¡Oh, mala suerte!',
       html: true,
       text: content,
       showCancelButton: play_again,
+      cancelButtonText: 'Jugar de nuevo',
+      confirmButtonText: 'Volver a inicio',
+      closeOnConfirm: false,
+			showLoaderOnConfirm: true,
+			showLoaderOnCancel: true
+  },
+  function(goToHome) {
+    if (goToHome) {
+			window.location.href = '../Panel';
+		} else {
+			$('#btn-play').hide();
+			$.ajax({
+				url: "../GameProducts/get_products_for_game",
+				beforeSend: function( xhr ) {
+			
+				}
+			})
+			.done(function( data ) {
+				var result = jQuery.parseJSON(data);
+				
+				current_user = result.current_user;
+				products = result.products;
+				if(products.length < 4) {
+					not_products();
+				}
+				$('#btn-play').show();
+			});
+		}
+	});
+
+	
+}
+
+function not_products(){
+	var content = "<div class='game-modal'><div class='title'>No hay productos para sortear.</div><br/><br/><p>Te estamos redireccionando al inicio...</p></div>";
+	swal({
+      title: '¡Lo sentimos!',
+      html: true,
+      text: content,
+			showCancelButton: false,
+			showConfirmButton: false,
       cancelButtonText: 'Jugar de nuevo',
       confirmButtonText: 'Volver a inicio',
       closeOnConfirm: false,
@@ -259,21 +306,23 @@ function not_won(selected){
   },
   function() {
     window.location.href = '../Panel';
-  });
+	});
+	
+	setTimeout(function(){
+		window.location.href = '../Panel';
+ 	}, 5000);
 }
 
 function winner(img){
-  var images = "<div class='images'><img src='" + img +"'></img><img src='" + img +"'></img><img src='" + img +"'></img></div>"
-  var winner = "<div class='winner'>Ganaste este producto, nos comunicaremos contigo para coordinar el proceso de entrega, gracias por hacer parte de nosotros.</div>"
-  var tries = "<div class='tries'>Te quedan " + (lotto_points - 1) +" intentos.</div>"
-  var content = "<div class='game-modal'><div class='title'></div>" + images + winner  +"</div>";
-  var play_again = false;
-  if(lotto_points > 1) { play_again = true; }
+  var images = "<div class='images'><img src='../" + img +"'></img><img src='../" + img +"'></img><img src='../" + img +"'></img></div>"
+  var winner = "<br/><br/><div class='winner'>Ganaste este producto, nos comunicaremos contigo para coordinar el proceso de entrega, gracias por hacer parte de nosotros.</div>"
+  var content = "<div class='game-modal'><div class='title'></div>" + images + winner  +"<br/><br/><p>Te estamos redireccionando a tus premios...</p></div>";
 	swal({
       title: '¡Felicidades!',
       html: true,
       text: content,
-      showCancelButton: play_again,
+			showCancelButton: false,
+			showConfirmButton: false,
       cancelButtonText: 'Jugar de nuevo',
       confirmButtonText: 'Volver a inicio',
       closeOnConfirm: false,
@@ -281,11 +330,16 @@ function winner(img){
   },
   function() {
     window.location.href = '../Panel';
-  });
+	});
+	
+	setTimeout(function(){
+		window.location.href = '../games/my_rewards';
+ 	}, 7000);
 }
 
 
 function set_products() {
+	$('#btn-play').hide();
 	$.ajax({
 		url: "../GameProducts/get_products_for_game",
 		beforeSend: function( xhr ) {
@@ -296,8 +350,12 @@ function set_products() {
     var result = jQuery.parseJSON(data);
     
     current_user = result.current_user;
-    products = result.products;
+		products = result.products;
+		if(products.length < 4) {
+			not_products();
+		}
 		initialize_game();
+		$('#btn-play').show();
 	});
 }
 

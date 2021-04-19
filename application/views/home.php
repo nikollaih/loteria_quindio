@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/powerball.css">
 
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -8,9 +7,10 @@
 				<div class="header-item text-center">
           <img class="text-center logo" src="<?= base_url().'assets/images/logo.png' ?>" alt="" height="72">
 				</div>
+				
 				<div class="header-item">
 					|
-					<a href="<?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? base_url() . 'panel' : base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit"><?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? $this->session->userdata("logged_in")["first_name"]." ".$this->session->userdata("logged_in")["last_name"] : "Iniciar sesión" ?></a>
+					<a href="<?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? base_url() . 'panel' : base_url() . 'usuarios/login' ?>" class="btn btn-link" type="submit"><?php echo (isset($this->session->userdata("logged_in")["first_name"])) ? "Ir al inicio" : "Iniciar sesión" ?></a>
 				</div>
 			</div>
 		</div>
@@ -107,6 +107,14 @@
 			</div>
 		</div>
 
+	</div>
+	<div class="p-3">
+		<div class="row">
+			<div class="col-md-6"></div>
+			<div class="col-md-6 text-right">
+					<a href="https://www.placetopay.com/web" target="_blank"><img width="120" src="https://static.placetopay.com/placetopay-logo-dark-background.svg" alt="PlaceToPay" srcset=""></a>
+			</div>
+		</div>
 	</div>
 </div>
 

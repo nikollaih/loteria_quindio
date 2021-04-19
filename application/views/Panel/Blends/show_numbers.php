@@ -63,42 +63,23 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0">Lista de mezclas</h4>
+                <h4 class="header-title mt-0">Lista de numeros de serie <?= $blend['serie']?></h4>
                 <hr class="mb-4">
                 <table id="table-blends" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <!-- <th scope="col">Desde</th>
-                            <th scope="col">Hasta</th> -->
                             <th scope="col">Serie</th>
-                            <th scope="col">Cantidad números</th>
-                            <th scope="col">Estado</th>
-                            <?php if(is_admin()){ ?>
-                            <th scope="col"></th>
-                            <?php } ?>
+                            <th scope="col">Número</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                            if(isset($blends) && is_array($blends)){
-                                $x = 1;
-                                foreach ($blends as $blend) {
+                            if(isset($numbers) && is_array($numbers)){
+                                foreach ($numbers as $number) {
                         ?>
                             <tr>
-                                <th scope="row"><?= $x++; ?></th>
-                                <!-- <td><?= $blend["start_number"] ?></td>
-                                <td><?= $blend["end_number"] ?></td> -->
-                                <td><strong><?= $blend["serie"] ?></strong></td>
-                                <td><?= $blend["numbers_quantity"] ?></td>
-                                <td><?php echo ($blend["blend_status"] == 1) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' ?></td>
-                                <?php if(is_admin()){ ?>
-                                    <td class="text-center" style="width:160px;">
-                                        <!-- <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button> -->
-                                        <a  href="<?= base_url() . 'blends/show_numbers/' . $blend["serie"] ?>" type="button" class="btn btn-info btn-sm text-white">Ver números</a>
-                                        <button id="row-blend-<?= $blend['id'] ?>" data-id="<?= $blend['id'] ?>" type="button" class="btn btn-danger btn-sm delete-blend-button">Eliminar</button>
-                                    </td>
-                                <?php } ?>
+                            <td><?= $blend["serie"] ?></td>
+                                <td><?= $number ?></td>
                             </tr>
                         <?php
                                 }

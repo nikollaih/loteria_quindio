@@ -37,16 +37,15 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0">Lista de ganadores productos fisicos</h4>
+                <h4 class="header-title mt-0">Lsita de premios</h4>
                 <hr class="mb-4">
                 <table id="table-winners" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th scope="col"></th>
                             <th scope="col">Codigo del premio</th>
-                            <th scope="col">Cliente</th>
                             <th scope="col">Producto</th>
-                            <th scope="col">Estado</th>    
+                            <th scope="col">Estado</th>
                             <th scope="col">Comentarios</th>
                             <th scope="col"></th>
                         </tr>
@@ -62,9 +61,9 @@
                                     <img height="80px" src="<?= (@getimagesize(base_url().$winner["g_product_path"])) ? base_url().$winner["g_product_path"] : "https://dummyimage.com/600x400/bdbdbd/fff&text=Imagen no disponible" ?>" alt="<?= $winner["g_product_name"] ?>" srcset="">
                                 </th>
                                 <td><strong><?= strtoupper($winner["slug"]) ?></strong></td>
-                                <td><?= $winner["first_name"]." ".$winner["last_name"] ?></td>
+                                
                                 <td><?= "P-".$winner["product_id"]. " " . $winner["g_product_name"] ?></td>
-                                <td><div class="badge badge-<?= get_class_by_status($winner["status"]) ?> float-right"><?= $winner["status"] ?></div></td>
+                                <td><div class="badge badge-<?= get_class_by_status($winner["status"]) ?> "><?= $winner["status"] ?></div></td>
                                 <td>
                                 <?php
                                         if($winner["comments"] != ""){

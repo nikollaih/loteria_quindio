@@ -18,7 +18,8 @@ class GenerateReturn {
 
     $returned = [];
     $returned_count = 0;
-
+    print_r($blends);
+    die();
     foreach ($blends as $blend) {
       $serie = $blend['serie'];
       $solds = $this->get_sold_numbers($serie);

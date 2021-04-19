@@ -69,14 +69,18 @@ $(document).ready(function() {
 
  	// hook start button
  	$('#btn-play').on('click',function(){
+		$('.ring div p').removeClass('winner-number');
+		$('.btn-purchase').addClass('invisible');
+		var timer = 2;
+		spin(timer);
+		setTimeout(function(){
+			perform_roulette();
+		}, 6000);
+	});
+
+	function perform_roulette(){
 		$.ajax({
 			url: "Main/get_random_draw_number",
-			beforeSend: function( xhr ) {
-				$('.ring div p').removeClass('winner-number');
-				$('.btn-purchase').addClass('invisible');
-				var timer = 2;
-				spin(timer);
-			}
 		})
 		.done(function( data ) {
 			var result = jQuery.parseJSON(data);
@@ -95,8 +99,7 @@ $(document).ready(function() {
 			$('.btn-purchase').attr('date', result.draw.date);
 			$('.btn-purchase').removeClass('invisible');
 		});
- 	
-	})
+	}
 	 
 	$('#btn-stop').on('click',function(){
 		$('.ring').css('animation', '');

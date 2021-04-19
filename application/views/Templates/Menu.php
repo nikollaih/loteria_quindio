@@ -45,6 +45,9 @@
                             <li>
                                 <a href="<?= base_url() . 'Usuarios/add_user'; ?>">Agregar Nuevo</a>
                             </li>
+                            <li>
+                                <a href="<?= base_url() . 'Hobbies'; ?>">Hobbies</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -122,13 +125,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="<?= base_url() . 'Hobbies'; ?>">
-                            <em data-feather="coffee"></em>
-                            <span> Hobbies </span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="<?= base_url() . 'Products'; ?>">
                             <em data-feather="tag"></em>
                             <span> Productos </span>
@@ -155,6 +151,13 @@
                                     <a href="<?= base_url() . 'Purchases'; ?>/user_list">Mis Compras</a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li>
+                            <a href="<?= base_url() . 'games/my_rewards' ?>">
+                                <em data-feather="award"></em>
+                                <span> Premios fisicos </span>
+                            </a>
                         </li>
                 <?php
                     }
