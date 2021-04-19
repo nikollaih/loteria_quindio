@@ -144,7 +144,7 @@
                 <div class="row mt-4">
                     <div class="col-md-12 text-center">
                         <?php
-                            if($request["status"]->status == "APRROVED" || $request["status"]->status == "PENDING"){
+                            if($request["status"]->status == "APPROVED" || $request["status"]->status == "PENDING"){
                                 ?>
                                 <a href="<?= base_url() ?>panel" class="btn btn-success btn-lg printPageButton">Volver al inicio</a>
                                 <?php
