@@ -215,6 +215,7 @@ class Purchases extends Application_Controller {
 
 		if($params["purchase"]["request_id"] != null && $params["purchase"]){
 			$jsonData = generate_payment_json($params["purchase"]["id_purchase"]);
+
 			$ch = curl_init( get_setting("pse_api_url").$params["purchase"]["request_id"] );
 			# Setup request to send json via POST.
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );

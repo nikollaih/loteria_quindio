@@ -155,7 +155,7 @@
                             </div>
                             <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
                             <div class="card-body">
-                            En la tienda virtual de <?= get_setting("commerce_name") ?> usted podrá realizar su pago con los medios habilitados para tal fin. Usted, de acuerdo a las opciones de pago escogidas por el comercio, podrá pagar a través de tarjetas de crédito Visa, American Express, Diners y MasterCard y Cuentas debito ahorro y corriente PSE.
+                            En la tienda virtual de <?= get_setting("commerce_name") ?> usted podrá realizar su pago con los medios habilitados para tal fin. Usted, de acuerdo a las opciones de pago escogidas por el comercio, podrá pagar a través de Cuentas debito ahorro y corriente PSE.
                             </div>
                             </div>
                         </div>
@@ -238,7 +238,25 @@
                             </div>
                         </div>
 
-                        
+                        <div class="card z-depth-0 bordered mb-2">
+                            <div class="card-header" id="heading8">
+                            <h5 class="mb-0 mt-0">
+                                <button class="btn collapsed text-secondary" type="button" data-toggle="collapse"
+                                data-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                                        <label style="cursor:pointer;">8. ¿Qué debo hacer si no recibí el comprobante de pago?</label>
+                                </button>
+                            </h5>
+                            </div>
+                            <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordionExample">
+                            <div class="card-body">
+                            Por cada transacción aprobada a través de Placetopay, recibirás un comprobante del
+pago con la referencia de compra en la dirección de correo electrónico que indicaste al
+momento de pagar. <br>
+Si no lo recibes, podrás contactar a <?= get_setting("commerce_name") ?> o a las líneas (57-6) 7448509 - (57-6) 7412441 o al correo electrónico
+<?= get_setting("commerce_email") ?>, para solicitar el reenvío del comprobante a la misma
+dirección de correo electrónico registrada al momento de pagar.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

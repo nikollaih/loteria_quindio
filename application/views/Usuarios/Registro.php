@@ -70,14 +70,17 @@
                                        <div class="col-md-6 form-group">
                                           <label for="name">Nombre <small class="text-danger fs-1">*</small></label>
                                           <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["first_name"] : "" ?>">
+                                          <?php echo form_error('user[first_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="last_name">Apellidos <small class="text-danger fs-1">*</small></label>
                                           <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["last_name"] : "" ?>">
+                                          <?php echo form_error('user[last_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-12 form-group">
                                           <label for="email">Correo electrónico <small class="text-danger fs-1">*</small></label>
                                           <input placeholder="ejemplo@correo.com" type="email" id="email" name="user[email]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["email"] : "" ?>">
+                                          <?php echo form_error('user[email]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="inputPassword">Contraseña <small class="text-danger fs-1">*</small></label>

@@ -105,11 +105,19 @@ class Usuarios extends Application_Controller {
 		if($this->input->post()){
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
-			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|integer');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required|alpha', array(
+                'alpha'      => 'El campo Nombre solo permite letras.',
+				'required'      => 'El campo Nombre es requerido.',
+        	));
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required|alpha', array(
+                'alpha'      => 'El campo Apellidos solo permite letras.',
+				'required'      => 'El campo Apellidos es requerido.',
+        	));
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
-			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required|valid_email', array(
+                'valid_email'      => 'El campo Correo electrónico no es válido.',
+        	));
 			$this->form_validation->set_rules('user[password]', 'Contraseña', 'required');
 
 			// Check if input rules are ok
@@ -221,11 +229,19 @@ class Usuarios extends Application_Controller {
 		if($this->input->post()){
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
-			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|integer');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required|alpha', array(
+                'alpha'      => 'El campo Nombre solo permite letras.',
+				'required'      => 'El campo Nombre es requerido.',
+        	));
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required|alpha', array(
+                'alpha'      => 'El campo Apellidos solo permite letras.',
+				'required'      => 'El campo Apellidos es requerido.',
+        	));
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
-			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required|valid_email', array(
+                'valid_email'      => 'El campo Correo electrónico no es válido.',
+        	));
 
 			// Check if input rules are ok
 			if ($this->form_validation->run() == false) {

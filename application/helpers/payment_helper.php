@@ -47,7 +47,7 @@ if(!function_exists('generate_payment_json'))
                     "surname" => $purchase["last_name"],
                     "email" => $purchase["email"],
                     "document" => $purchase["identification_number"],
-                    "documentType" => "CC",
+                    "documentType" =>  $purchase["it_code"],
                     "mobile" => $purchase["phone"]
                 ), 
             "payment" =>

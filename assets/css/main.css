@@ -291,3 +291,8 @@ ul.pagination {
     padding: 20px;
     border-radius: 15px;
 }
+
+#container-subscriber .card{
+    margin-left: 0;
+    margin-right: 0
+}

@@ -33,7 +33,17 @@ import "./game_products.js";
 import "./physical_winners.js";
 import "./app.min.js";
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     jQuery('.custom-select2').select2();
     jQuery(".flatpickr-input").flatpickr();
+
+    jQuery(document).on("keyup", ".restrict-text", function () {
+        let value = jQuery(this).val().replace(/[^a-zA-Z]/g, '');
+        jQuery(this).val(value);
+    });
+
+    jQuery(document).on("keyup", ".restrict-number", function () {
+        let value = jQuery(this).val().replace(/[^0-9]/g, '');
+        jQuery(this).val(value);
+    });
 });
