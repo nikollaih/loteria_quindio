@@ -65,16 +65,16 @@
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="identification_number">Número de documento <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control" value="<?= (isset($data_form)) ? $data_form["user"]["identification_number"] : "" ?>" required>
+                                          <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control restrict-number" value="<?= (isset($data_form)) ? $data_form["user"]["identification_number"] : "" ?>" required>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="name">Nombre <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["first_name"] : "" ?>">
+                                          <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control restrict-text" required value="<?= (isset($data_form)) ? $data_form["user"]["first_name"] : "" ?>">
                                           <?php echo form_error('user[first_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="last_name">Apellidos <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["last_name"] : "" ?>">
+                                          <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control restrict-text" required value="<?= (isset($data_form)) ? $data_form["user"]["last_name"] : "" ?>">
                                           <?php echo form_error('user[last_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-12 form-group">
