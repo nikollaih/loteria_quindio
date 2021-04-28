@@ -1,6 +1,3 @@
-<?php
- //  print_r($request["status"]->status);
-?>
 <div class="row">
     <div class="offset-lg-2 offset-sm-0 col-lg-8 col-md-8 col-sm-12 purchase-resume">
         <div class="card">

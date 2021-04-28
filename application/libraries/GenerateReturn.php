@@ -18,7 +18,7 @@ class GenerateReturn {
 
     $returned = [];
     $returned_count = 0;
-    print_r($blends);
+
     die();
     foreach ($blends as $blend) {
       $serie = $blend['serie'];
@@ -45,8 +45,6 @@ class GenerateReturn {
     );
    
     $this->write_file($draw, $data);
-    
-    print_r($draw);
   }
   
   function write_file($draw, $data) {

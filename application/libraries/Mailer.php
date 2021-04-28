@@ -43,7 +43,6 @@ class Mailer {
       } else {
         die($this->CI->email->print_debugger());
           //Do whatever you want if failed 
-          log_message('error', 'Unable to Send Email to Customer.' . print_r($this->CI->email->print_debugger(array('headers', 'subject')), TRUE));
           return false;
       }
     } catch (Exception $e) {

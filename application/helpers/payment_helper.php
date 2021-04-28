@@ -103,7 +103,6 @@ if(!function_exists('after_aprroved'))
 
         $email_body = $CI->load->view('emails/purchase_invoice', $data, true);
 		$test = $CI->mailer->send($email_body, 'Compra exitosa', $data["purchase"]["email"]);
-        print_r($test);
     }
 
 }
