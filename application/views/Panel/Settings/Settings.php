@@ -18,7 +18,7 @@
                             foreach ($settings as $setting) {
                     ?>
                         <div class="row">
-        <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="header-title mt-0 add-draw-title"><?= $setting["title"] ?></h4>
@@ -51,17 +51,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+    </div>
                     <?php
                             }
                         }
                     ?>
-                </div>
-    </div>
             <?php
                 }
             ?>
-        </div>
-    </div>
     <div class="row justify-content-end">
         <div class="col-md-3">
             <div class="form-group">    
