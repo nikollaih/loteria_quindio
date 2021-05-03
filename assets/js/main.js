@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
     jQuery(".flatpickr-input").flatpickr();
 
     jQuery(document).on("keyup", ".restrict-text", function () {
-        let value = jQuery(this).val().replace(/[^a-zA-Z]/g, '');
+        let value = jQuery(this).val().replace(/[^a-zA-Z ]/g, '');
         jQuery(this).val(value);
     });
 

@@ -25,9 +25,8 @@ class Passwords extends CI_Controller {
 			$result = $this->Usuario->get_user_by_param("email", $email);
 			if($result != false){
 				$salt = get_alnum_string(10);
-				$result['change_password_salt'] = $salt;
-				$result['id'] = $result['id'];
-				$updating = $this->Usuario->update($result);
+
+				$updating = $this->Usuario->update(array("change_password_salt" => $salt, "id" => $result["id"]));
 				if($updating) {
 					$data['success_message'] = true;
 					$data['change_password_url'] = generate_change_password_url($result);
