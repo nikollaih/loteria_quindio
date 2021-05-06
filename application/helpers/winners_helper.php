@@ -32,6 +32,43 @@
         }
     }
 
+    if(!function_exists('check_seco_no_serie')){
+        function check_seco_no_serie($purchase, $draw, $results, $id_reward){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                if(is_array($results)){
+                    for ($i=1; $i < count($results); $i++) { 
+                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] != $results[$i]["result_serie"] && $id_reward == $results[$i]["id_reward"]){
+                            $i = count($results);
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    if(!function_exists('check_quindianito')){
+        function check_quindianito($purchase, $draw, $results, $id_reward){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                if(is_array($results)){
+                    if($purchase["number"] == $results[7]["result_number"] && $purchase["serie"] != $results[7]["result_serie"] && $id_reward == $results[7]["id_reward"] && ){
+                        $i = count($results);
+                        return true;
+                    }
+                    return false;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
     // Valida la compra con el número invertido del resultado al premio mayor
     if(!function_exists('check_mayor_invertido')){
         function check_mayor_invertido($purchase, $draw, $check_serie = false){

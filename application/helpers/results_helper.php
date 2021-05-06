@@ -8,20 +8,25 @@
                     return "PREMIO MAYOR";
                     break;
                 case '1':
-                    return "SECO DE 100 MILLONES";
+                    return "SECO DE 150 MILLONES";
                     break;
                 case '2':
                 case '3':
+                case '4':
                     return "SUELDAZO CAFETERO";
                     break;
-                case '4':
-                    return "SECO DE 50 MILLONES";
+                case '5':
+                case '6':
+                    return "SECO DE 45 MILLONES";
                     break;
-                case ($line >= 5 && $line <= 19):
-                    return "SECO DE 10 MILLONES";
+                case ($line >= 7 && $line <= 21):
+                    return "SECO DE 21 MILLONES";
                 break;
-                case ($line > 19):
-                    return "SECO DE 5 MILLONES";
+                case ($line > 21 && $line <= 36):
+                    return "SECO DE 9 MILLONES";
+                break;
+                case '37':
+                    return "QUINDIANITO SIN SERIE";
                 break;
                 
                 default:
@@ -45,16 +50,21 @@
                     break;
                 case '2':
                 case '3':
+                case '4':
                     return 3;
                     break;
-                case '4':
+                case '5':
+                case '6':
                     return 4;
                     break;
-                case ($line >= 5 && $line <= 19):
+                case ($line >= 7 && $line <= 21):
                     return 5;
                 break;
-                case ($line > 19):
+                case ($line > 21 && $line <= 36):
                     return 6;
+                break;
+                case '37':
+                    return 7;
                 break;
                 
                 default:

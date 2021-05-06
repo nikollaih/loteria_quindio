@@ -82,7 +82,7 @@ class Results extends Application_Controller {
                     }
                 }
                 else{
-                    json_response(null, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($data));
+                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos  ".count($data));
                 }
             }
             else{

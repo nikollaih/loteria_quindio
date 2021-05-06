@@ -32,7 +32,7 @@ class Files extends CI_Controller {
                                         $result = explode("|", $result_rows[$i]);
 
                                         if(count($result) == 10){
-                                            if(strlen($result[8]) == 4 && strlen($result[9]) == 3){
+                                            if(strlen($result[8]) == 4 && (strlen($result[9]) == 3) || $i == 37){
                                                 $data["id_draw"] = $draw["id"];
                                                 $data["id_reward"] = get_id_reward_by_line($i);
                                                 $data["award_name"] = get_result_name_by_line($i);
@@ -62,7 +62,7 @@ class Files extends CI_Controller {
                                         json_response($tmp_array, true, "Result listing");
                                     }
                                     else{
-                                        json_response(null, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($tmp_array));
+                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($tmp_array));
                                     }
                                 }
                                 else{
@@ -78,7 +78,7 @@ class Files extends CI_Controller {
                         }
                     }
                     else{
-                        json_response(null, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($result_rows));
+                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($result_rows));
                     }
                 }
                 else{

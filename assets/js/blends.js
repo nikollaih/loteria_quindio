@@ -10,11 +10,11 @@ jQuery(document).on("change", "#input_blends", function () {
     load_blends(jQuery(this).attr("data-draw"));
 });
 
-jQuery(document).on("change", "#input_result", function () {
+/*jQuery(document).on("change", "#input_result", function () {
     jQuery("#save-result-txt").hide();
     jQuery("#background-loading").show();
     load_results(jQuery(this).attr("data-draw"));
-});
+});*/
 
 jQuery(document).on("click", "#save-blends-btn", function () {
     save_blends();

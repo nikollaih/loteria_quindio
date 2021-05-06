@@ -230,12 +230,10 @@ class Usuarios extends Application_Controller {
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
 			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|integer');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required|alpha', array(
-                'alpha'      => 'El campo Nombre solo permite letras.',
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required', array(
 				'required'      => 'El campo Nombre es requerido.',
         	));
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required|alpha', array(
-                'alpha'      => 'El campo Apellidos solo permite letras.',
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required', array(
 				'required'      => 'El campo Apellidos es requerido.',
         	));
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
