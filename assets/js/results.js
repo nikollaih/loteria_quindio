@@ -25,7 +25,6 @@ function load_results(draw_number = null) {
         success: function (data) {
             data = (JSON.parse(data));
             results = data.object;
-            console.log(data);
             var temp_rows = "";
 
             if (data.status) {
