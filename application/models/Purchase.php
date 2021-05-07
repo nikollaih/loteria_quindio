@@ -46,6 +46,23 @@ Class Purchase extends CI_Model {
         }
     }
 
+    public function get_sold_numbers_with_serie($id_draw, $serie = null) {
+        $this->db->select("number, serie");
+        $this->db->from('purchases');
+        $this->db->where("id_draw", $id_draw); 
+        $this->db->where("purchase_status", 'APPROVED'); 
+        if($serie != null){
+            $this->db->where("serie", $serie);
+        }
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return array();
+        }
+    }
+
     public function get_sold_numbers_array($id_draw, $serie = null) {
         $this->db->select("number");
         $this->db->from('purchases');

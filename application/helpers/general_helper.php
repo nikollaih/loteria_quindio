@@ -35,6 +35,50 @@
     
     }
 
+
+    if(!function_exists('get_numbers_to_return'))
+    {
+        function get_numbers_to_return(){
+            $CI = &get_instance();
+            $CI->load->model(['Blend', 'Draw', 'Purchase', 'ToReturn']);
+            
+            // Get current active draw
+            $draw = $CI->Draw->get_active_draw();
+            // Get the blends list
+            $blends_list = $CI->Blend->get_blends();
+
+            $sold_numbers_for_blend = $CI->Purchase->get_sold_numbers_with_serie($draw["id"]);
+
+            $grouped_by_serie = array();
+            foreach($sold_numbers_for_blend as $val) {
+                $grouped_by_serie[$val['serie']][] = $val['number'];
+            }
+        
+            $not_sold_numbers = Array();
+            $sold_numbers = [];
+            foreach ($blends_list as $key => $blend) {
+              $blend_numbers = unserialize($blend["blend_numbers"]);
+
+              $diff = $blend_numbers;
+              if(array_key_exists($blend['serie'], $grouped_by_serie)){
+                $sold_numbers = $grouped_by_serie[$blend['serie']];
+                $diff = array_diff($blend_numbers, $sold_numbers);
+              
+              }
+              $not_sold_numbers[$blend['serie']][] = $diff;
+            }
+
+            $data = Array(
+                'id_draw' => $draw['id'],
+                'to_return' => serialize($not_sold_numbers)
+            );
+
+            $result = $CI->ToReturn->set_return($data);
+        }
+    
+    }
+
+
     // Get a random number and serie 
     if(!function_exists('get_available_numbers'))
     {

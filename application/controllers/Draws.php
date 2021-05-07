@@ -85,6 +85,11 @@ class Draws extends Application_Controller {
         $this->generatereturn->perform($draw);
     }
 
+    public function save_numbers_to_return(){
+        get_numbers_to_return();
+       
+    }
+
     // Delete a draw
     public function delete_draw(){
         if(is_admin()){
