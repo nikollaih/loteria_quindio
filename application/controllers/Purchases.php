@@ -76,7 +76,7 @@ class Purchases extends Application_Controller {
 		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
-		$data["slug"] = create_unique_slug("Purchases", 8);
+		$data["slug"] = create_unique_slug("purchases", 8);
 		$data["discount"] = 0;
 		$data["purchase_status"] = "PENDING";
 		$draw = $this->Draw->get_active_draw();
@@ -108,6 +108,9 @@ class Purchases extends Application_Controller {
 
 						$payment_result = $this->do_payment($result_purchase, $user["balance_total"]);
 						if(is_array($payment_result)){
+							if($payment_result["success"]){
+								$this->Purchase->update_purchase(array('id_purchase' => $result_purchase["id_purchase"], 'purchase_status' => "APPROVED" ));
+							}
 							return $payment_result;
 						}
 						//return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
@@ -144,6 +147,7 @@ class Purchases extends Application_Controller {
 			if(($purchase_total) <= $user_balance){
 				$new_balance = $user_balance - ($purchase_total);
 				update_balance($new_balance, $purchase["id_user"]);
+				return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => "");
 			}
 			else{
 				return array("type" => "danger", "success" => false, "message" => "Saldo insuficiente.");

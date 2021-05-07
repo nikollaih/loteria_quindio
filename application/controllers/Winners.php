@@ -14,7 +14,7 @@ class Winners extends Application_Controller {
         $draw = ($this->input->post("id_draw")) ? $this->Draw->get_draws($this->input->post("id_draw")) : $this->Draw->get_previous_draw();
         
         if(is_array($draw) && isset($draw["draw_number"])){
-            $purchases = $this->Purchase->get_purchase_by_param("d.draw_number", $draw["draw_number"], 0);
+            $purchases = $this->Purchase->get_purchase_by_param("d.draw_number", $draw["draw_number"], 0, "APPROVED");
             $results = $this->Result->get_results($draw["id"]);
             if(is_array($purchases)){
                 foreach ($purchases as $purchase) {

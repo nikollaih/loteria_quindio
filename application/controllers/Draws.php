@@ -46,7 +46,7 @@ class Draws extends Application_Controller {
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
                 $data["date"] = $data["date"] . " 21:30:00";
-                $data["draw_slug"] = create_unique_slug("Draws", 8, "draw_slug");
+                $data["draw_slug"] = create_unique_slug("draws", 8, "draw_slug");
                 $result_draw = $this->Draw->set_draw($data);
                 // If the user was registered successfully
                 if($result_draw != false){

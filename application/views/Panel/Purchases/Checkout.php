@@ -5,6 +5,15 @@
       if($this->session->has_userdata('draw_number')){
          $draw_number = $this->session->userdata()['draw_number'];
       }
+
+      if($draw == false){
+?>
+   <div class="alert alert-warning alert-dismissible fade show" role="alert">
+           No hay ningún sorteo abierto en este momento.
+            </div>
+<?php
+      }
+      else{
    ?>
    <div>
       <div class="py-3 text-center">
@@ -337,3 +346,6 @@
       </form>
    </div>
 </div>
+<?php
+      }
+?>

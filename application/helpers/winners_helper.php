@@ -56,7 +56,7 @@
         function check_quindianito($purchase, $draw, $results, $id_reward){
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 if(is_array($results)){
-                    if($purchase["number"] == $results[7]["result_number"] && $purchase["serie"] != $results[7]["result_serie"] && $id_reward == $results[7]["id_reward"] && ){
+                    if($purchase["number"] == $results[7]["result_number"] && $purchase["serie"] != $results[7]["result_serie"] && $id_reward == $results[7]["id_reward"]){
                         $i = count($results);
                         return true;
                     }

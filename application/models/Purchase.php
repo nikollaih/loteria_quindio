@@ -138,7 +138,7 @@ Class Purchase extends CI_Model {
     }
 
     // Read data from database to show data in admin page
-    public function get_purchase_by_param($param, $value, $limit = 1){
+    public function get_purchase_by_param($param, $value, $limit = 1, $status = null){
         $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date');
         $this->db->from('purchases p');
         $this->db->join('users u', 'u.id = p.id_user');
@@ -151,6 +151,9 @@ Class Purchase extends CI_Model {
         $this->db->where($param, $value);
         if($limit > 0){
             $this->db->limit(1);
+        }
+        if($status != null){
+            $this->db->where("purchase_status", $status);
         }
         $query = $this->db->get();
 
