@@ -43,7 +43,7 @@
             $CI->load->model(['Blend', 'Draw', 'Purchase', 'ToReturn']);
             
             // Get current active draw
-            $draw = $CI->Draw->get_active_draw();
+            $draw = $CI->Draw->get_previous_draw();
             // Get the blends list
             $blends_list = $CI->Blend->get_blends();
 
