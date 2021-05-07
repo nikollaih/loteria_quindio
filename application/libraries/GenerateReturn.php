@@ -8,39 +8,30 @@ class GenerateReturn {
 
   public function __construct(){
     $this->CI =& get_instance();
-    $this->CI->load->model(['Draw', 'Purchase', 'Blend']);
+    $this->CI->load->model(['Draw', 'Purchase', 'ToReturn']);
   }
 
   public function perform($draw){
     $this->draw = $draw;
 
-    $blends = $this->get_blends();
+    $to_return = $this->get_return($draw['id']);
 
     $returned = [];
     $returned_count = 0;
 
-    die();
-    foreach ($blends as $blend) {
-      $serie = $blend['serie'];
-      $solds = $this->get_sold_numbers($serie);
-      
-      $start_number = $blend['start_number'];
-      $end_number = $blend['end_number'];
+    $returned = [];
+    $returned_count = 0;
 
-      $rango = array_map( function( $day ) {
-        return str_pad( $day, 4, '000', STR_PAD_LEFT );
-      }, range($start_number, $end_number) );
-
-      $result = array_diff($rango, $solds);
-
-      $returned_count += count($result);
-      $returned[$serie] = $result;
+    $series = unserialize($to_return['to_return']);
+    
+    foreach ($series as $serie) {
+      $returned_count += count($serie[0]);
     }
 
     $returned_count = $returned_count * $this->frantions_count();
 
     $data = Array(
-      'returned' => $returned,
+      'returned' => $series,
       'count' => $returned_count
     );
    
@@ -52,6 +43,8 @@ class GenerateReturn {
     $agency_id = 'LDQ';
 
     $filePathAndName = $agency_id . $draw['draw_number'] . ".19.txt";
+    // print_r($data);
+    // die();
     $the_file = fopen($filePathAndName, "w") or die("Unable to open file!");
 
     fwrite($the_file, '19' . PHP_EOL);
@@ -60,17 +53,14 @@ class GenerateReturn {
     fwrite($the_file, $data['count'] . PHP_EOL);
 
     $returned = $data['returned'];
-
+    
     foreach($returned as $serie => $numbers){
-      foreach($numbers as $returned_number) {
-        $fractions_count = $this->frantions_count();
-        for ($i=1; $i <= $fractions_count; $i++) { 
-          fwrite($the_file, $returned_number . '|');
-          fwrite($the_file, $serie . '|');
-          fwrite($the_file, $i . '|');
-          fwrite($the_file, $fractions_count . '|');
-          fwrite($the_file, PHP_EOL);
-        }
+      foreach($numbers[0] as $returned_number) {
+        fwrite($the_file, $returned_number . '0');
+        fwrite($the_file, $serie . '0');
+        fwrite($the_file, 4 . '0');
+        fwrite($the_file, 4 . '0');
+        fwrite($the_file, PHP_EOL);
       } 
     }
 
@@ -101,7 +91,7 @@ class GenerateReturn {
     return $this->CI->Purchase->get_sold_numbers_array($this->draw['id'], $serie);
   }
 
-  function get_blends() {
-    return $this->CI->Blend->get_blends();
+  function get_return($id_draw) {
+    return $this->CI->ToReturn->get_return($id_draw);
   }
 }
