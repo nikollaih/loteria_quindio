@@ -1,301 +1,387 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:v="urn:schemas-microsoft-com:vml">
-
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
-    <!--[if !mso]--><!-- -->
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700' rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel="stylesheet">
-    <!--<![endif]-->
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <title>Loteria Del Quindio</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
-    <title>Loteria del quindio</title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700" rel="stylesheet">
 
-    <style type="text/css">
-        body {
-            width: 100%;
-            background-color: #ffffff;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            mso-margin-top-alt: 0px;
-            mso-margin-bottom-alt: 0px;
-            mso-padding-alt: 0px 0px 0px 0px;
-        }
+    <!-- CSS Reset : BEGIN -->
+    <style>
 
-        p,
-        h1,
-        h2,
-        h3,
-        h4 {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+body {
+    margin: 0 auto !important;
+    padding: 20px !important;
+    height: 100% !important;
+    width: 100% !important;
+    background: #f1f1f1;
+}
 
-        span.preheader {
-            display: none;
-            font-size: 1px;
-        }
+/* What it does: Stops email clients resizing small text. */
+* {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
 
-        html {
-            width: 100%;
-        }
+/* What it does: Centers email on Android 4.4 */
+div[style*="margin: 16px 0"] {
+    margin: 0 !important;
+}
 
-        table {
-            font-size: 14px;
-            border: 0;
-        }
-        /* ----------- responsivity ----------- */
+/* What it does: Stops Outlook from adding extra spacing to tables. */
+table,
+td {
+    mso-table-lspace: 0pt !important;
+    mso-table-rspace: 0pt !important;
+}
 
-        @media only screen and (max-width: 640px) {
-            /*------ top header ------ */
-            .main-header {
-                font-size: 20px !important;
-            }
-            .main-section-header {
-                font-size: 28px !important;
-            }
-            .show {
-                display: block !important;
-            }
-            .hide {
-                display: none !important;
-            }
-            .align-center {
-                text-align: center !important;
-            }
-            .no-bg {
-                background: none !important;
-            }
-            /*----- main image -------*/
-            .main-image img {
-                width: 440px !important;
-                height: auto !important;
-            }
-            /* ====== divider ====== */
-            .divider img {
-                width: 440px !important;
-            }
-            /*-------- container --------*/
-            .container590 {
-                width: 440px !important;
-            }
-            .container580 {
-                width: 400px !important;
-            }
-            .main-button {
-                width: 220px !important;
-            }
-            /*-------- secions ----------*/
-            .section-img img {
-                width: 320px !important;
-                height: auto !important;
-            }
-            .team-img img {
-                width: 100% !important;
-                height: auto !important;
-            }
-        }
+/* What it does: Fixes webkit padding issue. */
+table {
+    border-spacing: 0 !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+    margin: 0 auto !important;
+}
 
-        @media only screen and (max-width: 479px) {
-            /*------ top header ------ */
-            .main-header {
-                font-size: 18px !important;
-            }
-            .main-section-header {
-                font-size: 26px !important;
-            }
-            /* ====== divider ====== */
-            .divider img {
-                width: 280px !important;
-            }
-            /*-------- container --------*/
-            .container590 {
-                width: 280px !important;
-            }
-            .container590 {
-                width: 280px !important;
-            }
-            .container580 {
-                width: 260px !important;
-            }
-            /*-------- secions ----------*/
-            .section-img img {
-                width: 280px !important;
-                height: auto !important;
-            }
-        }
+/* What it does: Uses a better rendering method when resizing images in IE. */
+img {
+    -ms-interpolation-mode:bicubic;
+}
+
+/* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+a {
+    text-decoration: none;
+}
+
+/* What it does: A work-around for email clients meddling in triggered links. */
+*[x-apple-data-detectors],  /* iOS */
+.unstyle-auto-detected-links *,
+.aBn {
+    border-bottom: 0 !important;
+    cursor: default !important;
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+/* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+.a6S {
+    display: none !important;
+    opacity: 0.01 !important;
+}
+
+/* What it does: Prevents Gmail from changing the text color in conversation threads. */
+.im {
+    color: inherit !important;
+}
+
+/* If the above doesn't work, add a .g-img class to any image in question. */
+img.g-img + div {
+    display: none !important;
+}
+
+/* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+/* Create one of these media queries for each additional viewport size you'd like to fix */
+
+/* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+@media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+    u ~ div .email-container {
+        min-width: 320px !important;
+    }
+}
+/* iPhone 6, 6S, 7, 8, and X */
+@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+    u ~ div .email-container {
+        min-width: 375px !important;
+    }
+}
+/* iPhone 6+, 7+, and 8+ */
+@media only screen and (min-device-width: 414px) {
+    u ~ div .email-container {
+        min-width: 414px !important;
+    }
+}
     </style>
-    <!--[if gte mso 9]><style type=”text/css”>
-        body {
-        font-family: arial, sans-serif!important;
-        }
-        </style>
-    <![endif]-->
+
+    <!-- CSS Reset : END -->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+	    .primary{
+	background: #17bebb;
+}
+.bg_white{
+	background: #ffffff;
+}
+.bg_light{
+	background: #f7fafa;
+}
+.bg_black{
+	background: #000000;
+}
+.bg_dark{
+	background: rgba(0,0,0,.8);
+}
+.email-section{
+	padding:2.5em;
+}
+
+/*BUTTON*/
+.btn{
+	padding: 10px 15px;
+	display: inline-block;
+}
+.btn.btn-primary{
+	border-radius: 5px;
+	background: #17bebb;
+	color: #ffffff;
+}
+.btn.btn-white{
+	border-radius: 5px;
+	background: #ffffff;
+	color: #000000;
+}
+.btn.btn-white-outline{
+	border-radius: 5px;
+	background: transparent;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.btn.btn-black-outline{
+	border-radius: 0px;
+	background: transparent;
+	border: 2px solid #000;
+	color: #000;
+	font-weight: 700;
+}
+.btn-custom{
+	color: rgba(0,0,0,.3);
+	text-decoration: underline;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Work Sans', sans-serif;
+	color: #000000;
+	margin-top: 0;
+	font-weight: 400;
+}
+
+body{
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 400;
+	font-size: 15px;
+	line-height: 1.8;
+	color: rgba(0,0,0,.4);
+}
+
+a{
+	color: #17bebb;
+}
+
+table{
+}
+/*LOGO*/
+
+.logo h1{
+	margin: 0;
+}
+.logo h1 a{
+	color: #478938;
+	font-size: 26px;
+	font-weight: 700;
+	font-family: 'Work Sans', sans-serif;
+}
+
+/*HERO*/
+.hero{
+	position: relative;
+	z-index: 0;
+}
+
+.hero .text{
+	color: rgba(0,0,0,.3);
+}
+.hero .text h2{
+	color: #000;
+	font-size: 34px;
+	margin-bottom: 15px;
+	font-weight: 300;
+	line-height: 1.2;
+}
+.hero .text h3{
+	font-size: 24px;
+	font-weight: 200;
+}
+.hero .text h2 span{
+	font-weight: 600;
+	color: #000;
+}
+
+.hero .text p{
+	font-size: 22px;
+	font-weight: 200;
+}
+
+.hero .text h4{
+	font-size: 20px;
+	font-weight: 200;
+}
+
+
+/*PRODUCT*/
+.product-entry{
+	display: block;
+	position: relative;
+	float: left;
+	padding-top: 20px;
+}
+.product-entry .text{
+	width: calc(100% - 125px);
+	padding-left: 20px;
+}
+.product-entry .text h3{
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.product-entry .text p{
+	margin-top: 0;
+}
+.product-entry img, .product-entry .text{
+	float: left;
+}
+
+ul.social{
+	padding: 0;
+}
+ul.social li{
+	display: inline-block;
+	margin-right: 10px;
+}
+
+/*FOOTER*/
+
+.footer{
+	border-top: 1px solid rgba(0,0,0,.05);
+	color: rgba(0,0,0,.5);
+}
+.footer .heading{
+	color: #000;
+	font-size: 20px;
+}
+.footer ul{
+	margin: 0;
+	padding: 0;
+}
+.footer ul li{
+	list-style: none;
+	margin-bottom: 10px;
+}
+.footer ul li a{
+	color: rgba(0,0,0,1);
+}
+
+.btn-link {
+    width: 100%;
+    padding: 16px;
+    background-color: #000;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 50px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+@media screen and (max-width: 500px) {
+
+
+}
+
+
+</style>
+
+
 </head>
 
+<body width="100%" style="margin: 0; padding: 20px !important; mso-line-height-rule: exactly; background-color: #f1f1f1;">
+	<center style="width: 100%; background-color: #f1f1f1; padding-top: 50px; padding-bottom: 50px;">
+    <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+      &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+    </div>
+    <div style="max-width: 600px; margin: 0 auto;" class="email-container">
+    	<!-- BEGIN BODY -->
+      <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+      	<tr>
+          <td valign="top" class="bg_white" style="padding: 3rem 2.5em 0 2.5em;">
+          	<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+          		<tr>
+          			<td class="logo" style="text-align: left;">
+			            <h1><a href="#">Lotería del Quindio</a></h1>
+			          </td>
+          		</tr>
+          	</table>
+          </td>
+	      </tr><!-- end tr -->
+				<tr>
+          <td valign="middle" class="hero bg_white" style="padding: 2em 0 2em 0;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+            	<tr>
+            		<td style="padding: 0 2.5em; text-align: left;">
+            			<div class="text">
+            				<h3>¡Compra exitosa!</h3>
+                            <h4>Su compra ha sido procesada de manera exitosa, aquí puede ver la información correspondiente:</h4>
+                            <br>
+                            <h4>Para cambiar tu contraseña, haz clic en el siguiente enlace:</h4>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Código de factura:</strong> <?= strtoupper($purchase["slug"]) ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Número del sorteo:</strong> <?= $purchase["draw_number"] ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Fecha del sorteo:</strong> <?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["date"]))) ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Número del billete:</strong> <?= $purchase["number"] ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Serie del billete:</strong> <?= $purchase["serie"] ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:5px;">
+                                <strong>Cantidad de fracciones compradas:</strong> <?= $purchase["parts"] ?>
+                            </p>
+                            <p style="line-height: 24px;margin-bottom:15px;">
+                                <strong>Sistema de abonados:</strong> <?= (is_array($subscriber)) ? "x".$subscriber["amount"]." sorteos" : "No aplica"; ?>
+                            </p>
+                            <p style="line-height: 24px; margin-bottom:20px;">
+                                Para ver la factura por favor haga click en el siguiente enlace:
+                            </p>
+            			</div>
+            		</td>
+                </tr>
+                <tr>
+                    <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 22px; letter-spacing: 2px;">
+                        <div style="margin-top: 50px; margin-bottom: 50px; ">
+                            <a href="<?= $button_url; ?>" class='btn-link' style="color: #ffffff; text-decoration: none; width: 100; ">Ver factura</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+          </td>
+          </tr><!-- end tr -->
+	    </table>
 
-<body class="respond" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-    <!-- pre-header end -->
-    <!-- header -->
-    <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="ffffff">
-
-        <tr>
-            <td align="center">
-                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-                    <tr>
-                        <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td align="center">
-
-                            <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-                                <tr>
-                                    <td align="center" height="70" style="height:70px;">
-                                        <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="100" border="0" style="display: block; width: 100px;" src="<?= base_url().'assets/images/logo.png' ?>" alt="" /></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
-    </table>
-    <!-- end header -->
-
-    <!-- big image section -->
-
-    <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="ffffff" class="bg_color">
-
-        <tr>
-            <td align="center">
-                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-                    <tr>
-                        <td align="center" style="color: #343434; font-size: 24px; font-family: Quicksand, Calibri, sans-serif; font-weight:700;letter-spacing: 3px; line-height: 35px;"
-                            class="main-header">
-                            <!-- section text ======-->
-
-                            <div style="line-height: 35px">
-
-                                Compra Exitosa</span>
-
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td align="center">
-                            <table border="0" width="40" align="center" cellpadding="0" cellspacing="0" bgcolor="eeeeee">
-                                <tr>
-                                    <td height="2" style="font-size: 2px; line-height: 2px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td align="left">
-                            <table border="0" width="590" align="center" cellpadding="0" cellspacing="0" class="container590">
-                                <tr>
-                                    <td align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
-                                        <!-- section text ======-->
-
-                                        <p style="line-height: 24px; margin-bottom:15px;">
-
-                                            Hola,
-
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:15px;">
-                                            Su compra ha sido procesada de manera exitosa, aquí puede ver la información correspondiente:
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Código de factura:</strong> <?= strtoupper($purchase["slug"]) ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Número del sorteo:</strong> <?= $purchase["draw_number"] ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Fecha del sorteo:</strong> <?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["date"]))) ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Número del billete:</strong> <?= $purchase["number"] ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Serie del billete:</strong> <?= $purchase["serie"] ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:5px;">
-                                            <strong>Cantidad de fracciones compradas:</strong> <?= $purchase["parts"] ?>
-                                        </p>
-                                        <p style="line-height: 24px;margin-bottom:15px;">
-                                            <strong>Sistema de abonados:</strong> <?= (is_array($subscriber)) ? "x".$subscriber["amount"]." sorteos" : "No aplica"; ?>
-                                        </p>
-                                        <p style="line-height: 24px; margin-bottom:20px;">
-                                            Para ver la factura por favor haga click en el siguiente enlace:
-                                        </p>
-                                        <table border="0" align="center" width="180" cellpadding="0" cellspacing="0" bgcolor="5caad2" style="margin-bottom:20px; margin-top: 40px;">
-
-                                            <tr>
-                                                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 22px; letter-spacing: 2px;">
-                                                    <!-- main section button -->
-
-                                                    <div style="line-height: 22px; width: 300px;">
-                                                        <a href="<?= $button_url; ?>" style="color: #ffffff; text-decoration: none;">Ver factura</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
-                                            </tr>
-
-                                        </table>
-                          
-
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-
-
-
-
-                </table>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td height="40" style="font-size: 40px; line-height: 40px;">&nbsp;</td>
-        </tr>
-
-    </table>
-
+    </div>
+  </center>
 </body>
-
 </html>
