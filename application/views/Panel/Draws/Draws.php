@@ -40,7 +40,7 @@
                     <h4 class="header-title mt-0 add-draw-title">Agregar Sorteo</h4>
                     <hr class="mb-4">
                     <form action="" method="post" id="form-draw">
-                        <input type="hidden" name="id" id="input_id_draw" value="null">
+                        <input type="hidden" name="id" id="input_id_draw" value="<?= (isset($data_form)) ? $data_form["id"] : "" ?>">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -75,14 +75,19 @@
                         <?php
                             if(isset($message)){
                         ?>
-                            <p class="result-draw-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+                            <div class="alert alert-<?= $message["type"] ?> alert-dismissible fade show" role="alert">
+                                <?= $message["message"] ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
                         <?php
                             }
                         ?>
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="form-group">    
-                                    <a class="btn btn-light btn-block cancel-edit-draw-button invisible" type="submit">Cancelar</a>
+                                    <a class="btn btn-light btn-block cancel-edit-draw-button <?= (isset($data_form)) ? "" : "invisible" ?>" type="submit">Cancelar</a>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -172,8 +177,13 @@
                                         </div>
                                     <?php
                                         }
+                                        else{
+                                            ?>
+                                             <button data-name="<?= $draw["draw_number"] ?>" data-id="<?= $draw["id"] ?>" type="button" class="btn btn-primary btn-sm edit-draw-button">Editar</button>
+                                <button data-name="<?= $draw["draw_number"] ?>" data-id="<?= $draw["id"] ?>" type="button" class="btn btn-danger btn-sm delete-draw-button">Eliminar</button>
+                                            <?php
+                                                }
                                     ?>
-                                    
                                 </td>
                                     <?php } ?>
                             </tr>

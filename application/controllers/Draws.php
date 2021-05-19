@@ -6,7 +6,7 @@ class Draws extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['Draw', 'Product', 'Result']);
+		$this->load->model(['Draw', 'Product', 'Result', 'Purchase']);
 		$this->load->helper(["url", "form"]);
 		$this->load->library(['Form_validation', 'GenerateReturn']);
 	}
@@ -69,24 +69,31 @@ class Draws extends Application_Controller {
             }
             else{
                 if($data["id"] != null && $data["id"] != "null"){
-                    $data["date"] = $data["date"]. " ".get_setting("close_draw_time");
-                    //Convert the date string into a unix timestamp.
-                    $unixTimestamp = strtotime( $data["date"]);
+                    $purchases = $this->Purchase->get_purchase_by_param("p.id_draw", $data["id"]);
 
-                    //Get the day of the week using PHP's date function.
-                    $dayOfWeek = date("N", $unixTimestamp);
-                    if($dayOfWeek != get_setting("draw_day")){
-                        return array("type" => "danger", "success" => false, "message" => "La fecha seleccionada no es válida.");
-                    }
+                    if(!is_array($purchases)){
+                        $data["date"] = $data["date"]. " ".get_setting("close_draw_time");
+                        //Convert the date string into a unix timestamp.
+                        $unixTimestamp = strtotime( $data["date"]);
 
-                    $result_draw = $this->Draw->update_draw($data);
+                        //Get the day of the week using PHP's date function.
+                        $dayOfWeek = date("N", $unixTimestamp);
+                        if($dayOfWeek != get_setting("draw_day")){
+                            return array("type" => "danger", "success" => false, "message" => "La fecha seleccionada no es válida.");
+                        }
 
-                    // If the user was registered successfully
-                    if($result_draw != false){
-                        return array("type" => "success", "success" => true, "message" => "Sorteo modificado exitosamente.");
+                        $result_draw = $this->Draw->update_draw($data);
+
+                        // If the user was registered successfully
+                        if($result_draw != false){
+                            return array("type" => "success", "success" => true, "message" => "Sorteo modificado exitosamente.");
+                        }
+                        else{
+                            return array("type" => "danger", "success" => false, "message" => "No se ha podido registrar el sorteo, por favor intente de nuevo más tarde.");
+                        }
                     }
                     else{
-                        return array("type" => "danger", "success" => false, "message" => "No se ha podido registrar el sorteo, por favor intente de nuevo más tarde.");
+                        return array("type" => "danger", "success" => false, "message" => "El sorteo ya tiene compras activas y no puede ser modificado.");
                     }
                 }
                 else{
@@ -115,21 +122,27 @@ class Draws extends Application_Controller {
     public function delete_draw(){
         if(is_admin()){
             $id = $this->input->post("id");
+            $purchases = $this->Purchase->get_purchase_by_param("p.id_draw", $id);
 
             if($id){
                 $draw = $this->Draw->get_draws($id);
                 if($draw != FALSE){
-                    $result = $this->Draw->delete_draw(array($id));
+                    if(!is_array($purchases)){
+                        $result = $this->Draw->delete_draw(array($id));
 
-                    if($result){
-                        echo json_encode(array("error" => FALSE, "message" => "Sorteo eliminado correctamente."));
+                        if($result){
+                            echo json_encode(array("error" => FALSE, "message" => "Sorteo eliminado correctamente."));
+                        }
+                        else{
+                            echo json_encode(array("error" => TRUE, "message" => "Ha ocurrido un error, por favor intente de nuevo más tarde."));
+                        }
                     }
                     else{
-                        echo json_encode(array("error" => TRUE, "message" => "Ha ocurrido un error, por favor intente de nuevo más tarde."));
+                        echo json_encode(array("error" => TRUE, "message" => "El sorteo ya tiene compras activas y no puede ser eliminado."));
                     }
                 }
                 else{
-                    echo json_encode(array("error" => TRUE, "message" => "El sorteo que intenta eliminar no se encuentra registrada."));
+                    echo json_encode(array("error" => TRUE, "message" => "El sorteo que intenta eliminar no se encuentra registrado."));
                 }
             }
             else{

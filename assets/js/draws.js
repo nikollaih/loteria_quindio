@@ -3,6 +3,10 @@ jQuery(document).on("click", ".edit-draw-button", function() {
     set_update_draw(jQuery(this).attr("data-id"), jQuery(this).attr("data-name"));
 });
 
+jQuery(document).on("click", ".delete-draw-button", function() {
+    delete_draw(jQuery(this).attr("data-id"), jQuery(this).attr("data-name"));
+});
+
 // When the cancel edit draw button is pressed
 jQuery(document).on("click", ".cancel-edit-draw-button", function() {
     stop_editing_draw();
@@ -23,7 +27,7 @@ var table_draws = jQuery("#table-draws").DataTable({
 function set_update_draw(id, name) {
     if (id != null) {
         jQuery("#input_id_draw").val(id);
-        jQuery("#input_name_draw").val(name);
+        jQuery("#input_draw_number").val(name);
         jQuery(".add-draw-title").html("Modificar Sorteo");
         jQuery(".cancel-edit-draw-button").removeClass("invisible");
         jQuery(".result-draw-action").remove();
@@ -33,7 +37,7 @@ function set_update_draw(id, name) {
 
 function stop_editing_draw() {
     jQuery("#input_id_draw").val(null);
-    jQuery("#input_name_draw").val("");
+    jQuery("#input_draw_number").val("");
     jQuery(".add-draw-title").html("Agregar Sorteo");
     jQuery(".cancel-edit-draw-button").addClass("invisible");
 }
@@ -57,17 +61,18 @@ function delete_draw(id) {
                             .remove()
                             .draw();
 
-                        swal(
-                            'Eliminado!',
-                            data.message,
-                            'success'
-                        );
+                            swal(
+                                'Eliminado!',
+                                data.message,
+                                'success'
+                            );
                     } else {
-                        swal(
-                            'Error!',
-                            data.message,
-                            'danger'
-                        );
+                        swal({
+                            title: 'Error!',
+                            text: data.message,
+                            type: 'warning',
+                            confirmButtonText: 'Continuar',
+                        });
                     }
                 }, 'json')
         });
