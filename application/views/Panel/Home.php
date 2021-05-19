@@ -4,7 +4,7 @@
   <div class="col-md-12">
     <?php $lottopoints = get_user_profile()["lotto_points"] ?>
     <?php $points_for_play = get_setting('points_for_play') ?>
-    <?php if ($lottopoints >= $points_for_play){ ?>
+    <?php if ($lottopoints >= $points_for_play && get_setting('enable_loto_game') == 1){ ?>
       <div class="card play_for_win">
         <div class="card-body">
           Tienes <?= $lottopoints ?> intentos disponibles para jugar y ganar productos.  <a href="<?= base_url() . 'games/slot_game'; ?>" class="btn btn-success btn-lg">Jugar</a>    

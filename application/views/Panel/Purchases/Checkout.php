@@ -13,6 +13,13 @@
             </div>
 <?php
       }
+      else if(get_setting("enable_purchases") == 0){
+         ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Las ventas de los billetes están desactivadas temporalmente.
+                     </div>
+         <?php
+               }
       else{
    ?>
    <div>

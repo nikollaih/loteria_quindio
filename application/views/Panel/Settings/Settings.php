@@ -16,6 +16,7 @@
                     <?php
                         if(is_array($settings)){
                             foreach ($settings as $setting) {
+                                if($setting["visible"] == 1){
                     ?>
                         <div class="row">
                             <div class="col-md-12">
@@ -33,6 +34,29 @@
                                                                     <input id="<?= $setting["key"] ?>" required name="data[<?= $setting["key"] ?>]" type="<?= $setting["input_type"] ?>" class="form-control"  value="<?= $setting["value"] ?>">
                                                                 </div>
                                                             </div>
+                                                        <?php
+                                                        break;
+                                                    case 'select':
+                                                        $temp_select = [];
+                                                        $items = explode("|", $setting["items"]);
+
+                                                        if(is_array($items)){
+                                                        ?>
+                                                         <div class="col-md-6">
+                                                            <select class="form-control" name="data[<?= $setting["key"] ?>]" id="<?= $setting["key"] ?>">
+                                                        <?php
+                                                            for ($i=0; $i < count($items); $i++) { 
+                                                                $values = explode(":", $items[$i]);
+                                                                ?>
+                                                                <option <?= ($setting["value"] == $values[0]) ? "selected" : "" ?> value="<?= $values[0] ?>"><?= $values[1] ?></option>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                            </select>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
                                                         <?php
                                                         break;
                                                     
@@ -54,6 +78,7 @@
                                 </div>
     </div>
                     <?php
+                                }
                             }
                         }
                     ?>

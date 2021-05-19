@@ -15,8 +15,12 @@ class Games extends Application_Controller {
 		if(!is_logged()){
 			header("Location: " . base_url() . "usuarios/login");
 		}
-
-		$this->load->view('games/slot_game');
+		if(get_setting('enable_loto_game')){
+			$this->load->view('games/slot_game');
+		}
+		else{
+			header("Location: " . base_url() . "Panel");
+		}
 	}
 
 	public function my_rewards(){
