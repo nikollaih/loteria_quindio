@@ -36,7 +36,13 @@
                                 <td><?= ucfirst(strftime('%B %d, %Y - %T',strtotime($purchase["created_at"]))) ?></td>
                                 <td class="text-center">COP <?= number_format($purchase["price"], 2, ',', '.') ?> </td>
                                 <td class="text-center">
-                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                    <?php
+                                        if($purchase["purchase_status"] == "APPROVED"){
+                                            ?>
+                                            <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                            <?php
+                                        }
+                                    ?>
                                 </td>
                             </tr>
                         <?php

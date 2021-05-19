@@ -341,7 +341,6 @@ ul.social li{
             				<h3>¡Compra exitosa!</h3>
                             <h4>Su compra ha sido procesada de manera exitosa, aquí puede ver la información correspondiente:</h4>
                             <br>
-                            <h4>Para cambiar tu contraseña, haz clic en el siguiente enlace:</h4>
                             <p style="line-height: 24px;margin-bottom:5px;">
                                 <strong>Código de factura:</strong> <?= strtoupper($purchase["slug"]) ?>
                             </p>

@@ -231,6 +231,12 @@ class Purchases extends Application_Controller {
 			curl_close($ch);
 		}
 
+		if($params["request"]["status"]->status == "REJECTED"){
+			$params["button_url"] = generate_invoice_url($params["purchase"]["user_slug"], $params["purchase"]["slug"]);
+			$email_body = $this->load->view('emails/purchase_invoice', $params, true);
+			$this->mailer->send($email_body, 'Compra exitosa',$params["purchase"]["email"]);
+		}
+	
 		$this->Purchase->update_purchase(array('id_purchase' => $params["purchase"]["id_purchase"], 'purchase_status' => $params["request"]["status"]->status, 'payment_response' =>  serialize($params["request"]), 'authorization' => ($params["request"]["status"]->status == "APPROVED") ? $params["request"]["payment"][0]->authorization : ""));
 
         $this->load_layout("Panel/Purchases/Resume", $params);
@@ -243,6 +249,12 @@ class Purchases extends Application_Controller {
 		$purchase = $this->Purchase->get_purchase_by_param("p.request_id", $response->requestId);
 
 		if($signature == $response->signature && $purchase && $purchase["purchase_status"] == "PENDING"){
+			if($response->status->status == "APPROVED"){
+				$params["button_url"] = generate_invoice_url($purchase["user_slug"], $purchase["slug"]);
+				$email_body = $this->load->view('emails/purchase_invoice', array("purchase" => $purchase), true);
+				$this->mailer->send($email_body, 'Compra exitosa',$purchase["email"]);
+			}
+			
 			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status ));
 		}
 	}
