@@ -45,9 +45,20 @@ class Draws extends Application_Controller {
     private function draw_register_proccess($data){
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
-                $data["date"] = $data["date"] . " 21:30:00";
+                $data["date"] = $data["date"]. " ".get_setting("close_draw_time");
                 $data["draw_slug"] = create_unique_slug("draws", 8, "draw_slug");
+
+                //Convert the date string into a unix timestamp.
+                $unixTimestamp = strtotime( $data["date"]);
+
+                //Get the day of the week using PHP's date function.
+                $dayOfWeek = date("N", $unixTimestamp);
+                if($dayOfWeek != get_setting("draw_day")){
+                    return array("type" => "danger", "success" => false, "message" => "La fecha seleccionada no es válida.");
+                }
+
                 $result_draw = $this->Draw->set_draw($data);
+
                 // If the user was registered successfully
                 if($result_draw != false){
                     return array("type" => "success", "success" => true, "message" => "Sorteo registrado exitosamente.");
@@ -58,8 +69,18 @@ class Draws extends Application_Controller {
             }
             else{
                 if($data["id"] != null && $data["id"] != "null"){
-                    $data["date"] = $data["date"] . " 21:30:00";
+                    $data["date"] = $data["date"]. " ".get_setting("close_draw_time");
+                    //Convert the date string into a unix timestamp.
+                    $unixTimestamp = strtotime( $data["date"]);
+
+                    //Get the day of the week using PHP's date function.
+                    $dayOfWeek = date("N", $unixTimestamp);
+                    if($dayOfWeek != get_setting("draw_day")){
+                        return array("type" => "danger", "success" => false, "message" => "La fecha seleccionada no es válida.");
+                    }
+
                     $result_draw = $this->Draw->update_draw($data);
+
                     // If the user was registered successfully
                     if($result_draw != false){
                         return array("type" => "success", "success" => true, "message" => "Sorteo modificado exitosamente.");
