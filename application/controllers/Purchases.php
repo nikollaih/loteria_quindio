@@ -102,14 +102,22 @@ class Purchases extends Application_Controller {
 						$this->session->unset_userdata('draw_number');
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
+							$params['subscriber'] = $info_data["subscriber"];
+						}else{
+							$params['subscriber'] = 1;
 						}
-						// Add a new loto point
-						add_loto_punto();
 
 						$payment_result = $this->do_payment($result_purchase, $user["balance_total"]);
 						if(is_array($payment_result)){
 							if($payment_result["success"]){
+								add_loto_punto_by_slug($result_purchase["user_slug"]);
 								$this->Purchase->update_purchase(array('id_purchase' => $result_purchase["id_purchase"], 'purchase_status' => "APPROVED" ));
+								
+								$params['purchase'] = $result_purchase;
+								$params["button_url"] = generate_invoice_url($params["purchase"]["user_slug"], $params["purchase"]["slug"]);
+								
+								$email_body = $this->load->view('emails/purchase_invoice', $params, true);
+								$this->mailer->send($email_body, 'Compra exitosa',$params["purchase"]["email"]);
 							}
 							return $payment_result;
 						}
@@ -231,7 +239,8 @@ class Purchases extends Application_Controller {
 			curl_close($ch);
 		}
 
-		if($params["request"]["status"]->status == "REJECTED"){
+		if($params["request"]["status"]->status == "APPROVED"){
+			add_loto_punto_by_slug($params["purchase"]["user_slug"]);
 			$params["button_url"] = generate_invoice_url($params["purchase"]["user_slug"], $params["purchase"]["slug"]);
 			$email_body = $this->load->view('emails/purchase_invoice', $params, true);
 			$this->mailer->send($email_body, 'Compra exitosa',$params["purchase"]["email"]);
@@ -250,6 +259,7 @@ class Purchases extends Application_Controller {
 
 		if($signature == $response->signature && $purchase && $purchase["purchase_status"] == "PENDING"){
 			if($response->status->status == "APPROVED"){
+				add_loto_punto_by_slug($purchase["user_slug"]);
 				$params["button_url"] = generate_invoice_url($purchase["user_slug"], $purchase["slug"]);
 				$email_body = $this->load->view('emails/purchase_invoice', array("purchase" => $purchase), true);
 				$this->mailer->send($email_body, 'Compra exitosa',$purchase["email"]);

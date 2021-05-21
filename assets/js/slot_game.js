@@ -254,7 +254,7 @@ function not_won(selected){
   var play_again = false;
   if(lotto_points > 1) { play_again = true; }
 	swal({
-      title: '¡Oh, mala suerte!',
+      title: '¡Intentalo de nuevo!',
       html: true,
       text: content,
       showCancelButton: play_again,

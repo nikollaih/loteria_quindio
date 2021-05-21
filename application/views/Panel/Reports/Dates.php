@@ -48,6 +48,7 @@
                 <table id="table-reports-date" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
                         <tr>
+                            <th scope="col">Estado</th>
                             <th scope="col">Fecha de compra</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Número</th>
@@ -64,7 +65,8 @@
                                 foreach ($purchases as $purchase) {
                         ?>
                             <tr>
-                            <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["purchase_date"]))) ?></td>
+                            <th scope="row"><span class="badge label-<?= $purchase["purchase_status"] ?>"><?= convert_purchase_status($purchase["purchase_status"]) ?></span></th>
+                                <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["purchase_date"]))) ?></td>
                                 <td class=""><?= $purchase["first_name"]." ".$purchase["last_name"] ?></td>
                                 <td class="text-center"><?= $purchase["number"] ?></td>
                                 <td class="text-center"><?= $purchase["serie"] ?></td>
