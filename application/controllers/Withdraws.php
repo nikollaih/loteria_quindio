@@ -39,7 +39,7 @@ class Withdraws extends Application_Controller {
                 $data["id_user"] = logged_user()["id"];
             }
             $user = $this->Usuario->get_user_by_param("u.id", $data["id_user"]);
-            if($user["balance_total"] > 0){
+            if($user["balance_total"] > 0 && $user["balance_total"] >= get_setting("withdraw_restriction")){
                 $new_withdraw["status"] = 1;
                 $new_withdraw["slug_withdraw"] = create_unique_slug('withdraws', 8, 'slug_withdraw');
                 $new_withdraw["id_user"] = $user["id"];

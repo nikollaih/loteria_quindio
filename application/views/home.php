@@ -1,5 +1,13 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/powerball.css">
 
+<style>
+	body {
+		background: url(<?= base_url().get_setting("main_background") ?>);
+		background-size: cover;
+    background-position: center;
+	}
+</style>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">

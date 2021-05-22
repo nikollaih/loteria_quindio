@@ -77,7 +77,7 @@
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                      <div class="text-success">
                         <h6 class="my-0">Hora de juego</h6>
-                        <small class="text-muted">10:00 pm</small>
+                        <small class="text-muted">10:30 pm</small>
                      </div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between bg-light">

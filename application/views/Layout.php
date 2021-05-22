@@ -14,6 +14,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Nota: La cantidad minima necesaria para solicitar un retiro debe ser de $<?= number_format(get_setting("withdraw_restriction"), 0, ",", ".") ?> COP
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                    </button>
+                </div>
                 <div class="form-group">
                     <label for="">Nombre completo</label>
                     <input type="text" name="name" id="name" class="form-control" required="required" value="<?= logged_user()["first_name"].' '.logged_user()["last_name"] ?>"/>

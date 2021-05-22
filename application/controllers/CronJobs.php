@@ -22,7 +22,7 @@ class CronJobs extends Application_Controller {
             $draw = $this->Draw->get_active_draw();
 
             // Validate if subscriber is an array and different than false
-            if(is_array($subscriber) && $subscriber != false){
+            if(is_array($subscriber) && $subscriber != false && is_array($draw) && $draw != false){
                 foreach ($subscriber as $s) {
                     // Create the new purchase array
                     $data["id_user"] = $s["id_user"];

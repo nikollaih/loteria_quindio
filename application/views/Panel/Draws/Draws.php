@@ -40,7 +40,7 @@
                     <h4 class="header-title mt-0 add-draw-title">Agregar Sorteo</h4>
                     <hr class="mb-4">
                     <form action="" method="post" id="form-draw">
-                        <input type="hidden" name="id" id="input_id_draw" value="<?= (isset($data_form)) ? $data_form["id"] : "" ?>">
+                        <input type="hidden" name="id" id="input_id_draw" value="<?= (isset($data_form)) ? $data_form["id"] : "null" ?>">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">

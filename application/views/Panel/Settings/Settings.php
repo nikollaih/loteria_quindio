@@ -1,4 +1,4 @@
-<form action="" method="post" id="form-settings">
+<form action="" method="post" id="form-settings" enctype="multipart/form-data">
 <?php
     if(isset($message)){
 ?>
