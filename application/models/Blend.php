@@ -26,6 +26,21 @@ Class Blend extends CI_Model {
         }
     }
 
+    // Get the blends rows by number
+    public function get_blends_by_number($number) {
+        $this->db->select("serie");
+        $this->db->from('blends');
+        $this->db->order_by("serie", "asc");
+        $this->db->like('blend_numbers', $number, 'both');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return$query->result_array();
+        } else {
+            return [];
+        }
+    }
+
     // Add a new blend
     // $data -> The blend data with id as null and name
     public function set_blend($data){

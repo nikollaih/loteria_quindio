@@ -161,5 +161,9 @@ class Blends extends Application_Controller {
     function available_number($serie_id){
         json_response(get_available_numbers($serie_id), true, "Lista de números disponibles");
     }
+
+    function available_series($number){
+        json_response(get_available_blends($number), true, "Lista de series disponibles");
+    }
     
 }
