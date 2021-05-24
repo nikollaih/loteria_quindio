@@ -180,14 +180,14 @@ class Winners extends Application_Controller {
         $reward = $this->Reward->get_rewards($id_reward);
         if(!$temp_winner){
             $set_winner = ($this->Winner->set_winner(array("id_reward" => $id_reward, "id_purchase" => $purchase["id_purchase"], "created_at" => date("Y-m-d H:i:s"), "total_without_discount" => $reward["bill_without_discount"], "total_with_discount" => $reward["bill_with_discount"]))) ? true : false;
-            if($set_winner){
+            /*if($set_winner){
                 $user = $this->Usuario->get_user_by_param("u.id", $purchase["id_user"]);
                 if(is_array($user)){
                     $data["id"] = $user["id"];
                     $data["balance_total"] = doubleval($user["balance_total"]) + doubleval($reward["bill_with_discount"]);
                     $this->Usuario->update($data);
                 }
-            }
+            }*/
         }
         else{
             return true;

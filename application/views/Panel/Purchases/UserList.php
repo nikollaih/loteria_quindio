@@ -39,7 +39,7 @@
                                     <?php
                                         if($purchase["purchase_status"] == "APPROVED"){
                                             ?>
-                                            <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                            <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Tiquete de compr</a>
                                             <?php
                                         }
                                     ?>

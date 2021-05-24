@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Número</label>
+                                    <label for="">N&uacute;mero</label>
                                     <input id="input_draw_number" required name="draw_number" type="number" minlength="4" maxlength="4" class="form-control" placeholder="0000" value="<?= (isset($data_form)) ? $data_form["draw_number"] : "" ?>">
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Producto (cantidad fracciones/valor por fracción)</label>
+                                    <label for="">Producto (cantidad fracciones/valor por fracci&oacute;n)</label>
                                     <select name="product_id" class="custom-select d-block w-100 bill-data" id="product-id" required="">
                                         <?php
                                         if(isset($products) && is_array($products)){
@@ -112,7 +112,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Número de sorteo</th>
+                            <th scope="col">N&uacute;mero de sorteo</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Producto</th>
                             <th scope="col">Resultado</th>
@@ -157,7 +157,7 @@
                                                     }
                                                 ?>
 
-                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Devolución</a>
+                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Devoluci&oacute;n</a>
                                             
                                                 <?php
                                                     if($draw["nit"] != null){
@@ -173,6 +173,7 @@
                                                 <?php
                                                     }
                                                 ?>
+                                                <a href="" data-id='<?= $draw["id"] ?>'  data-number='<?= $draw["draw_number"] ?>' data-toggle="modal" data-target="#draw_result_image" type="button" class="dropdown-item modal-results-button">Imagen de resultados</a>
                                             </div>
                                         </div>
                                     <?php

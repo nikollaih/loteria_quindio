@@ -3,6 +3,10 @@ jQuery(document).on("click", ".edit-draw-button", function() {
     set_update_draw(jQuery(this).attr("data-id"), jQuery(this).attr("data-name"));
 });
 
+jQuery(document).on("click", ".modal-results-button", function() {
+    set_modal_results(jQuery(this).attr("data-id"), jQuery(this).attr("data-number"));
+});
+
 jQuery(document).on("click", ".delete-draw-button", function() {
     delete_draw(jQuery(this).attr("data-id"), jQuery(this).attr("data-name"));
 });
@@ -85,3 +89,51 @@ function set_dom_result(columns, date) {
     jQuery("#draw-info").html("#" + data.draw_number + " de " + date);
     jQuery("#result-id").val(data.id);
 }
+
+function set_modal_results(id, number){
+    jQuery("#results-draw-number").html(number);
+    jQuery("#results-draw-id").val(id);
+}
+
+function upload_draw_results(data){
+    $.ajax({
+        url: base_url + "Draws/image_results",
+        type: "POST",
+        data: data,
+        success: function (result) {
+            result = (JSON.parse(result));
+           if (result.error == false) {
+            $('#draw_result_image').modal('toggle');
+                swal(
+                    'Exito!',
+                    result.message,
+                    'success'
+                );
+            } else {
+                swal({
+                    title: 'Error!',
+                    text: result.message,
+                    type: 'warning',
+                    confirmButtonText: 'Continuar',
+                });
+            }
+            jQuery("#spinner-change-password").css("display", "none");
+            jQuery("#btn-save-change-password").css("display", "block");
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+}
+
+document.addEventListener( "DOMContentLoaded", function() {
+    var form = document.getElementById( "draw_result_image_form" );
+    form.addEventListener( "submit", function( e ) {
+        jQuery("#spinner-change-password").css("display", "block");
+        jQuery("#btn-save-change-password").css("display", "none");
+        e.preventDefault();
+        var formData = new FormData(this);
+        upload_draw_results(formData);
+    }, false);
+
+});

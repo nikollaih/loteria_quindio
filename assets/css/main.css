@@ -100,7 +100,7 @@ body {
 }
 
 .content{
-    padding-bottom: 80px;
+    padding-bottom: 100px;
 }
 
 .sw-theme-arrows>ul.step-anchor>li.done>a {
@@ -294,4 +294,33 @@ ul.pagination {
 #container-subscriber .card{
     margin-left: 0;
     margin-right: 0
+}
+
+#footer-list {
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#footer-list li{
+    list-style: none;
+    /* display: flex; */
+    margin-right: 20px;
+}
+
+#footer-list li:last-child a{
+    display: flex;
+    vertical-align: middle;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+
+#footer-list li p{
+    margin: 0;
+    color: #6c757d !important;
+}
+
+.footer{
+    position: fixed !important;
 }

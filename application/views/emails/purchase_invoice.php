@@ -342,7 +342,7 @@ ul.social li{
                             <h4>Su compra ha sido procesada de manera exitosa, aquí puede ver la información correspondiente:</h4>
                             <br>
                             <p style="line-height: 24px;margin-bottom:5px;">
-                                <strong>Código de factura:</strong> <?= strtoupper($purchase["slug"]) ?>
+                                <strong>Código de tiquete de compra:</strong> <?= strtoupper($purchase["slug"]) ?>
                             </p>
                             <p style="line-height: 24px;margin-bottom:5px;">
                                 <strong>Número del sorteo:</strong> <?= $purchase["draw_number"] ?>
@@ -363,7 +363,7 @@ ul.social li{
                                 <strong>Sistema de abonados:</strong> <?= (is_array($subscriber)) ? "x".$subscriber["amount"]." sorteos" : "No aplica"; ?>
                             </p>
                             <p style="line-height: 24px; margin-bottom:20px;">
-                                Para ver la factura por favor haga click en el siguiente enlace:
+                                Para ver el tiquete de compra por favor haga click en el siguiente enlace:
                             </p>
             			</div>
             		</td>
@@ -371,7 +371,7 @@ ul.social li{
                 <tr>
                     <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 22px; letter-spacing: 2px;">
                         <div style="margin-top: 50px; margin-bottom: 50px; ">
-                            <a href="<?= $button_url; ?>" class='btn-link' style="color: #ffffff; text-decoration: none; width: 100; ">Ver factura</a>
+                            <a href="<?= $button_url; ?>" class='btn-link' style="color: #ffffff; text-decoration: none; width: 100; ">Ver tiquete de compra</a>
                         </div>
                     </td>
                 </tr>

@@ -2,6 +2,7 @@
 <?php $this->load->view("Templates/Head") ?>
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/app.min.css">
 <body>
+    <?php $this->load->view("Templates/Modals/AddDrawResultImage") ?>
     <!-- Modal -->
     <div class="modal fade" id="generate_withdraw_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -100,15 +101,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Contraseña actual *</label>
-                        <input autocomplete="off" type="password" name="current_password" id="current_password" class="form-control" required="required" value="<?= logged_user()["first_name"].' '.logged_user()["last_name"] ?>"/>
+                        <input autocomplete="off" type="password" name="current_password" id="current_password" class="form-control" required="required" value=""/>
                     </div>
                     <div class="form-group">
                         <label for="">Nueva contraseña *</label>
-                        <input autocomplete="off" min-length="6" type="password" name="new_password" id="new_password" class="form-control" required="required" value="<?= logged_user()["identification_number"] ?>"/>
+                        <input autocomplete="off" min-length="6" type="password" name="new_password" id="new_password" class="form-control" required="required" value=""/>
                     </div>
                     <div class="form-group">
                         <label for="">Repetir nueva contraseña *</label>
-                        <input autocomplete="off" min-length="6" type="password" name="r_new_password" id="r_new_password" class="form-control" required="required" value="<?= logged_user()["identification_number"] ?>"/>
+                        <input autocomplete="off" min-length="6" type="password" name="r_new_password" id="r_new_password" class="form-control" required="required" value=""/>
                     </div>
                 </div>
                 <div class="modal-footer">

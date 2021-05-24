@@ -154,6 +154,35 @@ class Draws extends Application_Controller {
         }
     }
 
+    public function image_results(){
+        if(is_admin()){
+            if($this->input->post()){
+                $id = $this->input->post("id");
+                $draw = $this->Draw->get_draws($id);
+
+                //Comprobamos si el fichero es una imagen
+                if (isset($_FILES['result_image']['name']) && ($_FILES['result_image']['type']=='image/png' || $_FILES['result_image']['type']=='image/jpeg')){
+
+                   //Subimos el fichero al servidor
+                   $img_type = str_replace('image/', '', $_FILES['result_image']['type']);
+                   $dir =  './uploads/results/';
+                   $name = $draw["draw_number"] . '_result.'.$img_type;
+
+                   if(!file_exists($dir)){ //Si no existe el directorio lo crea
+                       mkdir($dir, 0755);
+                   }
+                   if(move_uploaded_file($_FILES['result_image']["tmp_name"], $dir.$name)){
+                        $this->Draw->update_draw(array('id' => $draw["id"], 'image_result' => $name));
+                        echo json_encode(array("error" => FALSE, "message" => "Imagen cargada exitosamente."));
+                   }
+               }
+           }
+        }
+        else{
+            echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
+        }
+    }
+
     public function results($slug){
         $params["title"] = "Resultados";
         $params["subtitle"] = "Resultados";

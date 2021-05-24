@@ -96,7 +96,6 @@ function change_password(data) {
         data: data,
         success: function (result) {
             result = (JSON.parse(result));
-            console.log(result);
             if (result.error) {
                 swal({
                     title: 'Error!',

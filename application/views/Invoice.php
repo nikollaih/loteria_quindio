@@ -7,7 +7,7 @@
          <div class="card-header p-4">
             <img height="50" class="pt-2 d-inline-block" src="<?= base_url() ?>assets/images/logo.png" alt="Lotería del Quindío" srcset="">
              <div class="float-right text-right">
-                 <h5 class="mb-0">Factura: <?= strtoupper($purchase["slug"]); ?></h5>
+                 <h5 class="mb-0">Tiquete de compra: <?= strtoupper($purchase["slug"]); ?></h5>
                  <label for=""><strong>Fecha:</strong> <?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["purchase_date"]))) ?></label>
              </div>
          </div>
