@@ -5,7 +5,7 @@ class Winners extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(['url', 'winners']);
+		$this->load->helper(['url', 'winners', 'file']);
         $this->load->model(["Purchase", "Subscriber", "Draw", "Booking", "Winner", "Reward", "Result", "Usuario"]);
 		$this->load->library(['session']);
     }
@@ -227,6 +227,74 @@ class Winners extends Application_Controller {
         }
         else{
             echo json_encode(array("error" => TRUE, "message" => "Usted no tiene permisos para realizar esta acción."));
+        }
+    }
+
+    function import_confirm_winners($draw_slug = null){
+
+        if(isset($_FILES["winners"])){
+            if($_FILES["winners"]["type"] == "text/plain"){
+                $string = read_file($_FILES["winners"]["tmp_name"]);
+                $winner_rows = explode("\n", $string);
+                $draw = $this->Draw->get_draws(null, null, $draw_slug);
+                //array_pop($winner_rows);
+                $tmp_array = [];
+
+                if(is_array($draw)){
+                    if($draw["confirmed_winners"] == 0){
+                        for ($i=0; $i < count($winner_rows); $i++) { 
+                            $winner = explode("|", $winner_rows[$i]);
+                            
+                            if(count($winner) == 7){
+                                $data["id_purchase"] = $winner[5];
+                                $data["confirmed"] = $winner[7];
+                                $data["total_with_discount"] = $winner[1];
+            
+                                if($this->Winner->update_winner($data)){
+                                    $purchase = $this->Purchase->get_purchases($winner[5]);
+                                    if(!$this->Usuario->update(array("id" => $purchase["id"], "balance_total" => floatval($purchase["balance_total"]) + floatval($winner[1])))){
+                                        $data["id_purchase"] = $winner[5];
+                                        $data["confirmed"] = 0;
+                                        $data["total_with_discount"] = 0;
+                                        $this->Winner->update_winner($data);
+                                        json_response(null, false, "Ha ocurrido un error inesperado.");
+                                    }
+                                    else{
+                                        $this->Purchase->update_purchase(array("id_purchase" => $purchase["id_purchase"], "reward_name" => $winner[2]));
+                                    }
+                                }
+                            }
+                            else{
+                                json_response(null, false, "La cantidad de items en la linea ".$i + 1 ." no es válida.");
+                            }
+                        }
+
+                        $this->Draw->update_draw(array("id" => $draw["id"], "confirmed_winners" => 1));
+                        json_response(null, true, "Ganadores cargados exitosamente.");
+                    }
+                    else{
+                        json_response(null, false, "El sorteo ya cuenta con un archivo de confirmación de ganadores.");
+                    }
+                }
+                else{
+                    json_response(null, false, "El sorteo no existe.");
+                }
+            }
+            else{
+                json_response(null, false, "Archivo de texto no válido.");
+            }
+        }
+        else{
+            json_response(null, false, "No se ha recibido el archivo de texto.");
+        }
+    }
+
+    function confirm_winners($draw_slug){
+        if(is_admin()){
+            $params["title"] = "Importar Ganadores";
+            $params["subtitle"] = "Importar Ganadores";
+            $params["draw"] = $this->Draw->get_draws(null, null, $draw_slug);
+            $this->load_layout("Panel/Draws/ConfirmWinners", $params);
         }
     }
     

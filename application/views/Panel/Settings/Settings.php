@@ -31,7 +31,7 @@
                                                         ?>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <input id="<?= $setting["key"] ?>" required name="data[<?= $setting["key"] ?>]" type="<?= $setting["input_type"] ?>" class="form-control"  value="<?= $setting["value"] ?>">
+                                                                    <input id="<?= $setting["key"] ?>" name="data[<?= $setting["key"] ?>]" type="<?= $setting["input_type"] ?>" class="form-control"  value="<?= $setting["value"] ?>">
                                                                 </div>
                                                             </div>
                                                         <?php

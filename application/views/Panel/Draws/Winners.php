@@ -13,6 +13,7 @@
                             <th scope="col">Serie MAYOR</th>
                             <th scope="col">Número Comprado</th>
                             <th scope="col">Serie Comprada</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,6 +29,7 @@
                                 <td><?= $winner["serie"] ?></td>
                                 <td><?= $winner["number"] ?></td>
                                 <td><?= $winner["purchase_serie"] ?></td>
+                                <td><?= ($winner["confirmed"] == 0) ? "<label class='badge label-FAILED'>Sin Confirmar</label>" : "<label class='badge label-APPROVED'>Confirmado</label>" ?></td>
                             </tr>
                         <?php
                                 }

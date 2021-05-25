@@ -6,7 +6,29 @@
 		background-size: cover;
     background-position: center;
 	}
+
+	.btn-wpp{
+		position: fixed;
+		right: 30px;
+		bottom: 30px;
+		z-index: 100;
+		cursor: pointer;
+		animation: float 800ms infinite alternate;
+	}
+
+	@keyframes float {
+  from {
+    bottom: 30px;
+  }
+  to {
+    bottom: 40px;
+  }
+}
 </style>
+
+<div class="btn-wpp">
+        <a href="https://api.whatsapp.com/send?phone=57<?= get_setting("whatsapp_number") ?>" target="_blank"><img style="margin-right: 5px;" width="50px" src="<?= base_url() ?>assets/images/whatsapp_icon.png" alt="Whatsapp icon" srcset=""></a>
+    </div>
 
 <div class="container">
 	<div class="row">

@@ -1,3 +1,5 @@
+let imported_winners;
+
 // When the edit draw button is pressed
 jQuery(document).on("click", ".edit-draw-button", function() {
     set_update_draw(jQuery(this).attr("data-id"), jQuery(this).attr("data-name"));
@@ -5,6 +7,12 @@ jQuery(document).on("click", ".edit-draw-button", function() {
 
 jQuery(document).on("click", ".modal-results-button", function() {
     set_modal_results(jQuery(this).attr("data-id"), jQuery(this).attr("data-number"));
+});
+
+jQuery(document).on("click", "#save-winners-btn", function () {
+    jQuery("#save-winner-txt").hide();
+    jQuery("#background-loading").show();
+    load_winners(jQuery( "#input_winners").attr("data-draw"));
 });
 
 jQuery(document).on("click", ".delete-draw-button", function() {
@@ -126,6 +134,40 @@ function upload_draw_results(data){
       });
 }
 
+// Load the txt file and convert it into a winnerss table
+function load_winners(draw_slug = null) {
+    var formData = new FormData();
+    formData.append('winners', jQuery('#input_winners')[0].files[0]);
+
+    console.log(jQuery('#input_winners'));
+
+    $.ajax({
+        url: base_url + 'Winners/import_confirm_winners/' + draw_slug,
+        type: 'POST',
+        data: formData,
+        processData: false, // tell jQuery not to process the data
+        contentType: false, // tell jQuery not to set contentType
+        success: function (data) {
+            data = (JSON.parse(data));
+            imported_winners = data.object;
+
+            if (data.status) {
+                jQuery("#save-winners-txt > span").html(data.message);
+                jQuery("#save-winners-txt").removeClass("alert-warning");
+                jQuery("#save-winners-txt").addClass("alert-success");
+                jQuery("#save-winners-txt").css("display", "block");
+            } else {
+                jQuery("#save-winners-txt > span").html(data.message);
+                jQuery("#save-winners-txt").removeClass("alert-success");
+                jQuery("#save-winners-txt").addClass("alert-warning");
+                jQuery("#save-winners-txt").css("display", "block");
+            }
+
+            jQuery("#background-loading").hide();
+        }
+    });
+}
+
 document.addEventListener( "DOMContentLoaded", function() {
     var form = document.getElementById( "draw_result_image_form" );
     form.addEventListener( "submit", function( e ) {
@@ -135,5 +177,4 @@ document.addEventListener( "DOMContentLoaded", function() {
         var formData = new FormData(this);
         upload_draw_results(formData);
     }, false);
-
 });

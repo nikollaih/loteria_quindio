@@ -119,7 +119,6 @@ function load_blends(draw_number = null) {
         success: function (data) {
             data = (JSON.parse(data));
             imported_blends = data.object;
-            console.log(data)
 
             if (data.status) {
                 jQuery("#save-result-txt > span").html(data.message);
