@@ -56,8 +56,8 @@ class GenerateReturn {
     
     foreach($returned as $serie => $numbers){
       foreach($numbers[0] as $returned_number) {
-        fwrite($the_file, $returned_number . '0');
-        fwrite($the_file, $serie . '0');
+        fwrite($the_file, $returned_number);
+        fwrite($the_file, $serie . '00');
         fwrite($the_file, $this->frantions_count() . '0');
         fwrite($the_file, $this->frantions_count() . '00000');
         fwrite($the_file, PHP_EOL);
