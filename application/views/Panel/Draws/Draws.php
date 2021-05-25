@@ -157,7 +157,8 @@
                                                     }
                                                 ?>
 
-                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Devoluci&oacute;n</a>
+                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Generar devoluci&oacute;n</a>
+                                                <a href="<?= base_url() ?>Draws/generate_foreign_sales/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Generar foraneas</a>
                                             
                                                 <?php
                                                     if($draw["nit"] != null){

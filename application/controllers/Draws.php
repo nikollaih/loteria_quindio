@@ -8,7 +8,7 @@ class Draws extends Application_Controller {
 		parent::__construct();
 		$this->load->model(['Draw', 'Product', 'Result', 'Purchase']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation', 'GenerateReturn']);
+		$this->load->library(['Form_validation', 'GenerateReturn', 'GenerateForeignSales']);
 	}
 
     // Load the draws listing
@@ -111,6 +111,11 @@ class Draws extends Application_Controller {
     public function generate_return($draw){
         $draw = $this->Draw->get_draws(null, null, $draw);
         $this->generatereturn->perform($draw);
+    }
+
+    public function generate_foreign_sales($draw){
+        $draw = $this->Draw->get_draws(null, null, $draw);
+        $this->generateforeignsales->perform($draw);
     }
 
     public function save_numbers_to_return(){
