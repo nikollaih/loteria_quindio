@@ -192,12 +192,15 @@ class Purchases extends Application_Controller {
 	}
 	
 	function user_list(){
-		$params["title"] = "Mis Compras";
-		$params["subtitle"] = "Mis Compras";
+		
 		if(is_admin() || is_assistant()){
+			$params["title"] = "Todas Las Compras";
+			$params["subtitle"] = "Todas Las Compras";
 			$params["purchases"] = $this->Purchase->get_purchases();
 		}
 		else{
+			$params["title"] = "Mis Compras";
+			$params["subtitle"] = "Mis Compras";
 			$params["purchases"] = $this->Purchase->get_user_purchases(logged_user()["id"]);
 		}
 
