@@ -174,6 +174,13 @@
                                                 <?php
                                                     }
                                                 ?>
+                                                 <?php
+                                                    if($draw["result"] != null && $draw["serie"] != null && $draw["confirmed_winners"] == 0){
+                                                ?>
+                                                    <a href="<?= base_url() ?>Winners/confirm_winners/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Confirmar Ganadores</a>
+                                                <?php
+                                                    }
+                                                ?>
                                                 <a href="" data-id='<?= $draw["id"] ?>'  data-number='<?= $draw["draw_number"] ?>' data-toggle="modal" data-target="#draw_result_image" type="button" class="dropdown-item modal-results-button">Imagen de resultados</a>
                                             </div>
                                         </div>
