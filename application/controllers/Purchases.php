@@ -76,7 +76,7 @@ class Purchases extends Application_Controller {
 		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
-		$data["slug"] = create_unique_slug("purchases", 8);
+		$data["slug"] = strtoupper(create_unique_slug("purchases", 8));
 		$data["discount"] = 0;
 		$data["purchase_status"] = "PENDING";
 		$draw = $this->Draw->get_active_draw();

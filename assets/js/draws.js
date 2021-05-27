@@ -178,3 +178,9 @@ document.addEventListener( "DOMContentLoaded", function() {
         upload_draw_results(formData);
     }, false);
 });
+
+// When the cancel edit draw button is pressed
+jQuery(document).on("click", "#download-winners-report", function() {
+    var id_draw = jQuery(this).attr("data-id");
+    window.open(base_url + "Files/generateWinnersReport/" + id_draw);
+});

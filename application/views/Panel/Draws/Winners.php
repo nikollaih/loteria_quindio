@@ -2,12 +2,19 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0">Lista de ganadores registrados para el sorteo #<?= $draw["draw_number"] ?></h4>
+            <div class="row">
+                <div class="col-md-6">
+                <h4 class="header-title mt-0">Lista de ganadores registrados para el sorteo #<?= $draw["draw_number"] ?></h4></div>
+                <div class="col-md-6">
+                <button style="float:right;" data-id="<?= $draw["id"] ?>" class="btn btn-success" id="download-winners-report">Descargar Excel</button></div>
+            </div>
+                
                 <hr class="mb-4">
                 <table id="table-winners" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
                         <tr>
                             <th scope="col">Premio</th>
+                            <th scope="col">Referencia Compra</th>
                             <th scope="col">Ganador</th>
                             <th scope="col">Resultado MAYOR</th>
                             <th scope="col">Serie MAYOR</th>
@@ -24,6 +31,7 @@
                         ?>
                             <tr>
                                 <td><?= $winner["reward_description"] ?></td>
+                                <td><?= $winner["purchase_slug"] ?></td>
                                 <td><?= $winner["first_name"]." ".$winner["last_name"] ?></td>
                                 <td><?= $winner["result"] ?></td>
                                 <td><?= $winner["serie"] ?></td>

@@ -261,6 +261,96 @@ class Files extends CI_Controller {
     }
 
     // Generate the purchases excel report by dates
+    public function generateWinnersReport($id_draw){
+        if(is_admin() || is_assistant()){
+
+            $draw = $this->Draw->get_draws($id_draw);
+            $winners = $this->Draw->get_draws_winners($id_draw);
+            
+
+            if(is_array($winners)){
+                $line = 1;
+                $spreadsheet = new Spreadsheet(); // instantiate Spreadsheet
+                $sheet = $spreadsheet->getActiveSheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+
+                // manually set title value
+                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->setCellValue('A'.$line, 'LOTERIA DEL QUINDIO'); 
+                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(14);
+                $line++;
+                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->setCellValue('A'.$line, 'REPORTE DE GANADORES PARA EL SORTEO #'.$draw["draw_number"]); 
+                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(12);
+                $line += 3;
+
+                $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray($this->getItemTitleStyle());
+
+                // Set the cells dimensions
+                $sheet->getColumnDimension('A')->setWidth(20);
+                $sheet->getColumnDimension('B')->setWidth(30);
+                $sheet->getColumnDimension('C')->setWidth(30);
+                $sheet->getColumnDimension('D')->setWidth(30);
+                $sheet->getColumnDimension('E')->setWidth(12);
+                $sheet->getColumnDimension('F')->setWidth(12);
+                $sheet->getColumnDimension('G')->setWidth(12);
+                $sheet->getColumnDimension('H')->setWidth(12);
+
+                // Set the table titles
+                $sheet->setCellValue('A'.$line, 'FECHA DE COMPRA'); 
+                $sheet->setCellValue('B'.$line, 'REFERENCIA COMPRA'); 
+                $sheet->setCellValue('C'.$line, 'DOCUMENTO CLIENTE'); 
+                $sheet->setCellValue('D'.$line, 'NOMBRE CLIENTE'); 
+                $sheet->setCellValue('E'.$line, 'NUMERO'); 
+                $sheet->setCellValue('F'.$line, 'SERIE'); 
+                $sheet->setCellValue('G'.$line, 'SORTEO'); 
+                $sheet->setCellValue('H'.$line, 'ESTADO'); 
+
+                $line++;
+
+                $price = 0;
+                $discount = 0;
+                foreach ($winners as $winner) {
+                    // Set the winners data
+                    $sheet->setCellValue('A'.$line, ucfirst(strftime('%B %d, %Y',strtotime($winner["purchase_date"])))); 
+                    $sheet->setCellValue('B'.$line, $winner["purchase_slug"]); 
+                    $sheet->setCellValue('C'.$line, $winner["identification_number"]); 
+                    $sheet->setCellValue('D'.$line, $winner["first_name"]." ".$winner["last_name"]); 
+                    $sheet->setCellValue('E'.$line, $winner["number"]); 
+                    $sheet->setCellValue('F'.$line, $winner["serie"]); 
+                    $sheet->setCellValue('G'.$line, $winner["draw_number"]); 
+                    $sheet->setCellValue('H'.$line, ($winner["confirmed"] == 0) ? "Sin Confirmar" : "Confirmado"); 
+                    $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray($this->getItemListStyle());
+                    $sheet->getStyle('E'.$line.':H'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT ] ]);
+                    $sheet->getStyle('D'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
+                    $sheet->getStyle('H'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
+                    $line++;
+                }
+
+
+                $writer = new Xlsx($spreadsheet); // instantiate Xlsx
+        
+                $filename = 'Reporte de ganadores para el sorteo #'.$draw["draw_number"]; // set filename for excel file to be exported
+             
+                header('Content-Type: application/vnd.ms-excel'); // generate excel file
+                header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+                header('Cache-Control: max-age=0');
+                
+                $writer->save('php://output');	// download file 
+            }
+            else{
+                json_response(null, false, "No se encontraron ventas para las fechas.");
+            }
+        }
+        else{
+            json_response(null, false, "Usted no puede realizar esta acción.");
+        }
+    }
+
+    // Generate the purchases excel report by dates
     public function generateStatesReport($start_date = null, $end_date = null){
         if($start_date == null){
             $start_date = date("Y-m-d");
