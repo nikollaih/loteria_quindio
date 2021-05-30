@@ -29,17 +29,19 @@ class GenerateForeignSales {
 
     $solds_count = count($solds) * $this->frantions_count();
 
-    fwrite($the_file, '19' . PHP_EOL);
+    //fwrite($the_file, '19' . PHP_EOL);
     fwrite($the_file, 'CCCCC' . PHP_EOL);
     fwrite($the_file, $draw['draw_number'] . PHP_EOL);
     fwrite($the_file, $solds_count . PHP_EOL);
 
     foreach($solds as $sold){
-      fwrite($the_file, $sold['number']);
-      fwrite($the_file, $sold['serie'] . '0000');
-      //fwrite($the_file, $this->frantions_count() . '0');
-      //fwrite($the_file, $this->frantions_count() . '00000');
-      fwrite($the_file, PHP_EOL);
+      for ($i=1; $i <= $this->frantions_count(); $i++) { 
+        fwrite($the_file, $sold['number']);
+        fwrite($the_file, $sold['serie'] . '0000');
+        fwrite($the_file, $i);
+        fwrite($the_file, $sold['city_dane_id']);
+        fwrite($the_file, PHP_EOL);
+      }
     }
 
     fclose($the_file);

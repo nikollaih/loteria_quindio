@@ -63,8 +63,10 @@ Class Purchase extends CI_Model {
     }
 
     public function get_sold_numbers_with_serie($id_draw, $serie = null) {
-        $this->db->select("number, serie");
+        $this->db->select("number, serie, cities.dane_id as city_dane_id");
         $this->db->from('purchases');
+        $this->db->join('users', 'users.id = purchases.id_user');
+        $this->db->join('cities', 'cities.id = users.city_id');
         $this->db->where("id_draw", $id_draw); 
         $this->db->where("purchase_status", 'APPROVED'); 
         if($serie != null){
