@@ -97,6 +97,10 @@ $(document).ready(function() {
 			$('.btn-purchase').attr('number', result.number);
 			$('.btn-purchase').attr('serie', result.serie);
 			$('.btn-purchase').attr('date', result.draw.date);
+			$('.btn-purchase').attr('draw_number', result.draw.draw_number);
+			$('.btn-purchase').attr('fractions_count', result.draw.fractions_count);
+			$('.btn-purchase').attr('fractions_value', result.draw.fraction_value);
+			$('.btn-purchase').attr('bill_value', (result.draw.fraction_value * result.draw.fractions_count));
 			$('.btn-purchase').removeClass('invisible');
 		});
 	}
@@ -153,10 +157,15 @@ function try_to_buy(btn) {
 	var number = btn.getAttribute('number');
 	var serie = btn.getAttribute('serie');
 	var date = btn.getAttribute('date');
+	var draw_number = btn.getAttribute('draw_number');
+	var fractions_count = btn.getAttribute('fractions_count');
+	var fractions_value = btn.getAttribute('fractions_value');
+	var bill_value = btn.getAttribute('bill_value');
 	var d = new Date(date);
 	date = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " ;
 
-	var content = "<div class='buying'><div><label>Numero</label><p class='number-confirm'>" + number + "</p></div><div><label>Serie</label><p class='serie-confirm'>" + serie + "</p></div><div><label>Fecha de sorteo</label><p class='fecha-confirm'>" + date +"</p></div></div>";
+	var content = "<div class='buying'><div><label>Numero</label><p class='number-confirm'>" + number + "</p></div><div><label>Serie</label><p class='serie-confirm'>" + serie + "</p></div><div><label>Sorteo</label><p class='serie-confirm'>" + draw_number + "</p></div><div><label>Fecha de sorteo</label><p class='fecha-confirm'>" + date +"</p></div></div>";
+	content += "<div class='buying-total w-100'><div>Cantidad de fracciones: <strong>" + fractions_count +"</strong></div><div>Valor de cada fracción: <strong>$" + fractions_value +"</strong></div><div class='mt-2'>Valor total de la compra: <strong>$" + bill_value +"</strong></div></div>";
 	swal({
 					title: '¿Deseas hacer esta compra?',
 					html: true,

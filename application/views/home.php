@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/powerball.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/floating-wpp.min.css">
 
 <style>
 	body {
@@ -25,10 +26,10 @@
   }
 }
 </style>
-
-<div class="btn-wpp">
+<div id="WAButton"></div>  
+<!-- <div class="btn-wpp">
         <a href="https://api.whatsapp.com/send?phone=57<?= get_setting("whatsapp_number") ?>" target="_blank"><img style="margin-right: 5px;" width="50px" src="<?= base_url() ?>assets/images/whatsapp_icon.png" alt="Whatsapp icon" srcset=""></a>
-    </div>
+    </div> -->
 
 <div class="container">
 	<div class="row">
@@ -132,8 +133,8 @@
 	<div class="row justify-content-center">
 		<div class="col-md-6  d-flex justify-content-center">
 			<div class="text-center">
-				<button class="btn btn-yellow btn-simulator invisible btn-purchase mr-4"><i data-feather="shopping-cart"></i>  Comprar</button>
-				<button class="btn btn-success  btn-simulator" id="btn-play"><i data-feather="play"></i> Jugar</button>
+				<button class="btn btn-yellow btn-simulator invisible btn-purchase mr-4"><i data-feather="shopping-cart" class="mr-2"></i>  Comprar</button>
+				<button class="btn btn-success  btn-simulator" id="btn-play"><i data-feather="repeat" class="mr-2"></i> Dame suerte</button>
 			</div>
 		</div>
 
@@ -151,3 +152,19 @@
 <script type="module" src="<?= base_url().'assets/js/vendor.min.js' ?>"></script>
 <script type="module" src="<?= base_url().'assets/js/app.min.js' ?>"></script>
 <script type="module" src="<?= base_url().'assets/js/simulator.js' ?>"></script>
+<script type="module" src="<?= base_url().'assets/js/floating-wpp.min.js' ?>"></script>
+<script type="module">  
+   jQuery(function () {
+			jQuery('#WAButton').floatingWhatsApp({
+               phone: '57<?= get_setting("whatsapp_number") ?>', //WhatsApp Business phone number
+               headerTitle: '¡Bienvenido!', //Popup Title
+               popupMessage: '¿Como podemos ayudarte? Escribenos.', //Popup Message
+               showPopup: true, //Enables popup display
+               buttonImage: '<img src="assets/images/whatsapp.svg" />', //Button Image
+               //headerColor: 'crimson', //Custom header color
+               //backgroundColor: 'crimson', //Custom background button color
+               position: "right" //Position: left | right
+
+           });
+       });
+</script>  

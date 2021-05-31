@@ -12,7 +12,7 @@
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" href="https://wa.me/57<?= get_setting("whatsapp_number") ?>">
+                    <a target="_blank" href="https://web.whatsapp.com/send?phone=57<?= get_setting("whatsapp_number") ?>">
                     <img style="margin-right: 5px;" width="30px" src="<?= base_url() ?>assets/images/whatsapp_icon.png" alt="Whatsapp icon" srcset="">
                     <p style="text-decoration:underline;">Enviar mensaje a whatsapp</p>
                     </a>
