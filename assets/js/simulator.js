@@ -60,7 +60,9 @@ function spin(timer) {
 }
 
 $(document).ready(function() {
-
+	$('.searching_series').hide();
+	$('.pricing_and_fractions').hide();
+	
 	// initiate slots 
  	createSlots($('#ring-1'));
  	createSlots($('#ring-2'));
@@ -179,6 +181,8 @@ function try_to_buy(btn) {
 				window.location.href = 'Main/set_session_draw_number/' + number + '/' + serie;
 			});
 }
+
+
 
 
 set_card_lotto_height();

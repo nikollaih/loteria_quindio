@@ -499,3 +499,105 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+.lucky {
+  display: none;
+}
+
+.not-lucky .label-title {
+  background-color: #4d9547;
+  color: #fff;
+  font-size: 1.8rem;
+  padding: 10px;
+  border-radius: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.not-lucky .roulette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.not-lucky .card-form {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 45px;
+  margin-top: 80px;
+  width: 70%;
+  position: relative;
+}
+
+
+.not-lucky .card-form label {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.not-lucky .card-form input, 
+.not-lucky .card-form select  {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.not-lucky .card-form .searching_series {
+  background-color: #000c;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  font-size: 1.2rem;
+  border-radius: 10px;
+}
+
+.roulette .pricing_and_fractions {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.roulette .pricing_and_fractions div {
+  border-radius: 8px;
+  padding: 10px;
+  width: fit-content;
+  background-color: #fff;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.btn-new-search {
+  background-color: #616161;
+}
+
+.get-lucky {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  color: #616161;
+  text-decoration: underline;
+  font-size: 1.1rem;
+}
+
+.get-lucky-container {
+  font-size: 1rem;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
