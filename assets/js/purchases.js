@@ -73,7 +73,7 @@ jQuery(document).on("change", "#slt-parts-cant", function () {
 
 // When the select serie changes
 jQuery(document).on("change", "#bill-serie", function () {
-    var min_value = jQuery(this).find(":selected").attr("data-min");
+   /* var min_value = jQuery(this).find(":selected").attr("data-min");
     var max_value = jQuery(this).find(":selected").attr("data-max");
 
     // jQuery("#bill-number").attr("min", min_value);
@@ -81,11 +81,17 @@ jQuery(document).on("change", "#bill-serie", function () {
     jQuery("#show-min-value").html(min_value);
     jQuery("#show-max-value").html(max_value);
     get_available_numbers(jQuery("#bill-serie").val());
-    set_show_bill_data();
+    set_show_bill_data();*/
 });
 
-jQuery(document).on("change", "#bill-number", function () {
+jQuery(document).on("keyup", "#bill-number", function () {
     set_show_bill_data();
+    let number = jQuery(this).val();
+
+    if(number.length == 4){
+        jQuery("#background-loading").show();
+        get_available_series(number);
+    }
 });
 
 function set_total() {
@@ -107,7 +113,7 @@ function set_show_bill_data() {
 }
 
 function get_available_numbers(serie_id) {
-    jQuery("#bill-number").html("");
+    /*jQuery("#bill-number").html("");
     jQuery.get(base_url + "Blends/available_number/" + serie_id, {},
         function (data) {
             let numbers = data.object.numbers;
@@ -117,5 +123,26 @@ function get_available_numbers(serie_id) {
                 jQuery("#bill-number").append(new_option);
             }
             jQuery("#bill-number").trigger("change");
-        }, 'json')
+        }, 'json')*/
+}
+
+function get_available_series(number){
+    jQuery("#bill-serie").html("");
+    $.ajax({
+        url: "Blends/available_series/" + number,
+    })
+    .done(function( data ) {
+        var result = jQuery.parseJSON(data).object;
+        var series = result.series;
+
+        if(series.length > 0){
+            for (let i = 0; i < series.length; i++) {
+                let new_option = new Option(series[i], series[i], false, false);
+                jQuery("#bill-serie").append(new_option);
+            }
+            jQuery("#bill-serie").trigger("change");
+        }
+        
+        jQuery("#background-loading").hide();
+    });
 }

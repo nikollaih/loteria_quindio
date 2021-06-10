@@ -180,10 +180,17 @@
                </h4>
                <p class="lead">Antes de realizar la compra asegurese de que todos los datos están bien, tenga en cuenta que estará comprando billetes completos.</p>
                <div class="row">
+               <div class="col-md-4 mb-3">
+                     <h5 for="state">Número del billete</h5>
+                     <input value="<?= (is_array($draw_number)) ? $draw_number["number"] : "" ?>" onkeypress="if(this.value.length==4){ return false; }" maxlength="4" minlength="4" name="purchase[number]" type="number" class="form-control bill-data" id="bill-number" placeholder="0000" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                     <div class="invalid-feedback">
+                        Ingrese un número válido.
+                     </div>
+                  </div>
                   <div class="col-md-4 mb-3">
                      <h5 for="state">Número de serie</h5>
                      <select name="purchase[serie]" class="custom-select2 d-block w-100 bill-data" id="bill-serie" data-plugin="customselect" required="">
-                        <?php
+                        <!--<?php
                            if(isset($blends) && is_array($blends)){
                                $x = 1;
                                foreach ($blends as $blend) {
@@ -192,12 +199,12 @@
                         <?php
                            }
                            }
-                           ?>
+                           ?>-->
                      </select>
                   </div>
-                  <div class="col-md-4 mb-3">
+                  <!--<div class="col-md-4 mb-3">
                      <h5 for="state">Número del billete</h5>
-                     <select class="form-control wide custom-select2 bill-data" name="purchase[number]" required="" data-plugin="customselect" id="bill-number">
+                     <select class="form-control wide custom-select2 bill-data" name="purchase[number]" required="" data-plugin="customselect">
                         <?php
                            foreach (get_available_numbers((is_array($draw_number)) ? $draw_number["serie"] : $blends[0]["serie"])["numbers"] as $number) {
                         ?>
@@ -214,7 +221,7 @@
                      <div class="invalid-feedback">
                         Ingrese un número válido.
                      </div>
-                  </div>
+                  </div>-->
                   <div class="col-md-4 mb-3">
                      <!-- <h5 for="state">Cantidad de fracciones</h5> -->
                      <input readonly id="slt-parts-cant" data-amount="<?= $draw['fractions_count'] ?>" data-value="<?= $draw['fraction_value'] ?>" value="<?= (is_array($draw)) ? $draw['fractions_count'] : "" ?>" name="purchase[parts]" type="hidden" class="form-control bill-data" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">

@@ -215,7 +215,6 @@
 			$( "#number-not-lucky" ).prop( "disabled", true );
 			$('.btn-purchase').addClass('invisible');
 			$('.searching_series').show();
-			console.log('antes de envuar');
 			$.ajax({
 				url: "Blends/available_series/" + number,
 			})
