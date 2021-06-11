@@ -46,4 +46,12 @@ jQuery(document).ready(function () {
         let value = jQuery(this).val().replace(/[^0-9]/g, '');
         jQuery(this).val(value);
     });
+
+    jQuery(".toggle-menu").on('mousedown touchstart', function(){
+        jQuery(".left-side-menu").slideToggle(1);
+    });
+    
+    jQuery(document).on("click", ".toggle-menu", function () {
+        jQuery(".left-side-menu").slideToggle(1);
+    });
 });

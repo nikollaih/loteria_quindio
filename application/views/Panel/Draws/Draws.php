@@ -142,7 +142,7 @@
     ?>
                                 <td class="text-center" style="width:160px;">
                                     <?php
-                                        if($draw["date"] <= date("Y-m-d")){
+                                        if($draw["date"] <= date("Y-m-d"). " ".get_setting("close_draw_time")){
                                     ?>
                                         <div class="dropdown">
                                             <button class="btn btn-link dropdown-toggle gray-color" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -150,7 +150,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                  <?php
-                                                    if($draw["date"] <= date("Y-m-d") && $draw["result"] == null && $draw["nit"] == null){
+                                                    if($draw["date"] <= date("Y-m-d"). " ".get_setting("close_draw_time") && $draw["result"] == null && $draw["nit"] == null){
                                                 ?>
                                                     <a href="<?= base_url() ?>Results/import_result/<?= $draw["draw_slug"] ?>" data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>'  id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="dropdown-item">Agregar Resultado</a>
                                                 <?php

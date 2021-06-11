@@ -190,6 +190,14 @@
                   <div class="col-md-4 mb-3">
                      <h5 for="state">Número de serie</h5>
                      <select name="purchase[serie]" class="custom-select2 d-block w-100 bill-data" id="bill-serie" data-plugin="customselect" required="">
+                           <?php
+                              if(is_array($draw_number)){
+                                 ?>
+                                 
+                                 <option selected value="<?= $draw_number["serie"] ?>"><?= $draw_number["serie"] ?></option>
+                              <?php
+                              }
+                           ?>
                         <!--<?php
                            if(isset($blends) && is_array($blends)){
                                $x = 1;
@@ -201,6 +209,9 @@
                            }
                            ?>-->
                      </select>
+                     <div class="invalid-feedback">
+                        Ingrese una válida.
+                     </div>
                   </div>
                   <!--<div class="col-md-4 mb-3">
                      <h5 for="state">Número del billete</h5>
@@ -346,8 +357,8 @@
                <h4 class="mb-3">Pago</h4>
                <div class="d-block my-3">
                   <div class="custom-control custom-radio">
-                     <input id="bank-purchase" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="1">
-                     <label class="custom-control-label" for="bank-purchase"> <img class="mb-4" src="<?= base_url() ?>assets/images/pagos-pse.png" alt="" srcset="" width="60px"></label>
+                     <input id="bank-purchase" name="purchase[payment_method]" type="radio" class="custom-control-input" required="" value="1" checked>
+                     <label class="custom-control-label" for="bank-purchase"> <img class="mb-4" src="<?= base_url() ?>assets/images/pagos-pse.png"  alt="" srcset="" width="60px"></label>
                     
                   </div>
                   <div class="custom-control custom-radio">

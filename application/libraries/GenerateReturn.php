@@ -16,6 +16,8 @@ class GenerateReturn {
 
     $to_return = $this->get_return($draw['id']);
 
+    
+
     $returned = [];
     $returned_count = 0;
 

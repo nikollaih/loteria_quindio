@@ -45,7 +45,7 @@ class Draws extends Application_Controller {
     private function draw_register_proccess($data){
         if(is_array($data)){
             if (!$this->Draw->get_draws($data["id"], $data["draw_number"]) && $data["id"] == "null"){
-                $data["date"] = $data["date"]. " ".get_setting("close_draw_time");
+                $data["date"] = date("Y-m-d H:i:s",strtotime ( '-1 minute' , strtotime ( $data["date"]. " ".get_setting("close_draw_time")) ));
                 $data["draw_slug"] = create_unique_slug("draws", 8, "draw_slug");
 
                 //Convert the date string into a unix timestamp.
