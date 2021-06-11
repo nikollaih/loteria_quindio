@@ -51,7 +51,10 @@
 			<h1 class="title"></h1>
 		</div>
 	</div>
-	<div class="row not-lucky">
+	<?php
+		if(isset($draw["draw_number"])){
+			?>
+			<div class="row not-lucky">
 		<div class="col-md-12">
 			<div class="roulette">
 				<div class="label-title">¡Elige un número y gana!</div>
@@ -83,6 +86,20 @@
 			</div>
 		</div>
 	</div>
+			<?php
+		}
+		else{
+			?>
+			<div class="row not-lucky">
+		<div class="col-md-12">
+			<div class="roulette">
+				<div class="label-title" style="background-color:#ff5050;">No hay un sorteo disponible</div>
+			</div>
+		</div>
+	</div>
+			<?php
+		}
+	?>
 	<div class="row lucky" id="rotate">
 		<div class="col-md-12">
 		

@@ -8,6 +8,7 @@ Class Blend extends CI_Model {
     // Get the blends rows
     // $id -> If id is different of null it will return only a row with the blend id information
     public function get_blends($serie = null, $id = null) {
+        $this->get_all();
         $this->db->from('blends');
         $this->db->order_by("serie", "asc");
         if($serie != null){
@@ -70,6 +71,14 @@ Class Blend extends CI_Model {
     // Save the blends rows
     public function set_blends($data) {
         return $this->db->insert_batch('blends', $data); 
+    }
+
+    public function get_all(){
+        $this->db->select("SUM(numbers_quantity) as sum");
+        $this->db->from('blends');
+        $query = $this->db->get();
+
+        print_r($query->result_array());
     }
 
     public function delete_blends(){

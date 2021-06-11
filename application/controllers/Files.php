@@ -101,22 +101,23 @@ class Files extends CI_Controller {
                 if($_FILES["result"]["type"] == "text/plain"){
                     $string = read_file($_FILES["result"]["tmp_name"]);
                     $result_rows = explode("\n", $string);
-                    array_pop($result_rows);
+                    //array_pop($result_rows);
                     $tmp_array = [];
 
                     for ($i=0; $i < count($result_rows); $i++) { 
-                        $result = explode(",", $result_rows[$i]);
+                        if(trim($result_rows[$i]) != ""){
+                            $result = explode(",", $result_rows[$i]);
 
-                        if(count($result) > 4 && count($result) < 7){
-                            if(!isset($tmp_array[$result[2]])){
-                                $tmp_array[$result[2]] = [];
+                            if(count($result) > 4 && count($result) < 7){
+                                if(!isset($tmp_array[$result[2]])){
+                                    $tmp_array[$result[2]] = [];
+                                }
+                                        array_push($tmp_array[$result[2]], $result[1]);
                             }
-                                    array_push($tmp_array[$result[2]], $result[1]);
-                        }
-                        else{
-                            json_response(null, false, "Una de las lineas del archivo tiene más o menos elementos de los requeridos, por favor verifique la linea: ".($i + 1));
-                        }
-                            
+                            else{
+                                json_response(null, false, "Una de las lineas del archivo tiene más o menos elementos de los requeridos, por favor verifique la linea: ".($i + 1));
+                            }
+                        }   
                     }
 
                     json_response($tmp_array, true, "Mezclas cargadas correctamente");

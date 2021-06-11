@@ -157,7 +157,7 @@
                                                 <i class="uil uil-check-square text-success h2"></i>
                                              </div>
                                              <h3>Finalizar!</h3>
-                                             <p class="w-75 mb-2 mx-auto text-muted">Para completar el registro por favot acepte los términos y condiciones y presione el botón "Terminar"</p>
+                                             <p class="w-75 mb-2 mx-auto text-muted">Para completar el registro por favor acepte los términos y condiciones y presione el botón "Terminar"</p>
                                              <div class="mb-3">
                                                 <div class="custom-control custom-checkbox">
                                                    <input required type="checkbox" class="custom-control-input" id="sm-arrows-customCheck">

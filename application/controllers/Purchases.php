@@ -268,7 +268,7 @@ class Purchases extends Application_Controller {
 				$this->mailer->send($email_body, 'Compra exitosa',$purchase["email"]);
 			}
 			
-			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status ));
+			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status, 'payment_response' =>  serialize($response), 'authorization' => ($response->status->status == "APPROVED") ? $response->payment[0]->authorization : "" ));
 		}
 	}
 

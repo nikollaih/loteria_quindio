@@ -30,7 +30,7 @@ class GenerateForeignSales {
     $solds_count = count($solds) * $this->frantions_count();
 
     //fwrite($the_file, '19' . PHP_EOL);
-    fwrite($the_file, 'CCCCC' . PHP_EOL);
+    fwrite($the_file, '10139' . PHP_EOL);
     fwrite($the_file, $draw['draw_number'] . PHP_EOL);
     fwrite($the_file, $solds_count . PHP_EOL);
 

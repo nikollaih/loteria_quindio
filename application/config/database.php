@@ -70,15 +70,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'default';
+$active_group = 'staging';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'us-cdbr-east-02.cleardb.com',
 	'username' => 'b947f8a3e5df96',
-	'password' => 'f798a14a',
+	'password' => 'e4f5d3c82a241cb',
 	'database' => 'heroku_01bd7e2d93d0625',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+$db['staging'] = array(
+	'dsn'	=> '',
+	'hostname' => '138.128.165.106',
+	'username' => 'pseloteriaquindi_database_dev_staging',
+	'password' => '@LoteriaQuindio123',
+	'database' => 'pseloteriaquindi_pse_staging',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

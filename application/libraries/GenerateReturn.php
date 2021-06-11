@@ -50,7 +50,7 @@ class GenerateReturn {
     $the_file = fopen($filePathAndName, "w") or die("Unable to open file!");
 
     fwrite($the_file, '19' . PHP_EOL);
-    fwrite($the_file, 'CCCCC' . PHP_EOL);
+    fwrite($the_file, '10139' . PHP_EOL);
     fwrite($the_file, $draw['draw_number'] . PHP_EOL);
     fwrite($the_file, $data['count'] . PHP_EOL);
 
