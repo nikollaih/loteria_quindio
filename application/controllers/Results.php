@@ -20,8 +20,8 @@ class Results extends Application_Controller {
 
                 $tmp_array = [];
 
-                if(count($result_rows) == 38 && is_array($draw)){
-                    for ($i=0; $i < 38; $i++) { 
+                if(count($result_rows) == 37 && is_array($draw)){
+                    for ($i=0; $i < 37; $i++) { 
                         $result = explode("|", $result_rows[$i]);
 
                         $data["id_draw"] = $draw["id"];
@@ -41,7 +41,7 @@ class Results extends Application_Controller {
                     }
                 }
 
-                if(count($tmp_array) == 38){
+                if(count($tmp_array) == 37){
                     $result_insert = $this->Result->set_results($tmp_array);
                     if($result_insert){
                         $new_draw["id"] = $draw["id"];
@@ -66,7 +66,7 @@ class Results extends Application_Controller {
             // Check is there is any post data
             if($this->input->post()){
                 $data = $this->input->post("data");
-                if(count($data) == 38){
+                if(count($data) == 37){
                     $result_insert = $this->Result->set_results($data);
 
                     if($result_insert){
@@ -82,7 +82,7 @@ class Results extends Application_Controller {
                     }
                 }
                 else{
-                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos  ".count($data));
+                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 37 resultados y obtuvimos  ".count($data));
                 }
             }
             else{

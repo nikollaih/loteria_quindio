@@ -244,28 +244,29 @@ class Winners extends Application_Controller {
                     if($draw["confirmed_winners"] == 0){
                         for ($i=0; $i < count($winner_rows); $i++) { 
                             $winner = explode("|", $winner_rows[$i]);
-                            
-                            if(count($winner) == 7){
+                            if(count($winner) == 8){
                                 $data["id_purchase"] = $winner[5];
                                 $data["confirmed"] = $winner[7];
                                 $data["total_with_discount"] = $winner[1];
-            
-                                if($this->Winner->update_winner($data)){
-                                    $purchase = $this->Purchase->get_purchases($winner[5]);
-                                    if(!$this->Usuario->update(array("id" => $purchase["id"], "balance_total" => floatval($purchase["balance_total"]) + floatval($winner[1])))){
-                                        $data["id_purchase"] = $winner[5];
-                                        $data["confirmed"] = 0;
-                                        $data["total_with_discount"] = 0;
-                                        $this->Winner->update_winner($data);
-                                        json_response(null, false, "Ha ocurrido un error inesperado.");
-                                    }
-                                    else{
-                                        $this->Purchase->update_purchase(array("id_purchase" => $purchase["id_purchase"], "reward_name" => $winner[2]));
+                                
+                                if($winner[7] == 1){
+                                    if($this->Winner->update_winner($data)){
+                                        $purchase = $this->Purchase->get_purchases($winner[5]);
+                                        if(!$this->Usuario->update(array("id" => $purchase["id"], "balance_total" => floatval($purchase["balance_total"]) + floatval($winner[1])))){
+                                            $data["id_purchase"] = $winner[5];
+                                            $data["confirmed"] = 0;
+                                            $data["total_with_discount"] = 0;
+                                            $this->Winner->update_winner($data);
+                                            json_response(null, false, "Ha ocurrido un error inesperado.");
+                                        }
+                                        else{
+                                            $this->Purchase->update_purchase(array("id_purchase" => $purchase["id_purchase"], "reward_name" => $winner[2]));
+                                        }
                                     }
                                 }
                             }
                             else{
-                                json_response(null, false, "La cantidad de items en la linea ".$i + 1 ." no es válida.");
+                                json_response(null, false, "La cantidad de items en la linea ".($i + 1) ." no es válida.");
                             }
                         }
 
