@@ -59,16 +59,4 @@ class GenerateTXTForWinnersLibrary {
     flush();
     readfile($filePathAndName);
   }
-
-  function frantions_count(){
-    return $this->draw['fractions_count'];
-  }
-  
-  function get_sold_numbers($serie) {
-    return $this->CI->Purchase->get_sold_numbers_array($this->draw['id'], $serie);
-  }
-
-  function get_return($id_draw) {
-    return $this->CI->ToReturn->get_return($id_draw);
-  }
 }
