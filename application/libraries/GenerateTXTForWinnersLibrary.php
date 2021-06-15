@@ -34,7 +34,7 @@ class GenerateTXTForWinnersLibrary {
       fwrite($the_file, $winner['total_with_discount'] . '|');
       fwrite($the_file, $winner['reward_description'] . '|');
       fwrite($the_file, $winner['number'] . '|');
-      fwrite($the_file, $winner['serie'] . '|');
+      fwrite($the_file, $winner['purchase_serie'] . '|');
       fwrite($the_file, $winner['id_purchase'] . '|');
       fwrite($the_file, $winner['draw_number'] . '|');
       fwrite($the_file, $winner['confirmed']);
