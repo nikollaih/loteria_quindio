@@ -28,7 +28,7 @@ class GenerateTXTForWinnersLibrary {
     // print_r($data);
     // die();
     $the_file = fopen($filePathAndName, "w") or die("Unable to open file!");
-    
+    $x = 1;
     foreach($winners as $winner){
       fwrite($the_file, $winner['identification_number'] . '|');
       fwrite($the_file, $winner['total_with_discount'] . '|');
@@ -38,7 +38,10 @@ class GenerateTXTForWinnersLibrary {
       fwrite($the_file, $winner['id_purchase'] . '|');
       fwrite($the_file, $winner['draw_number'] . '|');
       fwrite($the_file, $winner['confirmed']);
-      fwrite($the_file, PHP_EOL);
+      if(count($winners) == ++$x){
+        fwrite($the_file, PHP_EOL);
+        $x++;
+      }
     }
 
     fclose($the_file);
