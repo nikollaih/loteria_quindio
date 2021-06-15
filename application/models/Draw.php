@@ -36,7 +36,7 @@ Class Draw extends CI_Model {
     // Get the draws rows
     // $id -> If id is different of null it will return only a row with the draw id information
     public function get_draws_winners($id = null) {
-        $this->db->select('u.*, p.*, p.created_at as purchase_date, p.slug as purchase_slug, p.serie as purchase_serie, w.*, r.*, d.*');
+        $this->db->select('u.*, p.*,u.slug as user_slug, p.created_at as purchase_date, p.slug as purchase_slug, p.serie as purchase_serie, w.*, r.*, d.*');
         $this->db->from('draws d');
         $this->db->join('purchases p', 'p.id_draw = d.id');
         $this->db->join('users u', 'u.id = p.id_user');

@@ -5,8 +5,10 @@
             <div class="row">
                 <div class="col-md-6">
                 <h4 class="header-title mt-0">Lista de ganadores registrados para el sorteo #<?= $draw["draw_number"] ?></h4></div>
-                <div class="col-md-6">
-                <button style="float:right;" data-id="<?= $draw["id"] ?>" class="btn btn-success" id="download-winners-report">Descargar Excel</button></div>
+                <div class="col-md-6 flex text-right">
+                    <a href="<?= base_url() ?>Draws/generate_txt_for_winners/<?= $draw["draw_slug"] ?>" type="button" class="mr-3 btn btn-info">Generar TXT</a>
+                    <button  data-id="<?= $draw["id"] ?>" class="btn btn-success" id="download-winners-report">Descargar Excel</button>
+                </div>
             </div>
                 
                 <hr class="mb-4">

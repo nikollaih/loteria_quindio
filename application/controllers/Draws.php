@@ -8,7 +8,7 @@ class Draws extends Application_Controller {
 		parent::__construct();
 		$this->load->model(['Draw', 'Product', 'Result', 'Purchase']);
 		$this->load->helper(["url", "form"]);
-		$this->load->library(['Form_validation', 'GenerateReturn', 'GenerateForeignSales']);
+		$this->load->library(['Form_validation', 'GenerateReturn', 'GenerateForeignSales', 'GenerateTXTForWinnersLibrary']);
 	}
 
     // Load the draws listing
@@ -121,6 +121,12 @@ class Draws extends Application_Controller {
     public function save_numbers_to_return(){
         get_numbers_to_return();
        
+    }
+
+    public function generate_txt_for_winners($draw){
+        $draw = $this->Draw->get_draws(null, null, $draw);
+        $winners = $this->Draw->get_draws_winners($draw["id"]);
+        $this->generatetxtforwinnerslibrary->perform($draw, $winners);
     }
 
     // Delete a draw
