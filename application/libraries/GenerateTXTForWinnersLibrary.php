@@ -30,7 +30,7 @@ class GenerateTXTForWinnersLibrary {
     $the_file = fopen($filePathAndName, "w") or die("Unable to open file!");
     
     foreach($winners as $winner){
-      fwrite($the_file, $winner['user_slug'] . '|');
+      fwrite($the_file, $winner['identification_number'] . '|');
       fwrite($the_file, $winner['total_with_discount'] . '|');
       fwrite($the_file, $winner['reward_description'] . '|');
       fwrite($the_file, $winner['number'] . '|');
