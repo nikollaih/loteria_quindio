@@ -71,13 +71,14 @@ class CronJobs extends Application_Controller {
 
     
     function update_purchases_status(){
-        $purchases = $this->Purchase->get_purchase_by_param("p.purchase_status", "PENDING", 0);
+        $purchases = $this->Purchase->get_purchase_to_cronjob();
+
 
         if($purchases){
             foreach ($purchases as $purchase) {
                 if($purchase["request_id"]){
                     $status = get_purchase_status($purchase["id_purchase"], $purchase["request_id"]);
-                    $this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $status["status"]->status ));
+                    $this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $status["status"]->status, 'authorization' => $status["payment"][0]->authorization, 'payment_response' => serialize($status) ));
                 }
             }
         }

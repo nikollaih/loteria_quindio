@@ -199,6 +199,27 @@ Class Purchase extends CI_Model {
         }
     }
 
+    public function get_purchase_to_cronjob(){
+        $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date');
+        $this->db->from('purchases p');
+        $this->db->join('users u', 'u.id = p.id_user');
+        $this->db->join('cities c', 'u.city_id = c.id', 'left outer');
+        $this->db->join('states s', 'c.state_id = s.id', 'left outer');
+        $this->db->join('draws d', 'p.id_draw = d.id', 'left outer');
+        $this->db->join('products pro', 'pro.id = d.product_id', 'left outer');
+        $this->db->join('subscribers sub', 'p.id_purchase = sub.id_purchase', 'left outer');
+        $this->db->order_by('p.created_at', 'desc');
+        $where = "purchase_status='PENDING' OR (purchase_status='APPROVED' AND authorization ='')";
+        $this->db->where($where);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
     // Delete a product
     // $id -> Purchase id the user wants to delete
     public function delete_purchase($id){

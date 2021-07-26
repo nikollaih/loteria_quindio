@@ -191,7 +191,7 @@ class Purchases extends Application_Controller {
 		$this->Subscriber->set_subscriber($data);
 	}
 	
-	function user_list(){
+	function user_list($draw_slug){
 		
 		if(is_admin() || is_assistant()){
 			$params["title"] = "Todas Las Compras";
