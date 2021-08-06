@@ -38,10 +38,10 @@ class GenerateTXTForWinnersLibrary {
       fwrite($the_file, $winner['id_purchase'] . '|');
       fwrite($the_file, $winner['draw_number'] . '|');
       fwrite($the_file, $winner['confirmed']);
-      if(count($winners) == ++$x){
+      if(count($winners) > $x){
         fwrite($the_file, PHP_EOL);
-        $x++;
       }
+      $x++;
     }
 
     fclose($the_file);
