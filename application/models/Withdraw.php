@@ -31,12 +31,15 @@ Class Withdraw extends CI_Model {
         }
     }
 
-    function get_withdraw_status(){
+    function get_withdraw_status($id = null){
         $this->db->from('withdraw_status');
+        if($id != null){
+            $this->db->where("id_withdraw_status", $id);
+        }
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
-            return $query->result_array();
+            return ($id == null) ? $query->result_array() : $query->row_array();
         } else {
             return false;
         }
