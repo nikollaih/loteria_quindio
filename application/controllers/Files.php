@@ -9,7 +9,7 @@ class Files extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(['url', 'file', 'results']);
-        $this->load->model(["Draw", "Result", "Purchase"]);
+        $this->load->model(["Draw", "Result", "Purchase","Withdraw"]);
     }
     
     // Get the cities list rows by an state id
@@ -446,6 +446,102 @@ class Files extends CI_Controller {
         
                 $filename = 'Reporte de compras por departamento '.$start_date.' to '.$end_date; // set filename for excel file to be exported
         
+                header('Content-Type: application/vnd.ms-excel'); // generate excel file
+                header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+                header('Cache-Control: max-age=0');
+                
+                $writer->save('php://output');	// download file 
+            }
+            else{
+                json_response(null, false, "No se encontraron ventas para las fechas.");
+            }
+        }
+        else{
+            json_response(null, false, "Usted no puede realizar esta acción.");
+        }
+    }
+
+    // Generate the purchases excel report by dates
+    public function generateWithdrawsReport($start_date, $end_date){
+        if(is_admin() || is_assistant()){
+
+            $withdraws = $this->Withdraw->get_withdraws_by_dates($start_date, $end_date);
+
+            if(is_array($withdraws)){
+                $line = 1;
+                $spreadsheet = new Spreadsheet(); // instantiate Spreadsheet
+                $sheet = $spreadsheet->getActiveSheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+
+                // manually set title value
+                $sheet->mergeCells("A".$line.":K".$line);
+                $sheet->setCellValue('A'.$line, 'LOTERIA DEL QUINDIO'); 
+                $sheet->getStyle("A".$line.":K".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":K".$line)->getFont()->setSize(14);
+                $line++;
+                $sheet->mergeCells("A".$line.":K".$line);
+                $sheet->setCellValue('A'.$line, 'REPORTE SOLICITUDES DE RETIRO ('.ucfirst(strftime('%B %d, %Y',strtotime($start_date))).' - '.ucfirst(strftime('%B %d, %Y',strtotime($end_date))).')'); 
+                $sheet->getStyle("A".$line.":K".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":K".$line)->getFont()->setSize(12);
+                $line += 3;
+
+                $sheet->getStyle('A'.$line.':K'.$line)->applyFromArray($this->getItemTitleStyle());
+
+                // Set the cells dimensions
+                $sheet->getColumnDimension('A')->setWidth(20);
+                $sheet->getColumnDimension('B')->setWidth(20);
+                $sheet->getColumnDimension('C')->setWidth(12);
+                $sheet->getColumnDimension('D')->setWidth(20);
+                $sheet->getColumnDimension('E')->setWidth(23);
+                $sheet->getColumnDimension('F')->setWidth(23);
+                $sheet->getColumnDimension('G')->setWidth(23);
+                $sheet->getColumnDimension('H')->setWidth(20);
+                $sheet->getColumnDimension('I')->setWidth(20);
+                $sheet->getColumnDimension('J')->setWidth(20);
+                $sheet->getColumnDimension('K')->setWidth(40);
+
+                // Set the table titles
+                $sheet->setCellValue('A'.$line, 'CODIGO DEL RETIRO'); 
+                $sheet->setCellValue('B'.$line, 'ESTADO'); 
+                $sheet->setCellValue('C'.$line, 'VALOR'); 
+                $sheet->setCellValue('D'.$line, 'TIPO DOCUMENTO'); 
+                $sheet->setCellValue('E'.$line, 'NÚMERO DOCUMENTO'); 
+                $sheet->setCellValue('F'.$line, 'CLIENTE'); 
+                $sheet->setCellValue('G'.$line, 'FECHA DE SOLICITUD'); 
+                $sheet->setCellValue('H'.$line, 'BANCO'); 
+                $sheet->setCellValue('I'.$line, 'TIPO DE CUENTA'); 
+                $sheet->setCellValue('J'.$line, 'NÚMERO DE CUENTA'); 
+                $sheet->setCellValue('K'.$line, 'NOTAS CLIENTE'); 
+
+                $line++;
+
+                $price = 0;
+                $discount = 0;
+                foreach ($withdraws as $w) {
+                    // Set the winners data
+                    $sheet->setCellValue('A'.$line, strtoupper($w["slug_withdraw"])); 
+                    $sheet->setCellValue('B'.$line, $w["description"]); 
+                    $sheet->setCellValue('C'.$line, $w["total"]); 
+                    $sheet->setCellValue('D'.$line, $this->encryption->decrypt($w["document_type"])); 
+                    $sheet->setCellValue('E'.$line, $this->encryption->decrypt($w["document_number"])); 
+                    $sheet->setCellValue('F'.$line, $w["first_name"]." ".$w["last_name"]); 
+                    $sheet->setCellValue('G'.$line, ucfirst(strftime('%B %d, %Y',strtotime($w["created_at"])))); 
+                    $sheet->setCellValue('H'.$line, $this->encryption->decrypt($w["bank"])); 
+                    $sheet->setCellValue('I'.$line, $this->encryption->decrypt($w["account_type"])); 
+                    $sheet->setCellValue('J'.$line, $this->encryption->decrypt($w["account_number"])); 
+                    $sheet->setCellValue('K'.$line, $this->encryption->decrypt($w["user_notes"])); 
+                    $sheet->getStyle('A'.$line.':K'.$line)->applyFromArray($this->getItemListStyle());
+                    $sheet->getStyle('A'.$line.':K'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
+                    $sheet->getStyle('C'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT ] ]);
+                    $line++;
+                }
+
+
+                $writer = new Xlsx($spreadsheet); // instantiate Xlsx
+        
+                $filename = 'Reporte de solicitudes de retiro'; // set filename for excel file to be exported
+             
                 header('Content-Type: application/vnd.ms-excel'); // generate excel file
                 header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
                 header('Cache-Control: max-age=0');

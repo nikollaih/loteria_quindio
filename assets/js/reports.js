@@ -6,6 +6,13 @@ jQuery(document).on("click", "#download-states-report", function() {
     window.open(base_url + "Files/"+report+"/" + start_date + "/" + end_date);
 });
 
+// When the cancel edit draw button is pressed
+jQuery(document).on("click", "#download-withdraws-report", function() {
+    var start_date = jQuery("#start-date-report").val();
+    var end_date = jQuery("#end-date-report").val();
+    window.open(base_url + "Files/generateWithdrawsReport/" + start_date + "/" + end_date);
+});
+
 // Add datatable options to custom tables
 var table_reports_date = jQuery("#table-reports-date").DataTable({
     "language": {
