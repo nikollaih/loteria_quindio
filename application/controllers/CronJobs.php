@@ -7,7 +7,7 @@ class CronJobs extends Application_Controller {
 	{
 		parent::__construct();
         $this->load->helper(['url', 'winners', 'games']);
-        $this->load->model(["Purchase", "Subscriber", "Draw", "Booking", "Winner", "Usuario"]);
+        $this->load->model(["Purchase", "Subscriber", "Draw", "Booking", "Winner", "Usuario", "Setting"]);
 		$this->load->library(['session']);
 	}
 
@@ -59,6 +59,14 @@ class CronJobs extends Application_Controller {
     public function clear_booking(){
         $datetime_from = date("Y-m-d H:i:s", strtotime("-20 minutes", strtotime(date("Y-m-d H:i"))));
         $this->Booking->clear_booking($datetime_from);
+    }
+
+    // Set the next draw date
+    // Run all fridays
+    public function set_next_close_draw_date(){
+        $data["key"] = "close_draw_date";
+        $data["value"] = date("Y-m-d", strtotime('next thursday'))." 20:30:00";
+        $this->Setting->update($data);
     }
 
     // Set the lotto points to 0

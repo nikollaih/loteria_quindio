@@ -3,7 +3,7 @@ jQuery(document).on("click", "#download-states-report", function() {
     var start_date = jQuery("#start-date-report").val();
     var end_date = jQuery("#end-date-report").val();
     var report = jQuery(this).attr("data-report");
-    window.open(base_url + "Files/"+report+"/" + start_date + "/" + end_date);
+    window.open(base_url + "Files/" + report + "/" + start_date + "/" + end_date);
 });
 
 // When the cancel edit draw button is pressed
@@ -11,6 +11,13 @@ jQuery(document).on("click", "#download-withdraws-report", function() {
     var start_date = jQuery("#start-date-report").val();
     var end_date = jQuery("#end-date-report").val();
     window.open(base_url + "Files/generateWithdrawsReport/" + start_date + "/" + end_date);
+});
+
+// When the cancel edit draw button is pressed
+jQuery(document).on("click", "#download-users-report", function() {
+    var start_date = jQuery("#start-date-report").val();
+    var end_date = jQuery("#end-date-report").val();
+    window.open(base_url + "Files/generateUsersReport/" + start_date + "/" + end_date);
 });
 
 // Add datatable options to custom tables

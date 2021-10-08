@@ -1,4 +1,29 @@
-<div class="col-md-12">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label for="">Fecha inicial</label>
+                            <input type="text" id="start-date-report" name="start_date" class="form-control flatpickr-input" placeholder="" value="<?= (isset($start_date)) ? $start_date : date("Y-m-").'01' ?>">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="">Fecha final</label>
+                            <input type="text" id="end-date-report" name="end_date" class="form-control flatpickr-input" placeholder="" value="<?= (isset($end_date)) ? $end_date : date("Y-m-d") ?>">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for=""></label>
+                            <a class="btn btn-orange btn-block" id="download-users-report">Descargar Excel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
             <div class="row">
@@ -13,14 +38,14 @@
                         </button>
                         <div class="dropdown-menu">
                             <?php
-                              if($roles && is_array($roles)){
-                                 foreach ($roles as $rol) {
-                                 ?>
+                                if($roles && is_array($roles)){
+                                    foreach ($roles as $rol) {
+                                    ?>
                                     <a role-id="<?= $rol["id"] ?>" class="dropdown-item slt-role" href="#"><?= $rol["name"] ?></a>
-                                 <?php
-                                 }
-                              }
-                           ?>
+                                    <?php
+                                    }
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -29,11 +54,11 @@
                 <table id="table-users" class="custom-datatable table table-bordered table-striped mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Identificación</th>
+                            <th scope="col">Identificaci&oacute;n</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col">Dirección</th>
+                            <th scope="col">Tel&eacute;fono</th>
+                            <th scope="col">Direcci&oacute;n</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -63,3 +88,4 @@
             </div>
         </div>
     </div>
+</div>

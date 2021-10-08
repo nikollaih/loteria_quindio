@@ -275,6 +275,7 @@ class Usuarios extends Application_Controller {
 		$params["subtitle"] = "Usuarios";
 		$params["roles"] = $this->Usuario->get_roles();
 		$params["users"] = $this->get_users_by_role(1, null);
+		$params["start_date"] = "2021-05-01";
         $this->load_layout("Usuarios/List", $params);
 	}
 

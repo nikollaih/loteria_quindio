@@ -9,7 +9,7 @@ class Files extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(['url', 'file', 'results']);
-        $this->load->model(["Draw", "Result", "Purchase","Withdraw"]);
+        $this->load->model(["Draw", "Result", "Purchase","Withdraw", "Usuario"]);
     }
     
     // Get the cities list rows by an state id
@@ -567,7 +567,90 @@ class Files extends CI_Controller {
                 $writer->save('php://output');	// download file 
             }
             else{
-                json_response(null, false, "No se encontraron ventas para las fechas.");
+                json_response(null, false, "No se encontraron solicitudes para las fechas.");
+            }
+        }
+        else{
+            json_response(null, false, "Usted no puede realizar esta acción.");
+        }
+    }
+
+
+    // Generate the purchases excel report by dates
+    public function generateUsersReport($start_date, $end_date){
+        if(is_admin() || is_assistant()){
+            $users = $this->Usuario->get_user_by_dates($start_date, $end_date);
+
+            if(is_array($users)){
+                $line = 1;
+                $spreadsheet = new Spreadsheet(); // instantiate Spreadsheet
+                $sheet = $spreadsheet->getActiveSheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+
+                // manually set title value
+                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->setCellValue('A'.$line, 'LOTERIA DEL QUINDIO'); 
+                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(14);
+                $line++;
+                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->setCellValue('A'.$line, 'REPORTE USUARIOS ('.ucfirst(strftime('%B %d, %Y',strtotime($start_date))).' - '.ucfirst(strftime('%B %d, %Y',strtotime($end_date))).')'); 
+                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(12);
+                $line += 3;
+
+                $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray($this->getItemTitleStyle());
+
+                // Set the cells dimensions
+                $sheet->getColumnDimension('A')->setWidth(20);
+                $sheet->getColumnDimension('B')->setWidth(23);
+                $sheet->getColumnDimension('C')->setWidth(45);
+                $sheet->getColumnDimension('D')->setWidth(20);
+                $sheet->getColumnDimension('E')->setWidth(60);
+                $sheet->getColumnDimension('F')->setWidth(23);
+                $sheet->getColumnDimension('G')->setWidth(23);
+                $sheet->getColumnDimension('H')->setWidth(25);
+
+                // Set the table titles
+                $sheet->setCellValue('A'.$line, 'TIPO DOCUMENTO'); 
+                $sheet->setCellValue('B'.$line, 'NÚMERO DOCUMENTO'); 
+                $sheet->setCellValue('C'.$line, 'NOMBRE'); 
+                $sheet->setCellValue('D'.$line, 'TELÉFONO'); 
+                $sheet->setCellValue('E'.$line, 'DIRECCIÓN'); 
+                $sheet->setCellValue('F'.$line, 'CIUDAD'); 
+                $sheet->setCellValue('G'.$line, 'DEPARTAMENTO'); 
+                $sheet->setCellValue('H'.$line, 'FECHA DE NACIMIENTO'); 
+
+                $line++;
+
+                foreach ($users as $u) {
+                    // Set the winners data
+                    $sheet->setCellValue('A'.$line, $u["document_type"]); 
+                    $sheet->setCellValue('B'.$line, $u["identification_number"]); 
+                    $sheet->setCellValue('C'.$line, strtoupper($u["first_name"] . " " .$u["last_name"])); 
+                    $sheet->setCellValue('D'.$line, $u["phone"]); 
+                    $sheet->setCellValue('E'.$line, $u["address"]); 
+                    $sheet->setCellValue('F'.$line, $u["city_name"]); 
+                    $sheet->setCellValue('G'.$line, $u["state_name"]); 
+                    $sheet->setCellValue('H'.$line, $u["birth_date"]); 
+                    $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
+                    $line++;
+                }
+
+
+                $writer = new Xlsx($spreadsheet); // instantiate Xlsx
+        
+                $filename = 'Reporte de usuarios'; // set filename for excel file to be exported
+             
+                header('Content-Type: application/vnd.ms-excel'); // generate excel file
+                header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+                header('Cache-Control: max-age=0');
+                
+                $writer->save('php://output');	// download file 
+            }
+            else{
+                json_response(null, false, "No se encontraron usuarios para las fechas.");
             }
         }
         else{
