@@ -243,11 +243,15 @@ Class Purchase extends CI_Model {
             $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as report_description, s.name as state, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date, SUM(p.price) as price_sum, SUM(p.discount) as discount_sum, , SUM(p.bills) as bills');
             $this->db->where("s.id", $state);
             $this->db->group_by("c.id");
+            $this->db->group_by("p.payment_method");
+            $this->db->order_by("c.name", "asc");
         }
 
         if($state == 0){
             $this->db->select('pro.*, u.*, u.slug as user_slug, c.name as city, s.name as report_description, sub.*, sub.created_at, d.draw_number, d.date, p.*, p.created_at as purchase_date, SUM(p.price) as price_sum, SUM(p.discount) as discount_sum, SUM(p.bills) as bills');
             $this->db->group_by("s.id");
+            $this->db->group_by("p.payment_method");
+            $this->db->order_by("s.name", "asc");
         }
 
         if($state == -1){

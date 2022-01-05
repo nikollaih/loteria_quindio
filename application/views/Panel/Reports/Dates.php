@@ -56,6 +56,7 @@
                             <th scope="col">Sorteo</th>
                             <th scope="col">Abonados</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Método Pago</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,12 +68,13 @@
                             <tr>
                             <th scope="row"><span class="badge label-<?= $purchase["purchase_status"] ?>"><?= convert_purchase_status($purchase["purchase_status"]) ?></span></th>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["purchase_date"]))) ?></td>
-                                <td class=""><?= $purchase["first_name"]." ".$purchase["last_name"] ?></td>
+                                <td class=""><?= strtoupper($purchase["first_name"]." ".$purchase["last_name"]) ?></td>
                                 <td class="text-center"><?= $purchase["number"] ?></td>
                                 <td class="text-center"><?= $purchase["serie"] ?></td>
                                 <td class="text-center"><?= $purchase["draw_number"] ?></td>
                                 <td class="text-center"><?= ($purchase["subscriber_amount"] > 0) ? "x".$purchase["subscriber_amount"] : "N/A" ?></td>
                                 <td class="text-right">$<?= number_format($purchase["price"] - $purchase["discount"], 0, ',', '.') ?> COP</td>
+                                <td class="text-center"><span class="badge badge-<?= ($purchase["payment_method"] == "1") ? 'primary' : 'warning' ?>"><?= ($purchase["payment_method"] == "1") ? "PSE" : "Plataforma" ?></span></td>
                             </tr>
                         <?php
                                 }

@@ -155,30 +155,31 @@ class Files extends CI_Controller {
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
                 // manually set title value
-                $sheet->mergeCells("A".$line.":J".$line);
+                $sheet->mergeCells("A".$line.":K".$line);
                 $sheet->setCellValue('A'.$line, 'LOTERIA DEL QUINDIO'); 
-                $sheet->getStyle("A".$line.":J".$line)->applyFromArray($this->getDocumentTitleStyle());
-                $sheet->getStyle("A".$line.":J".$line)->getFont()->setSize(14);
+                $sheet->getStyle("A".$line.":K".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":K".$line)->getFont()->setSize(14);
                 $line++;
-                $sheet->mergeCells("A".$line.":J".$line);
+                $sheet->mergeCells("A".$line.":K".$line);
                 $sheet->setCellValue('A'.$line, 'REPORTE DE VENTAS DESDE '.strtoupper(strftime('%B %d, %Y',strtotime($start_date))).' HASTA '.strtoupper(strftime('%B %d, %Y',strtotime($end_date)))); 
-                $sheet->getStyle("A".$line.":J".$line)->applyFromArray($this->getDocumentTitleStyle());
-                $sheet->getStyle("A".$line.":J".$line)->getFont()->setSize(12);
+                $sheet->getStyle("A".$line.":K".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":K".$line)->getFont()->setSize(12);
                 $line += 6;
 
-                $sheet->getStyle('A'.$line.':J'.$line)->applyFromArray($this->getItemTitleStyle());
+                $sheet->getStyle('A'.$line.':K'.$line)->applyFromArray($this->getItemTitleStyle());
 
                 // Set the cells dimensions
                 $sheet->getColumnDimension('A')->setWidth(20);
                 $sheet->getColumnDimension('B')->setWidth(20);
-                $sheet->getColumnDimension('C')->setWidth(30);
-                $sheet->getColumnDimension('D')->setWidth(12);
-                $sheet->getColumnDimension('E')->setWidth(12);
-                $sheet->getColumnDimension('F')->setWidth(12);
-                $sheet->getColumnDimension('G')->setWidth(12);
-                $sheet->getColumnDimension('H')->setWidth(12);
-                $sheet->getColumnDimension('I')->setWidth(12);
-                $sheet->getColumnDimension('J')->setWidth(12);
+                $sheet->getColumnDimension('C')->setWidth(40);
+                $sheet->getColumnDimension('D')->setWidth(14);
+                $sheet->getColumnDimension('E')->setWidth(14);
+                $sheet->getColumnDimension('F')->setWidth(14);
+                $sheet->getColumnDimension('G')->setWidth(14);
+                $sheet->getColumnDimension('H')->setWidth(14);
+                $sheet->getColumnDimension('I')->setWidth(14);
+                $sheet->getColumnDimension('J')->setWidth(14);
+                $sheet->getColumnDimension('K')->setWidth(20);
 
                 // Set the table titles
                 $sheet->setCellValue('A'.$line, 'FECHA DE COMPRA'); 
@@ -191,6 +192,7 @@ class Files extends CI_Controller {
                 $sheet->setCellValue('H'.$line, 'SUBTOTAL'); 
                 $sheet->setCellValue('I'.$line, 'DESCUENTO'); 
                 $sheet->setCellValue('J'.$line, 'TOTAL'); 
+                $sheet->setCellValue('K'.$line, 'MÉTODO DE PAGO'); 
 
                 $line++;
 
@@ -202,7 +204,7 @@ class Files extends CI_Controller {
                     // Set the purchases data
                     $sheet->setCellValue('A'.$line, ucfirst(strftime('%B %d, %Y',strtotime($purchase["purchase_date"])))); 
                     $sheet->setCellValue('B'.$line, $purchase["identification_number"]); 
-                    $sheet->setCellValue('C'.$line, $purchase["first_name"]." ".$purchase["last_name"]); 
+                    $sheet->setCellValue('C'.$line, strtoupper($purchase["first_name"]." ".$purchase["last_name"])); 
                     $sheet->setCellValue('D'.$line, $purchase["number"]); 
                     $sheet->setCellValue('E'.$line, $purchase["serie"]); 
                     $sheet->setCellValue('F'.$line, $purchase["draw_number"]); 
@@ -210,8 +212,9 @@ class Files extends CI_Controller {
                     $sheet->setCellValue('H'.$line, $purchase["price"]); 
                     $sheet->setCellValue('I'.$line, $purchase["discount"]); 
                     $sheet->setCellValue('J'.$line, $purchase["price"] - $purchase["discount"]); 
-                    $sheet->getStyle('A'.$line.':J'.$line)->applyFromArray($this->getItemListStyle());
-                    $sheet->getStyle('D'.$line.':J'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT ] ]);
+                    $sheet->setCellValue('K'.$line, ($purchase["payment_method"] == "1") ? "PSE" : "Plataforma"); 
+                    $sheet->getStyle('A'.$line.':K'.$line)->applyFromArray($this->getItemListStyle());
+                    $sheet->getStyle('D'.$line.':K'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT ] ]);
                     $sheet->getStyle('B'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
                     $line++;
                 }
@@ -400,14 +403,15 @@ class Files extends CI_Controller {
                 $sheet->getStyle("A".$line.":J".$line)->getFont()->setSize(12);
                 $line += 6;
 
-                $sheet->getStyle('A'.$line.':E'.$line)->applyFromArray($this->getItemTitleStyle());
+                $sheet->getStyle('A'.$line.':F'.$line)->applyFromArray($this->getItemTitleStyle());
 
                 // Set the cells dimensions
                 $sheet->getColumnDimension('A')->setWidth(20);
                 $sheet->getColumnDimension('B')->setWidth(20);
                 $sheet->getColumnDimension('C')->setWidth(30);
-                $sheet->getColumnDimension('D')->setWidth(12);
-                $sheet->getColumnDimension('E')->setWidth(12);
+                $sheet->getColumnDimension('D')->setWidth(14);
+                $sheet->getColumnDimension('E')->setWidth(14);
+                $sheet->getColumnDimension('F')->setWidth(20);
 
                 // Set the table titles
                 $sheet->setCellValue('A'.$line, 'DEPARTAMENTO'); 
@@ -415,6 +419,7 @@ class Files extends CI_Controller {
                 $sheet->setCellValue('C'.$line, 'SUBTOTAL'); 
                 $sheet->setCellValue('D'.$line, 'DESCUENTO'); 
                 $sheet->setCellValue('E'.$line, 'TOTAL'); 
+                $sheet->setCellValue('F'.$line, 'MÉTODO DE PAGO'); 
 
                 $line++;
 
@@ -424,13 +429,14 @@ class Files extends CI_Controller {
                     $price += $purchase["price_sum"];
                     $discount += $purchase["discount_sum"];
                     // Set the purchases data
-                    $sheet->setCellValue('A'.$line, $purchase["report_description"]); 
+                    $sheet->setCellValue('A'.$line, strtoupper($purchase["report_description"])); 
                     $sheet->setCellValue('B'.$line, $purchase["bills"]); 
                     $sheet->setCellValue('C'.$line, $purchase["price_sum"]); 
                     $sheet->setCellValue('D'.$line, $purchase["discount_sum"]); 
                     $sheet->setCellValue('E'.$line, $purchase["price_sum"] - $purchase["discount_sum"]); 
+                    $sheet->setCellValue('F'.$line, ($purchase["payment_method"] == "1") ? "PSE" : "Plataforma"); 
                     
-                    $sheet->getStyle('A'.$line.':E'.$line)->applyFromArray($this->getItemListStyle());
+                    $sheet->getStyle('A'.$line.':F'.$line)->applyFromArray($this->getItemListStyle());
                     $line++;
                 }
 

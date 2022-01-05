@@ -12,7 +12,7 @@ Class Withdraw extends CI_Model {
         $this->db->join('withdraw_status ws', 'w.status = ws.id_withdraw_status');
         $this->db->join('users u', 'w.id_user = u.id');
         $this->db->join('identification_types it', 'u.identification_type_id = it.id');
-        $this->db->order_by('created_at', 'desc');
+        $this->db->order_by('w.created_at', 'desc');
 
         if($id_withdraw != null){
             $this->db->where("w.id_withdraw", $id_withdraw);
