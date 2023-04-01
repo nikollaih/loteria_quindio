@@ -26,21 +26,28 @@
                 </div>
                <div class="col-md-12">
                   <div class="row mt-3">
-                     <div class="col-md-4 form-group">
-                        <label for="roles_id" >Rol <small class="text-danger fs-1">*</small></label>
-                        <select class="form-control" name="user[roles_id]" id="roles_id" required>
-                           <option value>--Seleccione el rol</option>
-                           <?php
-                              if($roles && is_array($roles)){
-                                 foreach ($roles as $rol) {
-                                 ?>
-                                    <option <?= (isset($user["roles_id"]) && $user["roles_id"] == $rol["id"]) ? "selected" : "" ?> value='<?= $rol["id"] ?>'><?= $rol["name"] ?></option>
-                                 <?php
-                                 }
-                              }
-                           ?>
-                        </select>
-                     </div>
+                        <?php
+                          if (is_admin()){
+                             ?>
+                              <div class="col-md-4 form-group">
+                                 <label for="roles_id" >Rol <small class="text-danger fs-1">*</small></label>
+                                 <select class="form-control" name="user[roles_id]" id="roles_id" required>
+                                    <option value>--Seleccione el rol</option>
+                                    <?php
+                                       if($roles && is_array($roles)){
+                                          foreach ($roles as $rol) {
+                                          ?>
+                                             <option <?= (isset($user["roles_id"]) && $user["roles_id"] == $rol["id"]) ? "selected" : "" ?> value='<?= $rol["id"] ?>'><?= $rol["name"] ?></option>
+                                          <?php
+                                          }
+                                       }
+                                    ?>
+                                 </select>
+                              </div>
+                             <?php
+                          }
+                        ?>
+                     
                      <div class="col-md-4 form-group">
                         <label for="identification_type_id" >Tipo de documento <small class="text-danger fs-1">*</small></label>
                         <select class="form-control" name="user[identification_type_id]" id="identification_type_id" required>
@@ -58,19 +65,22 @@
                      </div>
                      <div class="col-md-4 form-group">
                         <label for="identification_number">Número de documento <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control" value="<?= (isset($user["identification_number"])) ? $user["identification_number"] : "" ?>" required>
+                        <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control restrict-number" value="<?= (isset($user["identification_number"])) ? $user["identification_number"] : "" ?>" required>
                      </div>
                      <div class="col-md-4 form-group">
                         <label for="name">Nombre <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($user["first_name"])) ? $user["first_name"] : "" ?>">
+                        <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control restrict-text" required value="<?= (isset($user["first_name"])) ? $user["first_name"] : "" ?>">
+                        <?php echo form_error('user[first_name]', '<p class="text-danger">', '</p>'); ?>
                      </div>
                      <div class="col-md-4 form-group">
                         <label for="last_name">Apellidos <small class="text-danger fs-1">*</small></label>
-                        <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($user["last_name"])) ? $user["last_name"] : "" ?>">
+                        <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control restrict-text" required value="<?= (isset($user["last_name"])) ? $user["last_name"] : "" ?>">
+                        <?php echo form_error('user[last_name]', '<p class="text-danger">', '</p>'); ?>
                      </div>
                      <div class="col-md-4 form-group">
                         <label for="email">Correo electrónico <small class="text-danger fs-1">*</small></label>
                         <input autocomplete="off" placeholder="ejemplo@correo.com" type="email" id="email" name="user[email]" class="form-control" required value="<?= (isset($user["email"])) ? $user["email"] : "" ?>">
+                        <?php echo form_error('user[email]', '<p class="text-danger">', '</p>'); ?>
                      </div>
                      <div class="col-md-4 form-group">
                         <label for="department" >Departamento <small class="text-danger fs-1">*</small></label>

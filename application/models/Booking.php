@@ -8,9 +8,15 @@ Class Booking extends CI_Model {
     // Get the bookings rows
     // $data -> Array that contains the booking information (number, draw, serie)
     public function get_bookings($data) {
-        $this->db->select("number");
         $this->db->from('booking');
-        $this->db->where("serie", $data["serie"]);
+        if(isset($data["serie"])){
+            $this->db->select("number");
+            $this->db->where("serie", $data["serie"]);
+        }
+        if(isset($data["number"])){
+            $this->db->select("serie");
+            $this->db->where("number", $data["number"]);
+        }
         $this->db->where("id_draw", $data["id_draw"]);
         $query = $this->db->get();
 

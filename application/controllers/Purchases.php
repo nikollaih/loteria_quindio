@@ -6,7 +6,7 @@ class Purchases extends Application_Controller {
     function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(['url', 'product']);
+		$this->load->helper(['url', 'product', 'games']);
 		$this->load->library(['session', 'form_validation', 'Mailer']);
 		$this->load->model(['Location', 'Blend', 'Draw', 'Purchase', 'Subscriber', 'Usuario']);
 	}
@@ -34,15 +34,6 @@ class Purchases extends Application_Controller {
             if(!$params["message"]["success"]){
                 $params["data_form"] = $this->input->post();
 			}
-			else{
-				$data["purchase"] = $params["message"]["data"];
-				$data["subscriber"] = $this->input->post("subscriber");
-				$data['success_message'] = true;
-				$data['button_url'] = generate_invoice_url($data["purchase"]["user_slug"], $data["purchase"]["slug"]);
-				$email_body = $this->load->view('emails/purchase_invoice', $data, true);
-				$this->mailer->send($email_body, 'Compra exitosa', $data["purchase"]["email"]);
-				$this->session->unset_userdata('draw_number');
-			}
 		}
 
         $params["title"] = "Compra";
@@ -61,15 +52,33 @@ class Purchases extends Application_Controller {
 		$blend = $this->Blend->get_blends($data["serie"]);
 		$user = $this->Usuario->get_user_by_param("u.id", logged_user()["id"]);
 		$subscriber_amount = $info_data["subscriber"]["amount"];
-		$subcriber_discount = $info_data["subscriber"]["discount"];
+
+		switch ($subscriber_amount) {
+			case '52':
+				$subcriber_discount = 15;
+				break;
+			
+			case '26':
+				$subcriber_discount = 8;
+				break;
+
+			case '13':
+				$subcriber_discount = 5;
+				break;
+			
+			default:
+			$subcriber_discount = 0;
+				break;
+		}
 
 		$data["bills"] = ($subscriber_amount > 1) ? $subscriber_amount + 1 : 1;
 		$data["parts"] = $info_data["current_draw"]["fractions_count"];
 		$data["created_at"] = date("Y-m-d H:i:s");
 		$data["id_user"] = logged_user()["id"];
 		$data["price"] = $info_data["current_draw"]["fraction_value"] * $data["parts"];
-		$data["slug"] = create_unique_slug("Purchases", 8);
+		$data["slug"] = strtoupper(create_unique_slug("purchases", 8));
 		$data["discount"] = 0;
+		$data["purchase_status"] = "PENDING";
 		$draw = $this->Draw->get_active_draw();
 
 		if($subscriber_amount > 1){
@@ -77,7 +86,7 @@ class Purchases extends Application_Controller {
 			$data["discount"] = ($data["price"] - ($info_data["current_draw"]["fraction_value"] * $info_data["current_draw"]["fractions_count"])) * ($subcriber_discount / 100);
 		}
 
-		$this->do_payment($data, $user["balance_total"]);
+		
 
 		// Validate if current active draw is the same for the purchase process
 		if($data["id_draw"] == $draw["id"]){
@@ -90,10 +99,29 @@ class Purchases extends Application_Controller {
 				if(!$temp_purchase){
 					$result_purchase = $this->Purchase->set_purchase($data);
 					if($result_purchase != false){
+						$this->session->unset_userdata('draw_number');
 						if($subscriber_amount > 1){
 							$this->set_subscriber($subscriber_amount, $result_purchase);
+							$params['subscriber'] = $info_data["subscriber"];
+						}else{
+							$params['subscriber'] = 1;
 						}
-						return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
+
+						$payment_result = $this->do_payment($result_purchase, $user["balance_total"]);
+						if(is_array($payment_result)){
+							if($payment_result["success"]){
+								add_loto_punto_by_slug($result_purchase["user_slug"]);
+								$this->Purchase->update_purchase(array('id_purchase' => $result_purchase["id_purchase"], 'purchase_status' => "APPROVED" ));
+								
+								$params['purchase'] = $result_purchase;
+								$params["button_url"] = generate_invoice_url($params["purchase"]["user_slug"], $params["purchase"]["slug"]);
+								
+								$email_body = $this->load->view('emails/purchase_invoice', $params, true);
+								$this->mailer->send($email_body, 'Compra exitosa',$params["purchase"]["email"]);
+							}
+							return $payment_result;
+						}
+						//return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 					}
 				}
 				else{
@@ -104,11 +132,13 @@ class Purchases extends Application_Controller {
 							if($subscriber_amount > 1){
 								$this->set_subscriber($subscriber_amount, $result_purchase);
 							}
+							// Add a new loto point
+							add_loto_punto();
 							return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => $result_purchase);
 						}
 					}
 					else{
-						return array("type" => "danger", "success" => false, "message" => "El número o cantidad de fracciones que desea comprar no se encuentra disponible.");
+						return array("type" => "danger", "success" => false, "message" => "El número y serie que desea comprar no se encuentra disponible.");
 					}
 				}
 			}
@@ -124,12 +154,29 @@ class Purchases extends Application_Controller {
 		if($purchase["payment_method"] == 2){
 			if(($purchase_total) <= $user_balance){
 				$new_balance = $user_balance - ($purchase_total);
+				update_balance($new_balance, $purchase["id_user"]);
+				return array("type" => "success", "success" => true, "message" => "Compra realizada exitosamente.", "data" => "");
 			}
 			else{
-				$new_balance = 0;
+				return array("type" => "danger", "success" => false, "message" => "Saldo insuficiente.");
 			}
+		}
+		else{
+			$jsonData = generate_payment_json($purchase["id_purchase"]);
 
-			if(update_balance($new_balance, $purchase["id_user"]));
+			$ch = curl_init( get_setting("pse_api_url") );
+			# Setup request to send json via POST.
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+			# Return response instead of printing.
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			# Send request.
+			$result = json_decode(curl_exec($ch));
+			curl_close($ch);
+
+			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'request_id' => $result->requestId ));
+			# Print response.
+			header("Location:".$result->processUrl);
 		}
 	}
 
@@ -145,12 +192,15 @@ class Purchases extends Application_Controller {
 	}
 	
 	function user_list(){
-		$params["title"] = "Mis Compras";
-		$params["subtitle"] = "Mis Compras";
+		
 		if(is_admin() || is_assistant()){
+			$params["title"] = "Todas Las Compras";
+			$params["subtitle"] = "Todas Las Compras";
 			$params["purchases"] = $this->Purchase->get_purchases();
 		}
 		else{
+			$params["title"] = "Mis Compras";
+			$params["subtitle"] = "Mis Compras";
 			$params["purchases"] = $this->Purchase->get_user_purchases(logged_user()["id"]);
 		}
 
@@ -169,5 +219,66 @@ class Purchases extends Application_Controller {
 		}
 
         $this->load_layout("Panel/Purchases/UserSubscriber", $params);
+	}
+
+	// Show the purchase resume, purchase status
+	function resume($purchase_slug = null){
+		$params["title"] = "Resumen";
+		$params["subtitle"] = "";
+		$params["request"] = [];
+		$params["purchase"] = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+
+		if($params["purchase"]["request_id"] != null && $params["purchase"]){
+			$jsonData = generate_payment_json($params["purchase"]["id_purchase"]);
+
+			$ch = curl_init( get_setting("pse_api_url").$params["purchase"]["request_id"] );
+			# Setup request to send json via POST.
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $jsonData ) );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+			# Return response instead of printing.
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			# Send request.
+			$params["request"]  = (array) json_decode(curl_exec($ch));
+			curl_close($ch);
+		}
+
+		if($params["request"]["status"]->status == "APPROVED"){
+			add_loto_punto_by_slug($params["purchase"]["user_slug"]);
+			$params["button_url"] = generate_invoice_url($params["purchase"]["user_slug"], $params["purchase"]["slug"]);
+			$email_body = $this->load->view('emails/purchase_invoice', $params, true);
+			$this->mailer->send($email_body, 'Compra exitosa',$params["purchase"]["email"]);
+		}
+	
+		$this->Purchase->update_purchase(array('id_purchase' => $params["purchase"]["id_purchase"], 'purchase_status' => $params["request"]["status"]->status, 'payment_response' =>  serialize($params["request"]), 'authorization' => ($params["request"]["status"]->status == "APPROVED") ? $params["request"]["payment"][0]->authorization : ""));
+
+        $this->load_layout("Panel/Purchases/Resume", $params);
+	}
+
+	// Update a purchase status
+	function notification(){
+		$response = json_decode(file_get_contents('php://input'));
+		$signature = sha1($response->requestId.$response->status->status.$response->status->date.get_setting("pse_api_secret_key"));
+		$purchase = $this->Purchase->get_purchase_by_param("p.request_id", $response->requestId);
+
+		if($signature == $response->signature && $purchase && $purchase["purchase_status"] == "PENDING"){
+			if($response->status->status == "APPROVED"){
+				add_loto_punto_by_slug($purchase["user_slug"]);
+				$params["button_url"] = generate_invoice_url($purchase["user_slug"], $purchase["slug"]);
+				$email_body = $this->load->view('emails/purchase_invoice', array("purchase" => $purchase), true);
+				$this->mailer->send($email_body, 'Compra exitosa',$purchase["email"]);
+			}
+			
+			$this->Purchase->update_purchase(array('id_purchase' => $purchase["id_purchase"], 'purchase_status' => $response->status->status, 'payment_response' =>  serialize($response), 'authorization' => ($response->status->status == "APPROVED") ? $response->payment[0]->authorization : "" ));
+		}
+	}
+
+	// Retry the payment
+	function retry_payment($purchase_slug){
+		if(is_logged()){
+			$purchase = $this->Purchase->get_purchase_by_param("p.slug", $purchase_slug);
+			if($purchase){
+				$this->do_payment($purchase, 0);
+			}
+		}
 	}
 }

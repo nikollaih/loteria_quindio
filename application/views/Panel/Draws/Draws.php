@@ -40,23 +40,23 @@
                     <h4 class="header-title mt-0 add-draw-title">Agregar Sorteo</h4>
                     <hr class="mb-4">
                     <form action="" method="post" id="form-draw">
-                        <input type="hidden" name="id" id="input_id_draw" value="null">
+                        <input type="hidden" name="id" id="input_id_draw" value="<?= (isset($data_form)) ? $data_form["id"] : "null" ?>">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Número</label>
+                                    <label for="">N&uacute;mero</label>
                                     <input id="input_draw_number" required name="draw_number" type="number" minlength="4" maxlength="4" class="form-control" placeholder="0000" value="<?= (isset($data_form)) ? $data_form["draw_number"] : "" ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Fecha</label>
+                                    <label for="">Fecha de juego</label>
                                     <input min="<?= date('Y-m-d') ?>" id="input_date" required name="date" type="text" class="form-control flatpickr-input active" value="<?= (isset($data_form)) ? $data_form["date"] : date('Y-m-d') ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Producto (cantidad fracciones/valor por fracción)</label>
+                                    <label for="">Producto (cantidad fracciones/valor por fracci&oacute;n)</label>
                                     <select name="product_id" class="custom-select d-block w-100 bill-data" id="product-id" required="">
                                         <?php
                                         if(isset($products) && is_array($products)){
@@ -75,14 +75,19 @@
                         <?php
                             if(isset($message)){
                         ?>
-                            <p class="result-draw-action text-<?= $message["type"] ?>"><?= $message["message"] ?></p>
+                            <div class="alert alert-<?= $message["type"] ?> alert-dismissible fade show" role="alert">
+                                <?= $message["message"] ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
                         <?php
                             }
                         ?>
                         <div class="row justify-content-end">
                             <div class="col-md-3">
                                 <div class="form-group">    
-                                    <a class="btn btn-light btn-block cancel-edit-draw-button invisible" type="submit">Cancelar</a>
+                                    <a class="btn btn-light btn-block cancel-edit-draw-button <?= (isset($data_form)) ? "" : "invisible" ?>" type="submit">Cancelar</a>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -107,7 +112,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Número de sorteo</th>
+                            <th scope="col">N&uacute;mero de sorteo</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Producto</th>
                             <th scope="col">Resultado</th>
@@ -137,7 +142,7 @@
     ?>
                                 <td class="text-center" style="width:160px;">
                                     <?php
-                                        if($draw["date"] <= date("Y-m-d")){
+                                        if($draw["date"] <= date("Y-m-d"). " ".get_setting("close_draw_time")){
                                     ?>
                                         <div class="dropdown">
                                             <button class="btn btn-link dropdown-toggle gray-color" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -145,14 +150,15 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                  <?php
-                                                    if($draw["date"] <= date("Y-m-d") && $draw["result"] == null && $draw["nit"] == null){
+                                                    if($draw["date"] <= date("Y-m-d"). " ".get_setting("close_draw_time") && $draw["result"] == null && $draw["nit"] == null){
                                                 ?>
                                                     <a href="<?= base_url() ?>Results/import_result/<?= $draw["draw_slug"] ?>" data-formated-date="<?= ucfirst(strftime('%B %d, %Y',strtotime($draw["date"]))); ?>" data-columns='<?= json_encode($draw) ?>'  id="row-draw-<?= $draw['id'] ?>" data-id="<?= $draw['id'] ?>" type="button" class="dropdown-item">Agregar Resultado</a>
                                                 <?php
                                                     }
                                                 ?>
 
-                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Devolución</a>
+                                                <a href="<?= base_url() ?>Draws/generate_return/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Generar devoluci&oacute;n</a>
+                                                <a href="<?= base_url() ?>Draws/generate_foreign_sales/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Generar foraneas</a>
                                             
                                                 <?php
                                                     if($draw["nit"] != null){
@@ -168,12 +174,25 @@
                                                 <?php
                                                     }
                                                 ?>
+                                                 <?php
+                                                    if($draw["result"] != null && $draw["serie"] != null && $draw["confirmed_winners"] == 0){
+                                                ?>
+                                                    <a href="<?= base_url() ?>Winners/confirm_winners/<?= $draw["draw_slug"] ?>" type="button" class="dropdown-item">Confirmar Ganadores</a>
+                                                <?php
+                                                    }
+                                                ?>
+                                                <a href="" data-id='<?= $draw["id"] ?>'  data-number='<?= $draw["draw_number"] ?>' data-toggle="modal" data-target="#draw_result_image" type="button" class="dropdown-item modal-results-button">Imagen de resultados</a>
                                             </div>
                                         </div>
                                     <?php
                                         }
+                                        else{
+                                            ?>
+                                             <button data-name="<?= $draw["draw_number"] ?>" data-id="<?= $draw["id"] ?>" type="button" class="btn btn-primary btn-sm edit-draw-button">Editar</button>
+                                <button data-name="<?= $draw["draw_number"] ?>" data-id="<?= $draw["id"] ?>" type="button" class="btn btn-danger btn-sm delete-draw-button">Eliminar</button>
+                                            <?php
+                                                }
                                     ?>
-                                    
                                 </td>
                                     <?php } ?>
                             </tr>

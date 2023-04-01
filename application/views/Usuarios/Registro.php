@@ -65,19 +65,22 @@
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="identification_number">Número de documento <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control" value="<?= (isset($data_form)) ? $data_form["user"]["identification_number"] : "" ?>" required>
+                                          <input placeholder="Ej: 123456789" type="number" id="identification_number" name="user[identification_number]" class="form-control restrict-number" value="<?= (isset($data_form)) ? $data_form["user"]["identification_number"] : "" ?>" required>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="name">Nombre <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["first_name"] : "" ?>">
+                                          <input placeholder="Ejemplo" type="text" id="name" name="user[first_name]" class="form-control restrict-text" required value="<?= (isset($data_form)) ? $data_form["user"]["first_name"] : "" ?>">
+                                          <?php echo form_error('user[first_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="last_name">Apellidos <small class="text-danger fs-1">*</small></label>
-                                          <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["last_name"] : "" ?>">
+                                          <input placeholder="Ejemplo" type="text" id="last_name" name="user[last_name]" class="form-control restrict-text" required value="<?= (isset($data_form)) ? $data_form["user"]["last_name"] : "" ?>">
+                                          <?php echo form_error('user[last_name]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-12 form-group">
                                           <label for="email">Correo electrónico <small class="text-danger fs-1">*</small></label>
                                           <input placeholder="ejemplo@correo.com" type="email" id="email" name="user[email]" class="form-control" required value="<?= (isset($data_form)) ? $data_form["user"]["email"] : "" ?>">
+                                          <?php echo form_error('user[email]', '<p class="text-danger">', '</p>'); ?>
                                        </div>
                                        <div class="col-md-6 form-group">
                                           <label for="inputPassword">Contraseña <small class="text-danger fs-1">*</small></label>
@@ -154,7 +157,7 @@
                                                 <i class="uil uil-check-square text-success h2"></i>
                                              </div>
                                              <h3>Finalizar!</h3>
-                                             <p class="w-75 mb-2 mx-auto text-muted">Para completar el registro por favot acepte los términos y condiciones y presione el botón "Terminar"</p>
+                                             <p class="w-75 mb-2 mx-auto text-muted">Para completar el registro por favor acepte los términos y condiciones y presione el botón "Terminar"</p>
                                              <div class="mb-3">
                                                 <div class="custom-control custom-checkbox">
                                                    <input required type="checkbox" class="custom-control-input" id="sm-arrows-customCheck">

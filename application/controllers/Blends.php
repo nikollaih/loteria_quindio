@@ -48,6 +48,14 @@ class Blends extends Application_Controller {
         $this->load_layout("Panel/Blends/Import", $params);
     }
 
+    public function show_numbers($serie) {
+        $params["title"] = "Números de mezcla";
+        $params["subtitle"] = "Números de mezcla";
+        $params["blend"] = $this->Blend->get_blends($serie);
+        $params["numbers"] = unserialize($params["blend"]["blend_numbers"]);
+        $this->load_layout("Panel/Blends/show_numbers", $params);
+    }
+
     private function blend_register_proccess($data){
         if(is_array($data)){
             if (!$this->Blend->validate_blend($data) && $data["id"] == "null"){
@@ -148,6 +156,14 @@ class Blends extends Application_Controller {
         else{
             json_response(null, false, "No tiene permisos para realizar esta acción.");
         }
+    }
+
+    function available_number($serie_id){
+        json_response(get_available_numbers($serie_id), true, "Lista de números disponibles");
+    }
+
+    function available_series($number){
+        json_response(get_available_blends($number), true, "Lista de series disponibles");
     }
     
 }

@@ -95,6 +95,7 @@
                                 <?php if(is_admin()){ ?>
                                     <td class="text-center" style="width:160px;">
                                         <!-- <button data-columns='<?= json_encode($blend) ?>' type="button" class="btn btn-primary btn-sm edit-blend-button">Editar</button> -->
+                                        <a  href="<?= base_url() . 'blends/show_numbers/' . $blend["serie"] ?>" type="button" class="btn btn-info btn-sm text-white">Ver números</a>
                                         <button id="row-blend-<?= $blend['id'] ?>" data-id="<?= $blend['id'] ?>" type="button" class="btn btn-danger btn-sm delete-blend-button">Eliminar</button>
                                     </td>
                                 <?php } ?>

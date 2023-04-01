@@ -3,6 +3,7 @@ Class Draw extends CI_Model {
     function __construct(){        
         parent::__construct();
         $this->load->database();
+        $this->load->helper(["settings"]);
     }
 
     // Get the draws rows
@@ -35,12 +36,14 @@ Class Draw extends CI_Model {
     // Get the draws rows
     // $id -> If id is different of null it will return only a row with the draw id information
     public function get_draws_winners($id = null) {
-        $this->db->select('u.*, p.*, p.serie as purchase_serie, w.*, r.*, d.*');
+        $this->db->select('p.created_at as purchase_date, p.slug as purchase_slug, r.reward_description, w.total_with_discount, u.identification_number, u.first_name, u.last_name, u.email, u.phone, st.name as state, c.name as city, p.number, p.serie as purchase_serie, w.confirmed, d.result, d.serie, p.id_purchase, d.draw_number');
         $this->db->from('draws d');
         $this->db->join('purchases p', 'p.id_draw = d.id');
         $this->db->join('users u', 'u.id = p.id_user');
         $this->db->join('winners w', 'w.id_purchase = p.id_purchase');
         $this->db->join('rewards r', 'w.id_reward = r.id_reward');
+        $this->db->join('cities c', 'c.id = u.city_id');
+        $this->db->join('states st', 'st.id = c.state_id');
 
         if($id != null && $id != "null"){
             $this->db->where("d.id", $id);
@@ -77,15 +80,16 @@ Class Draw extends CI_Model {
 
     // Get the current draw
     public function get_active_draw(){
+        $date = get_setting("close_draw_date");
         $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
-        $this->db->where("date >=", date("Y-m-d"));
+        $this->db->where("date >=", date("Y-m-d")." 00:00");
+        $this->db->where("date <=", $date);
         $this->db->order_by("date", "asc");
         $this->db->limit(1);
 
         $query = $this->db->get();
-        
         if ($query->num_rows() > 0) {
             return $query->row_array();
         } else {
@@ -95,10 +99,15 @@ Class Draw extends CI_Model {
 
      // Get the last played draw
      public function get_previous_draw(){
+        $close_time = get_setting("close_draw_time");
+        if(count(explode(":", $close_time)) == 2){
+            $close_time = $close_time.":00";
+        }
+
         $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
-        $this->db->where("date <=", date("Y-m-d"));
+        $this->db->where("date <=", date("Y-m-d")." ".$close_time);
         $this->db->order_by("date", "desc");
         $this->db->limit(1);
 

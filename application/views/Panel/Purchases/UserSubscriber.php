@@ -30,7 +30,7 @@
                                 <td class="text-center"><?= $subscriber["subscriber_remaining_amount"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($subscriber["created_at"]))) ?></td>
                                 <td class="text-center">
-                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$subscriber["user_slug"].'/'.$subscriber["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$subscriber["user_slug"].'/'.$subscriber["slug"] ?>" class="btn btn-sm btn-success">Tiquete de compra</a>
                                 </td>
                             </tr>
                         <?php

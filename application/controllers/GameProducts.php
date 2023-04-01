@@ -118,7 +118,7 @@ class GameProducts extends Application_Controller {
     }
 
   function get_products_for_game(){
-    $products = $this->GameProduct->get(null, 1, 8);
+    $products = $this->GameProduct->get_availables(null, 1, 8);
     if(is_array($products)){
       $result = array(
         'products' => $products,
@@ -150,7 +150,7 @@ class GameProducts extends Application_Controller {
     
     $lotto_points = $this->Usuario->get_loto_points($user_id);
     $this->Usuario->substract_lotto_point($user_id);
-    $products = $this->GameProduct->get(null, 1, 8);
+    $products = $this->GameProduct->get_availables(null, 1, 8);
 
     $result =  array(
       "won"  =>  $won,
@@ -175,9 +175,14 @@ class GameProducts extends Application_Controller {
       $data = array(
         'product_id' =>  $product,
         'user_id' => $user,
-        'slug' => $slug
+        'slug' => $slug,
+        'status' => 'pending'
       );
       $this->ProductWinner->set_product_winners($data);
+      $product_game = $this->GameProduct->get($product);
+			$current_qty = $product_game['g_product_quantity'];
+			$product_game['g_product_quantity'] = $current_qty - 1;
+			$this->GameProduct->update($product_game);
       echo json_encode(array('result' => true));
     }else{
       echo json_encode(array('result' => false));

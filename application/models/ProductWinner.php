@@ -6,7 +6,7 @@ Class ProductWinner extends CI_Model {
   }
 
   public function get_product_winners($id = null) {
-    $this->db->select('u.first_name, u.last_name, gp.g_product_name, pw.*');
+    $this->db->select('u.first_name, u.last_name, gp.g_product_name, gp.g_product_path, pw.*');
     $this->db->from('product_winners pw');
     $this->db->join('users u', 'pw.user_id = u.id');
     $this->db->join('game_products gp', 'gp.id_game_product = pw.product_id');
@@ -19,6 +19,25 @@ Class ProductWinner extends CI_Model {
         return false;
     }
   }
+
+
+  public function get_product_winners_by_user($user_id) {
+    $this->db->select('u.first_name, u.last_name, gp.g_product_name, gp.g_product_path, pw.*');
+    $this->db->from('product_winners pw');
+    $this->db->join('users u', 'pw.user_id = u.id');
+    $this->db->join('game_products gp', 'gp.id_game_product = pw.product_id');
+    $this->db->where('pw.user_id', $user_id);
+    $this->db->order_by("pw.id", "desc");
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        return $query->result_array();
+    } else {
+        return false;
+    }
+  }
+
+  
 
   public function get_product_winners_by_status($status) {
     $this->db->from('product_winners');
@@ -48,7 +67,7 @@ Class ProductWinner extends CI_Model {
 
 
   public function set_product_winners($data){
-      return $this->db->insert('product_winners', $data);
+    return $this->db->insert('product_winners', $data);
   }
 
 

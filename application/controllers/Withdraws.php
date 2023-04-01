@@ -18,6 +18,17 @@ class Withdraws extends Application_Controller {
 
         if($this->input->post()){
             $updated_withdraw = $this->input->post();
+            $withdraw = $this->Withdraw->get_withdraws(null, $updated_withdraw["id_withdraw"]);
+            $user = $this->Usuario->get_user_by_param("u.id", $withdraw["id_user"]);
+            $status = $this->Withdraw->get_withdraw_status($updated_withdraw["status"]);
+
+            if($status["return_money"] == 1 && $withdraw["returned_money"] == 0){
+                $data_user["id"] = $user["id"];
+                $data_user["balance_total"] = doubleval($user["balance_total"]) + doubleval($withdraw["total"]);
+                $updated_withdraw["returned_money"] = 1;
+                $this->Usuario->update($data_user);
+            }
+
             $this->Withdraw->update($updated_withdraw);
         }
 
@@ -39,7 +50,7 @@ class Withdraws extends Application_Controller {
                 $data["id_user"] = logged_user()["id"];
             }
             $user = $this->Usuario->get_user_by_param("u.id", $data["id_user"]);
-            if($user["balance_total"] > 0){
+            if($user["balance_total"] > 0 && $user["balance_total"] >= get_setting("withdraw_restriction")){
                 $new_withdraw["status"] = 1;
                 $new_withdraw["slug_withdraw"] = create_unique_slug('withdraws', 8, 'slug_withdraw');
                 $new_withdraw["id_user"] = $user["id"];

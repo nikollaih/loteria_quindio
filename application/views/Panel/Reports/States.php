@@ -56,10 +56,11 @@
                     <thead>
                         <tr>
                             <th scope="col">Departamento</th>
-                            <th scope="col">BILLETES VENDIDOS</th>
+                            <th scope="col">Billetes Vendidos</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Descuento</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Método pago</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,11 +70,12 @@
                                 foreach ($purchases as $purchase) {
                         ?>
                             <tr>
-                                <td ><?= $purchase["report_description"] ?></td>
+                                <td ><?= strtoupper($purchase["report_description"]) ?></td>
                                 <td ><?= $purchase["bills"] ?></td>
                                 <td class="text-right">$<?= number_format($purchase["price_sum"], 0, ',', '.') ?> COP</td>
                                 <td class="text-right">$<?= number_format($purchase["discount_sum"], 0, ',', '.') ?> COP</td>
                                 <td class="text-right">$<?= number_format($purchase["price_sum"] - $purchase["discount_sum"], 0, ',', '.') ?> COP</td>
+                                <td class="text-center"><span class="badge badge-<?= ($purchase["payment_method"] == "1") ? 'primary' : 'warning' ?>"><?= ($purchase["payment_method"] == "1") ? "PSE" : "Plataforma" ?></span></td>
                             </tr>
                         <?php
                                 }

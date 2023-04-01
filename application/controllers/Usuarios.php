@@ -79,8 +79,7 @@ class Usuarios extends Application_Controller {
 		if($user_slug != ''){
 			$user = $this->Usuario->get_user_by_param("slug", $user_slug);
 			if($user != false) {
-				$user['confirmed_email'] = true;
-				$updating = $this->Usuario->update($user);
+				$updating = $this->Usuario->update(array("confirmed_email" => true, "id" => $user["id"]));
 
 				if($updating) {
 					$data['success_message'] = true;
@@ -105,11 +104,17 @@ class Usuarios extends Application_Controller {
 		if($this->input->post()){
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
-			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|integer');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required', array(
+				'required'      => 'El campo Nombre es requerido.',
+        	));
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required', array(
+				'required'      => 'El campo Apellidos es requerido.',
+        	));
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
-			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required|valid_email', array(
+                'valid_email'      => 'El campo Correo electrónico no es válido.',
+        	));
 			$this->form_validation->set_rules('user[password]', 'Contraseña', 'required');
 
 			// Check if input rules are ok
@@ -221,11 +226,17 @@ class Usuarios extends Application_Controller {
 		if($this->input->post()){
 			// Set the inputs rules
 			$this->form_validation->set_rules('user[identification_type_id]', 'Tipo de documento', 'required');
-			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required');
-			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required');
-			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required');
+			$this->form_validation->set_rules('user[identification_number]', 'Número de documento', 'required|integer');
+			$this->form_validation->set_rules('user[first_name]', 'Nombre', 'required', array(
+				'required'      => 'El campo Nombre es requerido.',
+        	));
+			$this->form_validation->set_rules('user[last_name]', 'Apellidos', 'required', array(
+				'required'      => 'El campo Apellidos es requerido.',
+        	));
 			$this->form_validation->set_rules('user[city_id]', 'Ciudad', 'required');
-			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required');
+			$this->form_validation->set_rules('user[email]', 'Correo electrónico', 'required|valid_email', array(
+                'valid_email'      => 'El campo Correo electrónico no es válido.',
+        	));
 
 			// Check if input rules are ok
 			if ($this->form_validation->run() == false) {
@@ -264,6 +275,7 @@ class Usuarios extends Application_Controller {
 		$params["subtitle"] = "Usuarios";
 		$params["roles"] = $this->Usuario->get_roles();
 		$params["users"] = $this->get_users_by_role(1, null);
+		$params["start_date"] = "2021-05-01";
         $this->load_layout("Usuarios/List", $params);
 	}
 

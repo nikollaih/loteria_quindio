@@ -20,7 +20,7 @@ class Mailer {
         'smtp_host' => 'ssl://smtp.gmail.com',
         'smtp_port' => 465,
         'smtp_user' => 'loteriadelquindiosoporte@gmail.com',
-        'smtp_pass' => '@LoteriaQuindio',
+        'smtp_pass' => '@Loteria123',
         'mailtype'  => 'html',
         'charset'   => 'utf-8',
         'wordwrap' => TRUE,
@@ -35,13 +35,18 @@ class Mailer {
     $this->CI->email->subject($subject);
     $this->CI->email->message($content);
 
-    //Send email
-    if ($this->CI->email->send()) {
-      return true;
-    } else {
-        //Do whatever you want if failed 
-        log_message('error', 'Unable to Send Email to Customer.' . print_r($this->CI->email->print_debugger(array('headers', 'subject')), TRUE));
-        return false;
+    try {
+      //Send email
+
+      if ($this->CI->email->send()) {
+        return true;
+      } else {
+        die($this->CI->email->print_debugger());
+          //Do whatever you want if failed 
+          return false;
+      }
+    } catch (Exception $e) {
+      echo $e->getMessage();
     }
   }
 }

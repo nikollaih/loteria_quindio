@@ -7,6 +7,7 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(['url']);
+		$this->load->model(['Draw']);
   }
 
 	/**
@@ -26,6 +27,7 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('home');
+		$params["draw"] = $this->Draw->get_active_draw();
+		$this->load->view('home', $params);
 	}
 }

@@ -8,11 +8,12 @@
                     <thead>
                         <tr>
                             <th scope="col">Estado</th>
+                            <th scope="col">Referencia</th>
+                            <th scope="col">Autorización/CUS</th>
                             <th scope="col">Sorteo #</th>
                             <th scope="col">Fecha del sorteo</th>
                             <th scope="col">Número</th>
                             <th scope="col">Serie</th>
-                            <th scope="col">Fracciones</th>
                             <th scope="col">Fecha de compra</th>
                             <th scope="col">Valor</th>
                             <th scope="col"></th>
@@ -25,16 +26,23 @@
                                 foreach ($purchases as $purchase) {
                         ?>
                             <tr>
-                                <th scope="row"><span class="badge badge-primary">Pendiente</span></th>
+                                <th scope="row"><span class="badge label-<?= $purchase["purchase_status"] ?>"><?= convert_purchase_status($purchase["purchase_status"]) ?></span></th>
+                                <td><strong><?= $purchase["slug"] ?></strong></td>
+                                <td><strong><?= $purchase["authorization"] ?></strong></td>
                                 <td class="text-center"><?= $purchase["draw_number"] ?></td>
                                 <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["date"]))) ?></td>
                                 <td class="text-center"><?= $purchase["number"] ?></td>
                                 <td class="text-center"><?= $purchase["serie"] ?></td>
-                                <td class="text-center"><?= $purchase["parts"] ?></td>
-                                <td><?= ucfirst(strftime('%B %d, %Y',strtotime($purchase["created_at"]))) ?></td>
-                                <td class="text-center">$<?= number_format($purchase["price"], 0, ',', '.') ?> COP</td>
+                                <td><?= ucfirst(strftime('%B %d, %Y - %T',strtotime($purchase["created_at"]))) ?></td>
+                                <td class="text-center">COP <?= number_format($purchase["price"], 2, ',', '.') ?> </td>
                                 <td class="text-center">
-                                    <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Factura</a>
+                                    <?php
+                                        if($purchase["purchase_status"] == "APPROVED"){
+                                            ?>
+                                            <a target="_blank" href="<?= base_url().'Main/invoice/'.$purchase["user_slug"].'/'.$purchase["slug"] ?>" class="btn btn-sm btn-success">Tiquete de compr</a>
+                                            <?php
+                                        }
+                                    ?>
                                 </td>
                             </tr>
                         <?php

@@ -7,24 +7,32 @@ class Games extends Application_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(['url']);
-		$this->load->model(['ProductWinner']);
+		$this->load->model(['ProductWinner', 'GameProduct']);
   }
 
-	public function slot_machine()
-	{
-		if(!is_logged()){
-			header("Location: " . base_url() . "usuarios/login");
-		}
-
-		$this->load->view('games/slot_machine');
-	}
 
 	public function slot_game(){
 		if(!is_logged()){
 			header("Location: " . base_url() . "usuarios/login");
 		}
+		if(get_setting('enable_loto_game')){
+			$this->load->view('games/slot_game');
+		}
+		else{
+			header("Location: " . base_url() . "Panel");
+		}
+	}
 
-		$this->load->view('games/slot_game');
+	public function my_rewards(){
+		if(!is_logged()){
+			header("Location: " . base_url() . "usuarios/login");
+		}
+
+		$params['winners'] = $this->ProductWinner->get_product_winners_by_user(logged_user()["id"]);
+		$params['title'] = 'Mis premios fisicos';
+		$params['subtitle'] = 'Mis premios fisicos';
+		
+		$this->load_layout('Panel/GameProducts/MyRewards', $params);
 	}
 
 	public function validate_slot_machine_result(){
@@ -54,18 +62,16 @@ class Games extends Application_Controller {
 	
 	function update_winner(){
 		if(isset($this->input->post()["id"])){
-            $data = $this->input->post();
+			$data = $this->input->post();
 
-           if ($this->ProductWinner->update_product_winners($data)){
+			if ($this->ProductWinner->update_product_winners($data)){
 				echo json_encode(array("error" => FALSE, "message" => "Registro modificado exitosamente."));
-		   }
-		   else{
+			}else{
 				echo json_encode(array("error" => TRUE, "message" => "No se ha podido modificar el registro."));
-		   }
-            
-        }
-        else{
-            echo json_encode(array("error" => TRUE, "message" => "No se ha podido generar el retiro."));
-        }
+			}
+					
+		}else{
+      echo json_encode(array("error" => TRUE, "message" => "No se ha podido generar el retiro."));
+    }
 	}
 }

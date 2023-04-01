@@ -10,11 +10,11 @@ jQuery(document).on("change", "#input_blends", function () {
     load_blends(jQuery(this).attr("data-draw"));
 });
 
-jQuery(document).on("change", "#input_result", function () {
+/*jQuery(document).on("change", "#input_result", function () {
     jQuery("#save-result-txt").hide();
     jQuery("#background-loading").show();
     load_results(jQuery(this).attr("data-draw"));
-});
+});*/
 
 jQuery(document).on("click", "#save-blends-btn", function () {
     save_blends();
@@ -119,7 +119,6 @@ function load_blends(draw_number = null) {
         success: function (data) {
             data = (JSON.parse(data));
             imported_blends = data.object;
-            console.log(data)
 
             if (data.status) {
                 jQuery("#save-result-txt > span").html(data.message);

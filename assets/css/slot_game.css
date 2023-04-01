@@ -488,3 +488,10 @@ body {
   margin-top: 15px;
   font-weight: 600;
 }
+
+.btn-simulator {
+  height: 52px;
+  width: 200px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+}
