@@ -17,13 +17,13 @@
                     break;
                 case '5':
                 case '6':
-                    return "SECO DE 45 MILLONES";
+                    return "SECO DE 50 MILLONES";
                     break;
                 case ($line >= 7 && $line <= 21):
-                    return "SECO DE 21 MILLONES";
+                    return "SECO DE 25 MILLONES";
                 break;
                 case ($line > 21 && $line <= 36):
-                    return "SECO DE 9 MILLONES";
+                    return "SECO DE 10 MILLONES";
                 break;
                 case '37':
                     return "QUINDIANITO SIN SERIE";

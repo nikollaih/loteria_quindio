@@ -77,8 +77,6 @@ Class Blend extends CI_Model {
         $this->db->select("SUM(numbers_quantity) as sum");
         $this->db->from('blends');
         $query = $this->db->get();
-
-        print_r($query->result_array());
     }
 
     public function delete_blends(){
