@@ -66,7 +66,7 @@ class Results extends Application_Controller {
             // Check is there is any post data
             if($this->input->post()){
                 $data = $this->input->post("data");
-                if(count($data) == 38){
+                if(count($data) == 34){
                     $result_insert = $this->Result->set_results($data);
 
                     if($result_insert){
@@ -82,7 +82,7 @@ class Results extends Application_Controller {
                     }
                 }
                 else{
-                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos  ".count($data));
+                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos  ".count($data));
                 }
             }
             else{

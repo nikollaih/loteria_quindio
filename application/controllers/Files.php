@@ -21,30 +21,30 @@ class Files extends CI_Controller {
                     $result_rows = explode("\n", $string);
                    // array_pop($result_rows);
 
-                    if(count($result_rows) == 38){
+                    if(count($result_rows) == 34){
                         if(count(explode("|", $result_rows[0])) == 10){
                             $draw = $this->Draw->get_draws(null, explode("|", $result_rows[0])[6]);
                             if(is_array($draw)){
                                 if($draw["draw_number"] == $this->input->post("draw_number")){
                                     $tmp_array = [];
 
-                                    for ($i=0; $i < 38; $i++) { 
+                                    for ($i=0; $i < 34; $i++) { 
                                         $result = explode("|", $result_rows[$i]);
 
                                         if(count($result) == 10){
-                                            if(strlen($result[8]) == 4 && (strlen($result[9]) == 3) || $i == 37){
+                                            if(strlen(trim($result[8])) == 4 && (strlen(trim($result[9])) == 3) || $i == 33){
                                                 $data["id_draw"] = $draw["id"];
                                                 $data["id_reward"] = get_id_reward_by_line($i);
                                                 $data["award_name"] = get_result_name_by_line($i);
-                                                $data["nit"] = $result[0];
-                                                $data["dv"] = $result[1];
-                                                $data["lot_code"] = $result[2];
-                                                $data["fixed"] = $result[3];
-                                                $data["year"] = $result[4];
-                                                $data["file_type"] = $result[5];
-                                                $data["award_code"] = $result[7];
-                                                $data["result_number"] = $result[8];
-                                                $data["result_serie"] = $result[9];
+                                                $data["nit"] = trim($result[0]);
+                                                $data["dv"] = trim($result[1]);
+                                                $data["lot_code"] = trim($result[2]);
+                                                $data["fixed"] = trim($result[3]);
+                                                $data["year"] = trim($result[4]);
+                                                $data["file_type"] = trim($result[5]);
+                                                $data["award_code"] = trim($result[7]);
+                                                $data["result_number"] = trim($result[8]);
+                                                $data["result_serie"] = trim($result[9]);
                                                 $data["created_at"] = date("Y-m-d H:i:s");
 
                                                 array_push($tmp_array, $data);
@@ -58,11 +58,11 @@ class Files extends CI_Controller {
                                         }
                                     }
 
-                                    if(count($tmp_array) == 38){
+                                    if(count($tmp_array) == 34){
                                         json_response($tmp_array, true, "Result listing");
                                     }
                                     else{
-                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($tmp_array));
+                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos ".count($tmp_array));
                                     }
                                 }
                                 else{
@@ -78,7 +78,7 @@ class Files extends CI_Controller {
                         }
                     }
                     else{
-                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($result_rows));
+                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos ".count($result_rows));
                     }
                 }
                 else{

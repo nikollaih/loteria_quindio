@@ -12,20 +12,20 @@
                     break;
                 case '2':
                 case '3':
-                case '4':
                     return "SUELDAZO CAFETERO";
                     break;
+                case '4':
                 case '5':
                 case '6':
                     return "SECO DE 50 MILLONES";
                     break;
-                case ($line >= 7 && $line <= 21):
+                case ($line >= 7 && $line <= 17):
                     return "SECO DE 25 MILLONES";
                 break;
-                case ($line > 21 && $line <= 36):
+                case ($line > 17 && $line <= 32):
                     return "SECO DE 10 MILLONES";
                 break;
-                case '37':
+                case '33':
                     return "QUINDIANITO SIN SERIE";
                 break;
                 
@@ -50,20 +50,20 @@
                     break;
                 case '2':
                 case '3':
-                case '4':
                     return 3;
                     break;
+                case '4':
                 case '5':
                 case '6':
                     return 4;
                     break;
-                case ($line >= 7 && $line <= 21):
+                case ($line >= 7 && $line <= 17):
                     return 5;
                 break;
-                case ($line > 21 && $line <= 36):
+                case ($line > 17 && $line <= 32):
                     return 6;
                 break;
-                case '37':
+                case '33':
                     return 7;
                 break;
                 
