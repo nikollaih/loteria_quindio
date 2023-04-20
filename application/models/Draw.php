@@ -105,7 +105,7 @@ Class Draw extends CI_Model {
         $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
-        $this->db->where("date <=", $close_date);
+        $this->db->where("date <=", date("Y-m-d H:i:s"));
         $this->db->order_by("date", "desc");
         $this->db->limit(1);
 
