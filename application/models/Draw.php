@@ -80,15 +80,13 @@ Class Draw extends CI_Model {
 
     // Get the current draw
     public function get_active_draw(){
-        $close_time = get_setting("close_draw_time");
-        if(count(explode(":", $close_time)) == 2){
-            $close_time = $close_time.":00";
-        }
+        $close_date = get_setting("close_draw_date");
 
         $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
-        $this->db->where("date >=", date("Y-m-d")." ".$close_time);
+        $this->db->where("date >=", date("Y-m-d H:i:s"));
+        $this->db->where("date <=", $close_date);
         $this->db->order_by("date", "asc");
         $this->db->limit(1);
 
@@ -102,15 +100,12 @@ Class Draw extends CI_Model {
 
      // Get the last played draw
      public function get_previous_draw(){
-        $close_time = get_setting("close_draw_time");
-        if(count(explode(":", $close_time)) == 2){
-            $close_time = $close_time.":00";
-        }
+        $close_date = get_setting("close_draw_date");
 
         $this->db->select('d.*, p.slug, p.fractions_count, p.fraction_value, p.product_name');
         $this->db->from("draws d");
         $this->db->join("products p", "d.product_id = p.id");
-        $this->db->where("date <=", date("Y-m-d")." ".$close_time);
+        $this->db->where("date <=", $close_date);
         $this->db->order_by("date", "desc");
         $this->db->limit(1);
 
