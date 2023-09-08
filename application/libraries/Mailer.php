@@ -18,7 +18,7 @@ class Mailer {
     $config = array(
         'protocol'  => 'smtp',
         'smtp_host' => 'ssl://smtp.gmail.com',
-        'smtp_port' => 465,
+        'smtp_port' => 587,
         'smtp_user' => 'loteriadelquindiosoporte@gmail.com',
         'smtp_pass' => '@Loteria123',
         'mailtype'  => 'html',
