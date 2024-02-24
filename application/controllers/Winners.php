@@ -32,7 +32,7 @@ class Winners extends Application_Controller {
                                 }
                             break;
                             case '7':
-                                if (check_quindianito($purchase, $draw, $results, true)){
+                                if (check_quindianito($purchase, $draw, $results, 7)){
                                     $this->save_winner($purchase, 7);
                                     $i = 29;
                                 }

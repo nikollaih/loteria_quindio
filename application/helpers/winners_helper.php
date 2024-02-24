@@ -17,7 +17,7 @@
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 if(is_array($results)){
                     for ($i=0; $i < count($results); $i++) { 
-                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] == $results[$i]["result_serie"] && $id_reward == $results[$i]["id_reward"]){
+                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] == $results[$i]["result_serie"]){
                             $i = count($results);
                             return true;
                         }
@@ -37,7 +37,7 @@
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 if(is_array($results)){
                     for ($i=1; $i < count($results); $i++) { 
-                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] != $results[$i]["result_serie"] && $id_reward == $results[$i]["id_reward"]){
+                        if($purchase["number"] == $results[$i]["result_number"] && $purchase["serie"] != $results[$i]["result_serie"]){
                             $i = count($results);
                             return true;
                         }

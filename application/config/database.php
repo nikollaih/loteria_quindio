@@ -78,7 +78,7 @@ if($_SERVER['REMOTE_ADDR'] == "::1"){
 		'dsn'	=> '',
 		'hostname' => 'localhost',
 		'username' => 'root',
-		'password' => '',
+		'password' => 'root',
 		'database' => 'loteria_quindio',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
