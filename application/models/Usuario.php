@@ -68,7 +68,7 @@ Class Usuario extends CI_Model {
 
     // Read data from database to show data in admin page
     public function get_user_by_dates($start_date, $end_date, $role = 2){
-        $this->db->select("c.name as city_name, s.name as state_name, it.name as document_type, u.first_name, u.last_name, u.phone, u.address, u.birth_date, u.identification_number");
+        $this->db->select("c.name as city_name, s.name as state_name, it.name as document_type, u.first_name, u.last_name, u.phone, u.address, u.birth_date, u.identification_number, u.email");
         $this->db->from('users u');
         $this->db->join('identification_types it', 'u.identification_type_id = it.id');
         $this->db->join('cities c', 'u.city_id = c.id');
