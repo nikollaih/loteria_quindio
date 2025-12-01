@@ -21,14 +21,14 @@ class Files extends CI_Controller {
                     $result_rows = explode("\n", $string);
                    // array_pop($result_rows);
 
-                    if(count($result_rows) == 34){
+                    if(count($result_rows) == 45){
                         if(count(explode("|", $result_rows[0])) == 10){
                             $draw = $this->Draw->get_draws(null, explode("|", $result_rows[0])[6]);
                             if(is_array($draw)){
                                 if($draw["draw_number"] == $this->input->post("draw_number")){
                                     $tmp_array = [];
 
-                                    for ($i=0; $i < 34; $i++) { 
+                                    for ($i=0; $i < 45; $i++) {
                                         $result = explode("|", $result_rows[$i]);
 
                                         if(count($result) == 10){
@@ -58,11 +58,11 @@ class Files extends CI_Controller {
                                         }
                                     }
 
-                                    if(count($tmp_array) == 34){
+                                    if(count($tmp_array) == 45){
                                         json_response($tmp_array, true, "Result listing");
                                     }
                                     else{
-                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos ".count($tmp_array));
+                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 45 resultados y obtuvimos ".count($tmp_array));
                                     }
                                 }
                                 else{
@@ -78,7 +78,7 @@ class Files extends CI_Controller {
                         }
                     }
                     else{
-                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos ".count($result_rows));
+                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 45 resultados y obtuvimos ".count($result_rows));
                     }
                 }
                 else{
@@ -598,18 +598,18 @@ class Files extends CI_Controller {
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
                 // manually set title value
-                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->mergeCells("A".$line.":I".$line);
                 $sheet->setCellValue('A'.$line, 'LOTERIA DEL QUINDIO'); 
-                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
-                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(14);
+                $sheet->getStyle("A".$line.":I".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":I".$line)->getFont()->setSize(14);
                 $line++;
-                $sheet->mergeCells("A".$line.":H".$line);
+                $sheet->mergeCells("A".$line.":I".$line);
                 $sheet->setCellValue('A'.$line, 'REPORTE USUARIOS ('.ucfirst(strftime('%B %d, %Y',strtotime($start_date))).' - '.ucfirst(strftime('%B %d, %Y',strtotime($end_date))).')'); 
-                $sheet->getStyle("A".$line.":H".$line)->applyFromArray($this->getDocumentTitleStyle());
-                $sheet->getStyle("A".$line.":H".$line)->getFont()->setSize(12);
+                $sheet->getStyle("A".$line.":I".$line)->applyFromArray($this->getDocumentTitleStyle());
+                $sheet->getStyle("A".$line.":I".$line)->getFont()->setSize(12);
                 $line += 3;
 
-                $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray($this->getItemTitleStyle());
+                $sheet->getStyle('A'.$line.':I'.$line)->applyFromArray($this->getItemTitleStyle());
 
                 // Set the cells dimensions
                 $sheet->getColumnDimension('A')->setWidth(20);
@@ -620,6 +620,7 @@ class Files extends CI_Controller {
                 $sheet->getColumnDimension('F')->setWidth(23);
                 $sheet->getColumnDimension('G')->setWidth(23);
                 $sheet->getColumnDimension('H')->setWidth(25);
+                $sheet->getColumnDimension('I')->setWidth(45);
 
                 // Set the table titles
                 $sheet->setCellValue('A'.$line, 'TIPO DOCUMENTO'); 
@@ -629,7 +630,8 @@ class Files extends CI_Controller {
                 $sheet->setCellValue('E'.$line, 'DIRECCIÓN'); 
                 $sheet->setCellValue('F'.$line, 'CIUDAD'); 
                 $sheet->setCellValue('G'.$line, 'DEPARTAMENTO'); 
-                $sheet->setCellValue('H'.$line, 'FECHA DE NACIMIENTO'); 
+                $sheet->setCellValue('H'.$line, 'FECHA DE NACIMIENTO');
+                $sheet->setCellValue('I'.$line, 'CORREO ELECTRÓNICO');
 
                 $line++;
 
@@ -642,8 +644,9 @@ class Files extends CI_Controller {
                     $sheet->setCellValue('E'.$line, $u["address"]); 
                     $sheet->setCellValue('F'.$line, $u["city_name"]); 
                     $sheet->setCellValue('G'.$line, $u["state_name"]); 
-                    $sheet->setCellValue('H'.$line, $u["birth_date"]); 
-                    $sheet->getStyle('A'.$line.':H'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
+                    $sheet->setCellValue('H'.$line, $u["birth_date"]);
+                    $sheet->setCellValue('I'.$line, $u["email"]);
+                    $sheet->getStyle('A'.$line.':I'.$line)->applyFromArray(['alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT ] ]);
                     $line++;
                 }
 

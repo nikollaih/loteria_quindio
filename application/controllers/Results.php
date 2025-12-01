@@ -3,14 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Results extends Application_Controller {
     function __construct()
-	{
-		parent::__construct();
-		$this->load->helper(['url', 'file', 'results']);
+    {
+        parent::__construct();
+        $this->load->helper(['url', 'file', 'results']);
         $this->load->model(["Draw", "Result"]);
     }
-    
+
     // Get the cities list rows by an state id
-	public function import_result($draw_slug = null){
+    public function import_result($draw_slug = null){
         if(is_admin()){
             if($this->input->post()){
                 $string = read_file($_FILES["result"]["tmp_name"]);
@@ -20,8 +20,8 @@ class Results extends Application_Controller {
 
                 $tmp_array = [];
 
-                if(count($result_rows) == 38 && is_array($draw)){
-                    for ($i=0; $i < 38; $i++) { 
+                if(count($result_rows) == 45 && is_array($draw)){
+                    for ($i=0; $i < 45; $i++) {
                         $result = explode("|", $result_rows[$i]);
 
                         $data["id_draw"] = $draw["id"];
@@ -41,7 +41,7 @@ class Results extends Application_Controller {
                     }
                 }
 
-                if(count($tmp_array) == 38){
+                if(count($tmp_array) == 45){
                     $result_insert = $this->Result->set_results($tmp_array);
                     if($result_insert){
                         $new_draw["id"] = $draw["id"];
@@ -66,7 +66,7 @@ class Results extends Application_Controller {
             // Check is there is any post data
             if($this->input->post()){
                 $data = $this->input->post("data");
-                if(count($data) == 34){
+                if(count($data) == 45){
                     $result_insert = $this->Result->set_results($data);
 
                     if($result_insert){
@@ -82,15 +82,15 @@ class Results extends Application_Controller {
                     }
                 }
                 else{
-                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 34 resultados y obtuvimos  ".count($data));
+                    json_response($data, false, "Los valores recibidos no son validos, se esperaban 45 resultados y obtuvimos  ".count($data));
                 }
             }
             else{
-                json_response(null, false, "No se ha recibido ningún dato.");
+                json_response(null, false, "No se ha recibido ning迆n dato.");
             }
         }
         else{
-            json_response(null, false, "No tiene permisos para realizar esta acción.");
+            json_response(null, false, "No tiene permisos para realizar esta acci車n.");
         }
     }
 }
