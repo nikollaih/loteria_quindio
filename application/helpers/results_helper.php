@@ -8,24 +8,24 @@ if(!function_exists('get_result_name_by_line'))
                 return "PREMIO MAYOR";
                 break;
             case '1':
-                return "SECO DE 300 MILLONES";
-                break;
-            case '2':
-            case '3':
                 return "SECO DE 200 MILLONES";
                 break;
-            case '4':
-            case '5':
-            case '6':
+            case '2':
                 return "SECO DE 100 MILLONES";
                 break;
-            case ($line >= 7 && $line <= 14):
+            case ($line >= 3 && $line <= 7):
                 return "SECO DE 50 MILLONES";
                 break;
-            case ($line >= 15 && $line <= 24):
+            case ($line >= 8 && $line <= 12):
+                return "SECO DE 40 MILLONES";
+                break;
+            case ($line >= 13 && $line <= 17):
+                return "SECO DE 30 MILLONES";
+                break;
+            case ($line >= 18 && $line <= 27):
                 return "SECO DE 20 MILLONES";
                 break;
-            case ($line > 24 && $line <= 44):
+            case ($line >= 28 && $line <= 37):
                 return "SECO DE 10 MILLONES";
                 break;
 
@@ -49,22 +49,23 @@ if(!function_exists('get_id_reward_by_line'))
                 return 2;
                 break;
             case '2':
-            case '3':
                 return 3;
                 break;
-            case '4':
-            case '5':
-            case '6':
+            case ($line >= 3 && $line <= 7):
                 return 4;
                 break;
-            case ($line >= 7 && $line <= 14):
+            case ($line >= 8 && $line <= 12):
                 return 5;
                 break;
-            case ($line >= 15 && $line <= 24):
+            case ($line >= 13 && $line <= 17):
                 return 6;
                 break;
-            case ($line > 24 && $line <= 44):
+            case ($line >= 18 && $line <= 27):
                 return 7;
+                break;
+            case ($line >= 28 && $line <= 37):
+                return 8;
+                break;
 
             default:
                 return false;

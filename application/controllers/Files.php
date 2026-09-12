@@ -21,14 +21,14 @@ class Files extends CI_Controller {
                     $result_rows = explode("\n", $string);
                    // array_pop($result_rows);
 
-                    if(count($result_rows) == 45){
+                    if(count($result_rows) == 38){
                         if(count(explode("|", $result_rows[0])) == 10){
                             $draw = $this->Draw->get_draws(null, explode("|", $result_rows[0])[6]);
                             if(is_array($draw)){
                                 if($draw["draw_number"] == $this->input->post("draw_number")){
                                     $tmp_array = [];
 
-                                    for ($i=0; $i < 45; $i++) {
+                                    for ($i=0; $i < 38; $i++) {
                                         $result = explode("|", $result_rows[$i]);
 
                                         if(count($result) == 10){
@@ -58,11 +58,11 @@ class Files extends CI_Controller {
                                         }
                                     }
 
-                                    if(count($tmp_array) == 45){
+                                    if(count($tmp_array) == 38){
                                         json_response($tmp_array, true, "Result listing");
                                     }
                                     else{
-                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 45 resultados y obtuvimos ".count($tmp_array));
+                                        json_response($tmp_array, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($tmp_array));
                                     }
                                 }
                                 else{
@@ -78,7 +78,7 @@ class Files extends CI_Controller {
                         }
                     }
                     else{
-                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 45 resultados y obtuvimos ".count($result_rows));
+                        json_response($result_rows, false, "Los valores recibidos no son validos, se esperaban 38 resultados y obtuvimos ".count($result_rows));
                     }
                 }
                 else{

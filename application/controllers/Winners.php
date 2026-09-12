@@ -17,153 +17,171 @@ class Winners extends Application_Controller {
             $results = $this->Result->get_results($draw["id"]);
             if(is_array($purchases)){
                 foreach ($purchases as $purchase) {
-                    for ($i=1; $i <= 28; $i++) { 
+                    for ($i=1; $i <= 33; $i++) {
                         switch ($i) {
                             case '1':
                                 if (check_premio_mayor($purchase, $draw, true)){
                                     $this->save_winner($purchase, 1);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
-                            case ($i >= 2 && $i <= 6):
+                            case ($i >= 2 && $i <= 8):
                                 if (check_seco($purchase, $draw, $results, $i)){
                                     $this->save_winner($purchase, $i);
-                                    $i = 29;
-                                }
-                            break;
-                            case '7':
-                                if (check_quindianito($purchase, $draw, $results, 7)){
-                                    $this->save_winner($purchase, 7);
-                                    $i = 29;
-                                }
-                            break;
-                            case '8':
-                                if (check_mayor_invertido($purchase, $draw, true)){
-                                    $this->save_winner($purchase, 8);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '9':
                                 if (check_tres_primeras_cifras($purchase, $draw, true)){
                                     $this->save_winner($purchase, 9);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '10':
-                                if (check_ultimas_tres_cifras($purchase, $draw, true)){
+                                if (check_primera_dos_ultimas($purchase, $draw, true)){
                                     $this->save_winner($purchase, 10);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '11':
-                                if (check_combinado($purchase, $draw, true)){
+                                if (check_dos_primeras_ultima($purchase, $draw, true)){
                                     $this->save_winner($purchase, 11);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '12':
-                                if (check_primera_ultima($purchase, $draw, true)){
+                                if (check_ultimas_tres_cifras($purchase, $draw, true)){
                                     $this->save_winner($purchase, 12);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '13':
-                                if (check_ultimas_dos_cifras($purchase, $draw, true)){
+                                if (check_primeras_dos_cifras($purchase, $draw, true)){
                                     $this->save_winner($purchase, 13);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '14':
-                                if (check_primeras_dos_cifras($purchase, $draw, true)){
+                                if (check_ultimas_dos_cifras($purchase, $draw, true)){
                                     $this->save_winner($purchase, 14);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '15':
-                                if (check_dos_centro($purchase, $draw, true)){
+                                if (check_ultima($purchase, $draw, true)){
                                     $this->save_winner($purchase, 15);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '16':
-                                if (check_ultima($purchase, $draw, true)){
+                                if (check_combinado($purchase, $draw, true)){
                                     $this->save_winner($purchase, 16);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '17':
-                                if (check_serie($purchase, $draw, true)){
+                                if (check_mayor_invertido($purchase, $draw, true)){
                                     $this->save_winner($purchase, 17);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '18':
-                                if (check_premio_mayor($purchase, $draw, false)){
+                                if (check_anterior($purchase, $draw, true)){
                                     $this->save_winner($purchase, 18);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '19':
-                                if (check_mayor_invertido($purchase, $draw, false)){
+                                if (check_posterior($purchase, $draw, true)){
                                     $this->save_winner($purchase, 19);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '20':
-                                if (check_combinado($purchase, $draw, false)){
+                                if (check_serie($purchase, $draw, true)){
                                     $this->save_winner($purchase, 20);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '21':
-                                if (check_tres_primeras_cifras($purchase, $draw, false)){
+                                if (check_premio_mayor($purchase, $draw, false)){
                                     $this->save_winner($purchase, 21);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '22':
-                                if (check_ultimas_tres_cifras($purchase, $draw, false)){
+                                if (check_tres_primeras_cifras($purchase, $draw, false)){
                                     $this->save_winner($purchase, 22);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '23':
-                                if (check_primera_ultima($purchase, $draw, false)){
+                                if (check_primera_dos_ultimas($purchase, $draw, false)){
                                     $this->save_winner($purchase, 23);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '24':
-                                if (check_ultimas_dos_cifras($purchase, $draw, false)){
+                                if (check_dos_primeras_ultima($purchase, $draw, false)){
                                     $this->save_winner($purchase, 24);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '25':
-                                if (check_primeras_dos_cifras($purchase, $draw, false)){
+                                if (check_ultimas_tres_cifras($purchase, $draw, false)){
                                     $this->save_winner($purchase, 25);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '26':
-                                if (check_dos_centro($purchase, $draw, false)){
+                                if (check_primeras_dos_cifras($purchase, $draw, false)){
                                     $this->save_winner($purchase, 26);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '27':
-                                if (check_ultima($purchase, $draw, false)){
+                                if (check_ultimas_dos_cifras($purchase, $draw, false)){
                                     $this->save_winner($purchase, 27);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
                             case '28':
-                                if (check_seco_no_serie($purchase, $draw, $results, false)){
+                                if (check_ultima($purchase, $draw, false)){
                                     $this->save_winner($purchase, 28);
-                                    $i = 29;
+                                    $i = 34;
                                 }
                             break;
-                            
+                            case '29':
+                                if (check_combinado($purchase, $draw, false)){
+                                    $this->save_winner($purchase, 29);
+                                    $i = 34;
+                                }
+                            break;
+                            case '30':
+                                if (check_anterior($purchase, $draw, false)){
+                                    $this->save_winner($purchase, 30);
+                                    $i = 34;
+                                }
+                            break;
+                            case '31':
+                                if (check_posterior($purchase, $draw, false)){
+                                    $this->save_winner($purchase, 31);
+                                    $i = 34;
+                                }
+                            break;
+                            case '32':
+                                if (check_mayor_invertido($purchase, $draw, false)){
+                                    $this->save_winner($purchase, 32);
+                                    $i = 34;
+                                }
+                            break;
+                            case '33':
+                                if (check_seco_no_serie($purchase, $draw, $results, 33)){
+                                    $this->save_winner($purchase, 33);
+                                    $i = 34;
+                                }
+                            break;
+
                             default:
                                 # code...
                                 break;

@@ -147,6 +147,34 @@
         }
     }
 
+    // Valida la primera cifra y las 2 últimas cifras (ej. resultado 4867, valida 4_67)
+    if(!function_exists('check_primera_dos_ultimas')){
+        function check_primera_dos_ultimas($purchase, $draw, $check_serie = false){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                if(substr($purchase["number"], 0, 1) == substr($draw["result"], 0, 1) && substr($purchase["number"], -2) == substr($draw["result"], -2) && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    // Valida las 2 primeras cifras y la última cifra (ej. resultado 4867, valida 48_7)
+    if(!function_exists('check_dos_primeras_ultima')){
+        function check_dos_primeras_ultima($purchase, $draw, $check_serie = false){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                if(substr($purchase["number"], 0, 2) == substr($draw["result"], 0, 2) && substr($purchase["number"], -1) == substr($draw["result"], -1) && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
     if(!function_exists('check_ultimas_dos_cifras')){
         function check_ultimas_dos_cifras($purchase, $draw, $check_serie = false){
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
@@ -190,6 +218,42 @@
         function check_ultima($purchase, $draw, $check_serie = false){
             if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
                 if(substr($purchase["number"], -1) == substr($draw["result"], -1) && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    // Valida la compra con el número anterior al resultado (ej. resultado 4444, valida 4443)
+    if(!function_exists('check_anterior')){
+        function check_anterior($purchase, $draw, $check_serie = false){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                $digits = strlen((string) $draw["result"]);
+                $anterior = (intval($draw["result"]) - 1 + pow(10, $digits)) % pow(10, $digits);
+                $anterior = str_pad($anterior, $digits, "0", STR_PAD_LEFT);
+
+                if($purchase["number"] == $anterior && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
+    // Valida la compra con el número posterior al resultado (ej. resultado 4444, valida 4445)
+    if(!function_exists('check_posterior')){
+        function check_posterior($purchase, $draw, $check_serie = false){
+            if(isset($purchase["number"]) && isset($purchase["serie"]) && isset($purchase["draw_number"]) && isset($draw["draw_number"]) && isset($draw["result"]) && isset($draw["serie"])){
+                $digits = strlen((string) $draw["result"]);
+                $posterior = (intval($draw["result"]) + 1) % pow(10, $digits);
+                $posterior = str_pad($posterior, $digits, "0", STR_PAD_LEFT);
+
+                if($purchase["number"] == $posterior && $purchase["draw_number"] == $draw["draw_number"] && (($check_serie && $purchase["serie"] == $draw["serie"]) || (!$check_serie && $purchase["serie"] != $draw["serie"]))){
                     return true;
                 }
                 else{
